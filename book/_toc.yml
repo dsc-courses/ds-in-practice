@@ -1,0 +1,133 @@
+
+- file: content/introduction
+  title: Introduction
+  numbered: false
+
+- part: Understanding Data
+  chapters:
+    - title: Introduction to Data Science
+      file: content/01/introduction
+      sections:
+        - title: What is Data Science?
+          file: content/01/what-is-data-science
+        - title: The Scientific Method
+          file: content/01/scientific-method
+        - title: A Data Science Example
+          file: content/01/data-science-example
+    - title: The Basics of Tabular Data
+      file: content/02/introduction
+      sections:
+        - title: Tabular Data
+          file: content/02/tabular-data
+        - title: Table Methods
+          file: content/02/methods
+        - title: Data Types and Performance
+          file: content/02/data-types
+    - title: Querying and Describing Data
+      file: content/03/introduction
+      sections:
+        - title: Selecting Data
+          file: content/03/selecting-data
+        - title: Kinds of Data
+          file: content/03/kinds-of-data
+        - title: Categorical Distributions
+          file: content/03/categorical-distributions
+        - title: Quantitative Distributions
+          file: content/03/quantitative-distributions
+    - title: Understanding Assumptions and Data Cleaning
+      file: content/04/introduction
+      sections:
+      - title: Modifying DataFrames
+        file: content/04/modifying-dataframes
+      - title: Cleaning Messy Data
+        file: content/04/cleaning
+      - title: Exploratory Data Analysis
+        file: content/04/eda
+      - title: Hypothesis Testing
+        file: content/04/asking-questions
+    - title: Aggregation and Extension of Data
+      file: content/05/introduction
+      sections:
+      - title: Data Granularity
+        file: content/05/grouping
+      - title: Understanding Aggregations
+        file: content/05/understanding-aggregations
+      - title: Combining Data (Observations)
+        file: content/05/appending-data
+      - title: Combining Data (Attributes)
+        file: content/05/joining-data
+      - title: Permutation Tests
+        file: content/05/permutation-tests
+      - title: Exploratory Data Analysis II
+        file: content/05/eda-2
+    - title: Missing Data
+      file: content/06/introduction
+      sections:
+        - title: Definitions
+          file: content/06/defining-missing
+        - title: Identifying Missing Data
+          file: content/06/identifying-missing
+        - title: Handling Missing Data
+          file: content/06/handling-missing-data
+        - title: Single-Valued Imputation
+          file: content/06/single-valued-imputation
+        - title: Probabilistic Imputation
+          file: content/06/probabilistic-imputation
+- part: Collecting Data
+  chapters:
+    - title: Data Collection
+      file: content/07/introduction
+      sections:
+        - title: Using Existing Data
+          file: content/07/existing-data
+        - title: HTTP Requests
+          file: content/07/requests
+        - title: Parsing HTML
+          file: content/07/html
+    - title: Information Extaction
+      file: content/08/introduction
+      sections:
+        - title: Text Processing
+          file: content/08/patterns
+        - title: Natural Language Processing
+          file: content/08/nlp
+    - title: Introduction to Features
+      file: content/09/introduction
+      sections:
+        - title: Feature Engineering
+          file: content/09/features
+        - title: Data Pipelines
+          file: content/09/data-pipelines
+- part: Modeling With Data
+  chapters:
+    - title: Modeling Basics
+      file: content/10/introduction
+      sections:
+        - title: Introduction to Statistical Models
+          file: content/10/intro-modeling
+        - title: Building Modeling Pipelines
+          file: content/10/model-building
+    - title: Bias and Variance
+      file: content/11/introduction
+      sections:
+        - title: Model Quality (Inference)
+          file: content/11/fitting-inference
+        - title: Model Quality (Prediction)
+          file: content/11/fitting-prediction
+        - title: Cross Validation
+          file: content/11/cross-validation
+        - title: Parameter Search
+          file: content/11/parameter-search
+    - title: Evaluating Models; Fairness
+      file: content/12/introduction
+      sections:
+        - title: Evaluation metrics
+          file: content/12/eval
+        - title: Parity Measures
+          file: content/12/parity
+        - title: Fairness in Machine Learning
+          file: content/12/fairness
+
+
+
+

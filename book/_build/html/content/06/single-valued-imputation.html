@@ -1,0 +1,986 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Single-Valued Imputation &#8212; The Practice of Data Science</title>
+    
+  <link rel="stylesheet" href="../../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../../_static/js/index.3da636dd464baa7582d2.js">
+
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Probabilistic Imputation" href="probabilistic-imputation.html" />
+    <link rel="prev" title="Handling Missing Data" href="handling-missing-data.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../../index.html">
+  
+  <img src="../../_static/toolbox.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">The Practice of Data Science</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../introduction.html">
+   Data Science in Practice
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Understanding Data
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../01/introduction.html">
+   Introduction to Data Science
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../01/what-is-data-science.html">
+     What is Data Science?
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../01/scientific-method.html">
+     The Scientific Method
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../01/data-science-example.html">
+     A Data Science Example
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../02/introduction.html">
+   The Basics of Tabular Data
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../02/tabular-data.html">
+     Tabular Data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../02/tabular-data.html#tables-in-python-using-pandas">
+     Tables in python, using Pandas.
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../02/methods.html">
+     Table Methods
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../02/data-types.html">
+     Data Types and Performance
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../03/introduction.html">
+   Querying and Describing Data
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../03/selecting-data.html">
+     Selecting Data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../03/kinds-of-data.html">
+     Kinds of Data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../03/categorical-distributions.html">
+     Categorical Distributions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../03/quantitative-distributions.html">
+     Quantitative Distributions
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../04/introduction.html">
+   Understanding Assumptions and Data Cleaning
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../04/modifying-dataframes.html">
+     Modifying DataFrames
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../04/cleaning.html">
+     Cleaning Messy Data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../04/eda.html">
+     Exploratory Data Analysis
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../05/introduction.html">
+   Aggregation and Extension of Data
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../05/grouping.html">
+     Data Granularity
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../05/understanding-aggregations.html">
+     Understanding Aggregations
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../05/appending-data.html">
+     Combining Data (Observations)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../05/joining-data.html">
+     Combining Data: Attributes
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../05/joining-data.html#combining-different-measurements-over-the-same-individuals">
+     Combining different measurements over the same individuals
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../05/permutation-tests.html">
+     Permutation Tests
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../05/eda-2.html">
+     Exploratory Data Analysis II
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 current active collapsible-parent">
+  <a class="reference internal" href="introduction.html">
+   Missing Data
+  </a>
+  <ul class="current collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="defining-missing.html">
+     Definitions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="identifying-missing.html">
+     Identifying Missing Data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="handling-missing-data.html">
+     Handling Missing Data
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Single-Valued Imputation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="probabilistic-imputation.html">
+     Probabilistic Imputation
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Collecting Data
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../07/introduction.html">
+   Data Collection
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../07/existing-data.html">
+     Using Existing Data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../07/requests.html">
+     HTTP Requests
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../07/html.html">
+     Parsing HTML
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../08/introduction.html">
+   Information Extaction
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../08/patterns.html">
+     Text Processing
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../08/nlp.html">
+     Natural Language Processing
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../09/introduction.html">
+   Introduction to Features
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../09/features.html">
+     Feature Engineering
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../09/data-pipelines.html">
+     Data Pipelines
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Modeling With Data
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../10/introduction.html">
+   Modeling Basics
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../10/intro-modeling.html">
+     Introduction to Statistical Models
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../10/model-building.html">
+     Building Modeling Pipelines
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../11/introduction.html">
+   Bias and Variance
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../11/fitting-inference.html">
+     Model Quality (Inference)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../11/fitting-prediction.html">
+     Model Quality (Prediction)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../11/cross-validation.html">
+     Cross Validation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../11/parameter-search.html">
+     Parameter Search
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../12/introduction.html">
+   Evaluating Models; Fairness
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../12/eval.html">
+     Evaluation metrics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../12/parity.html">
+     Parity Measures
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../12/fairness.html">
+     Fairness in Machine Learning
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../_sources/content/06/single-valued-imputation.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+        <!-- Source interaction buttons -->
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/afraenkel/ds-in-practice/master?urlpath=tree/book/content/06/single-valued-imputation.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#imputation-with-the-mean-mode">
+   Imputation with the Mean/Mode
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#mcar-data">
+     MCAR Data
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#mar-data">
+     MAR Data
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#imputation-with-complex-models">
+   Imputation with Complex Models
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="single-valued-imputation">
+<h1>Single-Valued Imputation<a class="headerlink" href="#single-valued-imputation" title="Permalink to this headline">¶</a></h1>
+<hr class="docutils" />
+<p>Missing-value imputation refers to the process of ‘filling-in’ missing data with values that approximate the <em>true value</em> of the missing observation. Since the true value is unknown, various imputation techniques use different reasoning to make a ‘best guess’ at what the true values of these observations.</p>
+<p>Single-valued imputation make deterministic best guesses: a given missing observation will <em>always</em> be imputed with the same value. This well-behaved procedure has trade-offs: while easy to understand implement and interpret, it biases many statistics of the dataset. In particular single-valued imputation almost always artificially decreases the variance of a dataset; this decrease inflates the confidence one has in the results of one’s inference.</p>
+<p>The trick of single-valued imputation lies in how one finds the values with which to impute. This process may vary from an ad-hoc fixed value, to more complicated rules and models that statistically predict the missing value. The portions below introduce different imputation techniques in increasing complexity.</p>
+<div class="section" id="imputation-with-the-mean-mode">
+<h2>Imputation with the Mean/Mode<a class="headerlink" href="#imputation-with-the-mean-mode" title="Permalink to this headline">¶</a></h2>
+<p>Imputation with a ‘typical’ value of a column is the most simple approach to imputation. To impute a column with its mean value, one need only pass a dictionary of values to <code class="docutils literal notranslate"><span class="pre">fillna</span></code>: the keys are the columns to be imputed, while the values are mean values for those columns.</p>
+<div class="section" id="mcar-data">
+<h3>MCAR Data<a class="headerlink" href="#mcar-data" title="Permalink to this headline">¶</a></h3>
+<p><strong>Example (Mean):</strong> Imputing the <code class="docutils literal notranslate"><span class="pre">value</span></code> column with the mean observed value:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">imputed</span> <span class="o">=</span> <span class="n">unif</span><span class="o">.</span><span class="n">fillna</span><span class="p">({</span><span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="n">unif</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()})</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">d</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;True&#39;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+    <span class="s1">&#39;Imputed (MCAR)&#39;</span><span class="p">:</span> <span class="n">imputed</span>
+<span class="p">}</span>
+<span class="n">plot_distributions</span><span class="p">(</span><span class="o">**</span><span class="n">d</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/single-valued-imputation_6_0.png" src="../../_images/single-valued-imputation_6_0.png" />
+</div>
+</div>
+<p>From the plot, one observes the imputed distribution looks <em>very</em> different; all the missing values were given a single value. This decision has two primary effects:</p>
+<ul class="simple">
+<li><p>the mean remains unchanged by construction, and</p></li>
+<li><p>the variance of the imputed data is much smaller.</p></li>
+</ul>
+<p>These effects are seen in the following table:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span>
+    <span class="n">imputed</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">missing</span><span class="o">=</span><span class="s1">&#39;Imputed&#39;</span><span class="p">),</span> 
+    <span class="n">true</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">missing</span><span class="o">=</span><span class="s1">&#39;True Pop&#39;</span><span class="p">)]</span>
+<span class="p">)</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;missing&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead tr th {
+        text-align: left;
+    }
+
+    .dataframe thead tr:last-of-type th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr>
+      <th></th>
+      <th colspan="8" halign="left">value</th>
+    </tr>
+    <tr>
+      <th></th>
+      <th>count</th>
+      <th>mean</th>
+      <th>std</th>
+      <th>min</th>
+      <th>25%</th>
+      <th>50%</th>
+      <th>75%</th>
+      <th>max</th>
+    </tr>
+    <tr>
+      <th>missing</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Imputed</th>
+      <td>1000.0</td>
+      <td>0.414235</td>
+      <td>0.888919</td>
+      <td>-0.999003</td>
+      <td>-0.371867</td>
+      <td>0.414235</td>
+      <td>1.217879</td>
+      <td>1.994737</td>
+    </tr>
+    <tr>
+      <th>True Pop</th>
+      <td>1000.0</td>
+      <td>0.407980</td>
+      <td>0.989372</td>
+      <td>-0.999143</td>
+      <td>-0.532888</td>
+      <td>0.131755</td>
+      <td>1.404898</td>
+      <td>1.994737</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p><strong>Example (Mode):</strong> Imputing categorical attributes with the most ‘typical’ value calls for using the <em>mode</em>, as computing means only makes sense for quantitative columns. For the categorical attribute ‘label’, the most common value is <code class="docutils literal notranslate"><span class="pre">C</span></code>.</p>
+<p>Imputation with the mode therefore sees a large increase in the occurrence of the value <code class="docutils literal notranslate"><span class="pre">C</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span>
+    <span class="n">unif</span><span class="o">.</span><span class="n">fillna</span><span class="p">({</span><span class="s1">&#39;label&#39;</span><span class="p">:</span> <span class="n">unif</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mode</span><span class="p">()</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()})</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">missing</span><span class="o">=</span><span class="s1">&#39;Imputed&#39;</span><span class="p">),</span> 
+    <span class="n">true</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">missing</span><span class="o">=</span><span class="s1">&#39;True Pop&#39;</span><span class="p">)]</span>
+<span class="p">)</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="s1">&#39;label&#39;</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="s1">&#39;missing&#39;</span><span class="p">,</span> <span class="n">aggfunc</span><span class="o">=</span><span class="s1">&#39;size&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="n">x</span><span class="o">/</span><span class="n">x</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/single-valued-imputation_10_0.png" src="../../_images/single-valued-imputation_10_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="mar-data">
+<h3>MAR Data<a class="headerlink" href="#mar-data" title="Permalink to this headline">¶</a></h3>
+<p>Imputing MAR data with the mean yields a biased estimate of the true mean:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">imputed</span> <span class="o">=</span> <span class="n">depd</span><span class="o">.</span><span class="n">fillna</span><span class="p">({</span><span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="n">depd</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()})</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">d</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;True&#39;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+    <span class="s1">&#39;Imputed (MAR)&#39;</span><span class="p">:</span> <span class="n">imputed</span>
+<span class="p">}</span>
+<span class="n">plot_distributions</span><span class="p">(</span><span class="o">**</span><span class="n">d</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/single-valued-imputation_13_0.png" src="../../_images/single-valued-imputation_13_0.png" />
+</div>
+</div>
+<p>Note that, not only is the standard deviation smaller, but so is the mean of the dataset:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span>
+    <span class="n">imputed</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">missing</span><span class="o">=</span><span class="s1">&#39;Imputed&#39;</span><span class="p">),</span> 
+    <span class="n">true</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">missing</span><span class="o">=</span><span class="s1">&#39;True Pop&#39;</span><span class="p">)]</span>
+<span class="p">)</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;missing&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead tr th {
+        text-align: left;
+    }
+
+    .dataframe thead tr:last-of-type th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr>
+      <th></th>
+      <th colspan="8" halign="left">value</th>
+    </tr>
+    <tr>
+      <th></th>
+      <th>count</th>
+      <th>mean</th>
+      <th>std</th>
+      <th>min</th>
+      <th>25%</th>
+      <th>50%</th>
+      <th>75%</th>
+      <th>max</th>
+    </tr>
+    <tr>
+      <th>missing</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Imputed</th>
+      <td>1000.0</td>
+      <td>0.335408</td>
+      <td>0.930277</td>
+      <td>-0.999143</td>
+      <td>-0.508812</td>
+      <td>0.335408</td>
+      <td>1.240418</td>
+      <td>1.994737</td>
+    </tr>
+    <tr>
+      <th>True Pop</th>
+      <td>1000.0</td>
+      <td>0.407980</td>
+      <td>0.989372</td>
+      <td>-0.999143</td>
+      <td>-0.532888</td>
+      <td>0.131755</td>
+      <td>1.404898</td>
+      <td>1.994737</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p><strong>Example (Mean-by-group):</strong> Since the missingness of the ‘value’ column is dependent on ‘label’, the biased estimate of the mean can be corrected by doing <em>group-wise</em> single-valued imputation with the mean:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">fillna_grp</span><span class="p">(</span><span class="n">ser</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;fill-na with mean for a column for a column&#39;&#39;&#39;</span>
+    <span class="k">return</span> <span class="n">ser</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">ser</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
+    
+<span class="n">imputed</span> <span class="o">=</span> <span class="n">depd</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span>
+        <span class="n">value</span><span class="o">=</span><span class="n">depd</span><span class="o">.</span><span class="n">fillna</span><span class="p">({</span><span class="s1">&#39;label&#39;</span><span class="p">:</span><span class="s1">&#39;NULL&#39;</span><span class="p">})</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;label&#39;</span><span class="p">)[</span><span class="s1">&#39;value&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">fillna_grp</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">d</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;True&#39;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+    <span class="s1">&#39;Imputed (MAR)&#39;</span><span class="p">:</span> <span class="n">imputed</span>
+<span class="p">}</span>
+<span class="n">plot_distributions</span><span class="p">(</span><span class="o">**</span><span class="n">d</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/single-valued-imputation_18_0.png" src="../../_images/single-valued-imputation_18_0.png" />
+</div>
+</div>
+<p>Note that the three peaks correspond to the single-valued imputation for the three groups. The table below shows the mean of the imputed dataset roughly matches the population mean:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span>
+    <span class="n">imputed</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">missing</span><span class="o">=</span><span class="s1">&#39;Imputed&#39;</span><span class="p">),</span> 
+    <span class="n">true</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">missing</span><span class="o">=</span><span class="s1">&#39;True Pop&#39;</span><span class="p">)]</span>
+<span class="p">)</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;missing&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead tr th {
+        text-align: left;
+    }
+
+    .dataframe thead tr:last-of-type th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr>
+      <th></th>
+      <th colspan="8" halign="left">value</th>
+    </tr>
+    <tr>
+      <th></th>
+      <th>count</th>
+      <th>mean</th>
+      <th>std</th>
+      <th>min</th>
+      <th>25%</th>
+      <th>50%</th>
+      <th>75%</th>
+      <th>max</th>
+    </tr>
+    <tr>
+      <th>missing</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Imputed</th>
+      <td>1000.0</td>
+      <td>0.41524</td>
+      <td>0.987724</td>
+      <td>-0.999143</td>
+      <td>-0.511413</td>
+      <td>0.311839</td>
+      <td>1.482188</td>
+      <td>1.994737</td>
+    </tr>
+    <tr>
+      <th>True Pop</th>
+      <td>1000.0</td>
+      <td>0.40798</td>
+      <td>0.989372</td>
+      <td>-0.999143</td>
+      <td>-0.532888</td>
+      <td>0.131755</td>
+      <td>1.404898</td>
+      <td>1.994737</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p><em>Remark:</em> That the standard deviations are that close is likely due to the particulars of this dataset. Generally, group-wise single-valued imputation would still underestimate the variance of the population.</p>
+</div>
+</div>
+<div class="section" id="imputation-with-complex-models">
+<h2>Imputation with Complex Models<a class="headerlink" href="#imputation-with-complex-models" title="Permalink to this headline">¶</a></h2>
+<p>Each of the above techniques takes advantage of the observed data to make a best guess at the true value of a missing observation. Imputation with the mean uses the mean of observed empirical distribution of the attributed being imputed; group-wise imputation with the mean uses the conditional distribution, taking advantage of the attribute’s dependency on another column.</p>
+<p>Similar approaches, using more complex models, predict the true value of missing data using all attributes in the dataset. Examples of these include:</p>
+<ul class="simple">
+<li><p>fitting a linear regression model on the observed data to impute a given column,</p></li>
+<li><p>fitting a k-nearest neighbors (k-NN) model to impute a given column.</p></li>
+</ul>
+<p>Each of these consider the missing observations as a target variable to be predicted. These techniques will be covered when discussing modeling, later in the course.</p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./content/06"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="handling-missing-data.html" title="previous page">Handling Missing Data</a>
+    <a class='right-next' id="next-link" href="probabilistic-imputation.html" title="next page">Probabilistic Imputation</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Aaron Fraenkel<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="../../_static/js/index.3da636dd464baa7582d2.js"></script>
+
+
+    
+  </body>
+</html>

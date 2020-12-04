@@ -1,0 +1,10 @@
+COLLEGE_ID,NAME,UNDERGRAD_POP,PCT_FED_LOAN,MEDIAN_GRAD_DEBT,SETTING
+131200.0,University of California-Berkeley,30574.0,23.73%,$13200,City
+131300.0,University of California-Davis,30046.0,36.0%,$14000,City
+131400.0,University of California-Irvine,29295.0,36.4%,$16500,Suburban
+131500.0,University of California-Los Angeles,30994.0,33.32%,$15000,Urban
+131600.0,University of California-Riverside,20044.0,50.34%,$19000,City
+131700.0,University of California-San Diego,28577.0,36.15%,$17500,Urban
+132000.0,University of California-Santa Barbara,22181.0,36.32%,$16300,Suburban
+132100.0,University of California-Santa Cruz,17577.0,46.41%,$19700,Suburban
+4127100.0,University of California-Merced,7375.0,50.13%,$19018,Rural

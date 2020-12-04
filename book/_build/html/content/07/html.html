@@ -1,0 +1,826 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Parsing HTML &#8212; The Practice of Data Science</title>
+    
+  <link rel="stylesheet" href="../../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../../_static/js/index.3da636dd464baa7582d2.js">
+
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Attributes from Text" href="../08/introduction.html" />
+    <link rel="prev" title="HTTP Requests" href="requests.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../../index.html">
+  
+  <img src="../../_static/toolbox.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">The Practice of Data Science</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../introduction.html">
+   Data Science in Practice
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Understanding Data
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../01/introduction.html">
+   Introduction to Data Science
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../01/what-is-data-science.html">
+     What is Data Science?
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../01/scientific-method.html">
+     The Scientific Method
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../01/data-science-example.html">
+     A Data Science Example
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../02/introduction.html">
+   The Basics of Tabular Data
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../02/tabular-data.html">
+     Tabular Data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../02/tabular-data.html#tables-in-python-using-pandas">
+     Tables in python, using Pandas.
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../02/methods.html">
+     Table Methods
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../02/data-types.html">
+     Data Types and Performance
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../03/introduction.html">
+   Querying and Describing Data
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../03/selecting-data.html">
+     Selecting Data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../03/kinds-of-data.html">
+     Kinds of Data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../03/categorical-distributions.html">
+     Categorical Distributions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../03/quantitative-distributions.html">
+     Quantitative Distributions
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../04/introduction.html">
+   Understanding Assumptions and Data Cleaning
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../04/modifying-dataframes.html">
+     Modifying DataFrames
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../04/cleaning.html">
+     Cleaning Messy Data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../04/eda.html">
+     Exploratory Data Analysis
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../05/introduction.html">
+   Aggregation and Extension of Data
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../05/grouping.html">
+     Data Granularity
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../05/understanding-aggregations.html">
+     Understanding Aggregations
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../05/appending-data.html">
+     Combining Data (Observations)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../05/joining-data.html">
+     Combining Data: Attributes
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../05/joining-data.html#combining-different-measurements-over-the-same-individuals">
+     Combining different measurements over the same individuals
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../05/permutation-tests.html">
+     Permutation Tests
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../05/eda-2.html">
+     Exploratory Data Analysis II
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../06/introduction.html">
+   Missing Data
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../06/defining-missing.html">
+     Definitions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../06/identifying-missing.html">
+     Identifying Missing Data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../06/handling-missing-data.html">
+     Handling Missing Data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../06/single-valued-imputation.html">
+     Single-Valued Imputation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../06/probabilistic-imputation.html">
+     Probabilistic Imputation
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Collecting Data
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1 current active collapsible-parent">
+  <a class="reference internal" href="introduction.html">
+   Data Collection
+  </a>
+  <ul class="current collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="existing-data.html">
+     Using Existing Data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="requests.html">
+     HTTP Requests
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Parsing HTML
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../08/introduction.html">
+   Information Extaction
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../08/patterns.html">
+     Text Processing
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../08/nlp.html">
+     Natural Language Processing
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../09/introduction.html">
+   Introduction to Features
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../09/features.html">
+     Feature Engineering
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../09/data-pipelines.html">
+     Data Pipelines
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Modeling With Data
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../10/introduction.html">
+   Modeling Basics
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../10/intro-modeling.html">
+     Introduction to Statistical Models
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../10/model-building.html">
+     Building Modeling Pipelines
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../11/introduction.html">
+   Bias and Variance
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../11/fitting-inference.html">
+     Model Quality (Inference)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../11/fitting-prediction.html">
+     Model Quality (Prediction)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../11/cross-validation.html">
+     Cross Validation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../11/parameter-search.html">
+     Parameter Search
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../12/introduction.html">
+   Evaluating Models; Fairness
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../12/eval.html">
+     Evaluation metrics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../12/parity.html">
+     Parity Measures
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../12/fairness.html">
+     Fairness in Machine Learning
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../_sources/content/07/html.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+        <!-- Source interaction buttons -->
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/afraenkel/ds-in-practice/master?urlpath=tree/book/content/07/html.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#anatomy-of-html">
+   Anatomy of HTML
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#common-tags">
+     Common tags
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#parsing-html-with-beautiful-soup">
+   Parsing HTML with Beautiful Soup
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="parsing-html">
+<h1>Parsing HTML<a class="headerlink" href="#parsing-html" title="Permalink to this headline">¶</a></h1>
+<hr class="docutils" />
+<p>The previous section described the process of collecting data over a network via HTTP requests. In particular, when scraping websites, these requests result in the collection of raw source data in the form of HTML.</p>
+<p>HyperText Markup Language, or HTML, defines the structure of web content rendered on in a web browser. Thus, if a dataset requires extracting information from a website, the content must be found in, and retrieved from, the HTML.</p>
+<p>Understanding how HTML visually represents a website helps write more robust data-extraction code. While HTML can be treated solely as text, using the structure helps the developer write code that easily adapts to both changing requirements in the data collection, as well as evolving website source.</p>
+<div class="section" id="anatomy-of-html">
+<h2>Anatomy of HTML<a class="headerlink" href="#anatomy-of-html" title="Permalink to this headline">¶</a></h2>
+<p>A website, represented in HTML, is described using the framework of the Document Object Model:</p>
+<ul class="simple">
+<li><p>The <em>HTML Document</em> is the totality of the markup that makes up a website.</p></li>
+<li><p>The <em>Document Object Model</em> (DOM) is the internal representation of an HTML document as a <em>tree</em> structure.</p></li>
+<li><p>An HTML <em>Element</em> is a subtree of the document. Visually, elements are regions of the webpage.</p></li>
+<li><p>HTML <em>Tags</em> are markers that denote the start and end of an element.</p></li>
+</ul>
+<p><strong>Example:</strong> The basic website below, is represented as: the document rendered by the browser, the HTML source code, and the DOM tree.</p>
+<img src="imgs/html.png"><p>The root of document tree is the <code class="docutils literal notranslate"><span class="pre">&lt;html&gt;</span></code> element, which contains all the HTML source. The root typically contains two children: the head, containing metadata for the page, and the body, which contains the information rendered on the page itself. The body of this page consists of three portions: the header and two numbered sections, each of which includes a section header and text. Notice that all of these portions consist of subtrees themselves.</p>
+<div class="section" id="common-tags">
+<h3>Common tags<a class="headerlink" href="#common-tags" title="Permalink to this headline">¶</a></h3>
+<p>Tags define the visual appearance of a particular element. They typically fall into two different types:</p>
+<ol class="simple">
+<li><p>tags defining structural elements (regions of the page), and</p></li>
+<li><p>tags defining stylistic elements (e.g. formatting).</p></li>
+</ol>
+<p>The table below summarizes the most useful tags:</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Structure Elements</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Head/Body Elements</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;html&gt;</span></code></p></td>
+<td><p>the document</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">&lt;p&gt;</span></code></p></td>
+<td><p>the paragraph</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;head&gt;</span></code></p></td>
+<td><p>the header</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">&lt;h1&gt;,</span> <span class="pre">&lt;h2&gt;,</span> <span class="pre">...</span></code></p></td>
+<td><p>header(s)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;body&gt;</span></code></p></td>
+<td><p>the body</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">&lt;img&gt;</span></code></p></td>
+<td><p>images</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;div&gt;</span></code></p></td>
+<td><p>a logical division of the document</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">&lt;a&gt;</span></code></p></td>
+<td><p>anchor (hyper-link)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;span&gt;</span></code></p></td>
+<td><p>an <em>in-line</em> logical division</p></td>
+<td><p><a class="reference external" href="https://en.wikipedia.org/wiki/HTML_element">MANY MORE</a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<p>For data collection, <code class="docutils literal notranslate"><span class="pre">div</span></code> tags are particularly important: when collecting data on a collection of websites, selecting the subtree defined by a <code class="docutils literal notranslate"><span class="pre">div</span></code> tag that defines the area containing the data yields clearer, less error-prone parsing code.</p>
+</div>
+</div>
+<div class="section" id="parsing-html-with-beautiful-soup">
+<h2>Parsing HTML with Beautiful Soup<a class="headerlink" href="#parsing-html-with-beautiful-soup" title="Permalink to this headline">¶</a></h2>
+<p>The python library Beautiful Soup 4, or <code class="docutils literal notranslate"><span class="pre">bs4</span></code>, parses strings or file-like objects representing HTML. The constructor <code class="docutils literal notranslate"><span class="pre">BeautifulSoup(page)</span></code> returns  a <code class="docutils literal notranslate"><span class="pre">BeautifulSoup</span></code> object representing a <em>parsed document</em> as a tree-structure.</p>
+<p><strong>Example:</strong> The simple HTML document defined in the string below serves to illustrate the attributes and methods of the <code class="docutils literal notranslate"><span class="pre">BeautifulSoup</span></code> class:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">s</span> <span class="o">=</span> <span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">&lt;body&gt;</span>
+
+<span class="s1">  &lt;div id=&quot;content&quot;&gt;</span>
+<span class="s1">    &lt;h1&gt;Heading here&lt;/h1&gt;</span>
+<span class="s1">    &lt;p&gt;My First paragraph&lt;/p&gt;</span>
+<span class="s1">    &lt;p&gt;My &lt;em&gt;second&lt;/em&gt; paragraph&lt;/p&gt;</span>
+<span class="s1">  &lt;/div&gt;</span>
+<span class="s1">  </span>
+<span class="s1">  &lt;div id=&quot;nav&quot;&gt;</span>
+<span class="s1">    &lt;ul&gt;</span>
+<span class="s1">      &lt;li&gt;item 1&lt;/li&gt;</span>
+<span class="s1">      &lt;li&gt;item 2&lt;/li&gt;</span>
+<span class="s1">      &lt;li&gt;item 3&lt;/li&gt;</span>
+<span class="s1">    &lt;/ul&gt;</span>
+<span class="s1">  &lt;/div&gt;</span>
+
+<span class="s1">&lt;/body&gt;</span>
+<span class="s1">&#39;&#39;&#39;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The HTML can be rendered in notebooks using the <code class="docutils literal notranslate"><span class="pre">IPython.display</span></code> module:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">HTML</span>
+<span class="n">HTML</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">
+<body>
+
+  <div id="content">
+    <h1>Heading here</h1>
+    <p>My First paragraph</p>
+    <p>My <em>second</em> paragraph</p>
+  </div>
+
+  <div id="nav">
+    <ul>
+      <li>item 1</li>
+      <li>item 2</li>
+      <li>item 3</li>
+    </ul>
+  </div>
+
+</body>
+</div></div>
+</div>
+<p>Parsing the HTML string into a document with BeautifulSoup, resulting object can be explored:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">bs4</span>
+<span class="n">soup</span> <span class="o">=</span> <span class="n">bs4</span><span class="o">.</span><span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+<span class="nb">type</span><span class="p">(</span><span class="n">soup</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>bs4.BeautifulSoup
+</pre></div>
+</div>
+</div>
+</div>
+<p>The elements of a document can be retrieved by specifying a desired tag to the <code class="docutils literal notranslate"><span class="pre">find</span></code> or <code class="docutils literal notranslate"><span class="pre">find_all</span></code> method. For example, to retrieve all list elements in the document:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">list_items</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s1">&#39;li&#39;</span><span class="p">)</span>
+<span class="n">list_items</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;li&gt;item 1&lt;/li&gt;, &lt;li&gt;item 2&lt;/li&gt;, &lt;li&gt;item 3&lt;/li&gt;]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Each of the items in the resulting list are document elements; the text displayed in those elements may be retrieved with the <code class="docutils literal notranslate"><span class="pre">text</span></code> attribute:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">type</span><span class="p">(</span><span class="n">list_items</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>bs4.element.Tag
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">list_items</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;item 1&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<p>To select the top-portion of the page, consisting of the <em>content</em>, one can select the <code class="docutils literal notranslate"><span class="pre">div</span></code> with <code class="docutils literal notranslate"><span class="pre">find</span></code>, using the <code class="docutils literal notranslate"><span class="pre">attrs</span></code> keyword to specify the desired <code class="docutils literal notranslate"><span class="pre">div</span></code> element:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">content</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;div&#39;</span><span class="p">,</span> <span class="n">attrs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;content&#39;</span><span class="p">})</span>
+<span class="n">content</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;div id=&quot;content&quot;&gt;
+&lt;h1&gt;Heading here&lt;/h1&gt;
+&lt;p&gt;My First paragraph&lt;/p&gt;
+&lt;p&gt;My &lt;em&gt;second&lt;/em&gt; paragraph&lt;/p&gt;
+&lt;hr/&gt;
+&lt;/div&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">find</span></code> method also supports querying elements based on text they contain. For example, to retrieve the text of every element that contains the text ‘paragraph’, pass a predicate function matching the text ‘paragraph’:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">soup</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="s1">&#39;paragraph&#39;</span> <span class="ow">in</span> <span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;My First paragraph&#39;, &#39; paragraph&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<p>The entirety of any document tree may be traversed, depth-first, with the <code class="docutils literal notranslate"><span class="pre">descendants</span></code> method, which returns an iterator.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">elt</span> <span class="ow">in</span> <span class="n">soup</span><span class="o">.</span><span class="n">descendants</span><span class="p">:</span>
+    <span class="n">process</span><span class="p">(</span><span class="n">elt</span><span class="p">)</span>
+    <span class="o">...</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./content/07"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="requests.html" title="previous page">HTTP Requests</a>
+    <a class='right-next' id="next-link" href="../08/introduction.html" title="next page">Attributes from Text</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Aaron Fraenkel<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="../../_static/js/index.3da636dd464baa7582d2.js"></script>
+
+
+    
+  </body>
+</html>

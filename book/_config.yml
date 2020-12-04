@@ -1,0 +1,15 @@
+
+title: The Practice of Data Science
+author: Aaron Fraenkel
+logo: assets/images/toolbox.png
+
+execute:
+  execute_notebooks: off
+
+repository:
+  url: https://github.com/afraenkel/ds-in-practice
+  path_to_book: book
+
+
+
+

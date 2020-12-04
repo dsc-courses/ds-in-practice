@@ -1,0 +1,634 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Missing Data &#8212; The Practice of Data Science</title>
+    
+  <link rel="stylesheet" href="../../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../../_static/js/index.3da636dd464baa7582d2.js">
+
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Definitions: mechanisms of missing data" href="defining-missing.html" />
+    <link rel="prev" title="Exploratory Data Analysis (EDA): Part II" href="../05/eda-2.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../../index.html">
+  
+  <img src="../../_static/toolbox.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">The Practice of Data Science</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../introduction.html">
+   Data Science in Practice
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Understanding Data
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../01/introduction.html">
+   Introduction to Data Science
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../01/what-is-data-science.html">
+     What is Data Science?
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../01/scientific-method.html">
+     The Scientific Method
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../01/data-science-example.html">
+     A Data Science Example
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../02/introduction.html">
+   The Basics of Tabular Data
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../02/tabular-data.html">
+     Tabular Data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../02/tabular-data.html#tables-in-python-using-pandas">
+     Tables in python, using Pandas.
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../02/methods.html">
+     Table Methods
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../02/data-types.html">
+     Data Types and Performance
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../03/introduction.html">
+   Querying and Describing Data
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../03/selecting-data.html">
+     Selecting Data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../03/kinds-of-data.html">
+     Kinds of Data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../03/categorical-distributions.html">
+     Categorical Distributions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../03/quantitative-distributions.html">
+     Quantitative Distributions
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../04/introduction.html">
+   Understanding Assumptions and Data Cleaning
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../04/modifying-dataframes.html">
+     Modifying DataFrames
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../04/cleaning.html">
+     Cleaning Messy Data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../04/eda.html">
+     Exploratory Data Analysis
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../05/introduction.html">
+   Aggregation and Extension of Data
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../05/grouping.html">
+     Data Granularity
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../05/understanding-aggregations.html">
+     Understanding Aggregations
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../05/appending-data.html">
+     Combining Data (Observations)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../05/joining-data.html">
+     Combining Data: Attributes
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../05/joining-data.html#combining-different-measurements-over-the-same-individuals">
+     Combining different measurements over the same individuals
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../05/permutation-tests.html">
+     Permutation Tests
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../05/eda-2.html">
+     Exploratory Data Analysis II
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 current active collapsible-parent">
+  <a class="current reference internal" href="#">
+   Missing Data
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="defining-missing.html">
+     Definitions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="identifying-missing.html">
+     Identifying Missing Data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="handling-missing-data.html">
+     Handling Missing Data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="single-valued-imputation.html">
+     Single-Valued Imputation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="probabilistic-imputation.html">
+     Probabilistic Imputation
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Collecting Data
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../07/introduction.html">
+   Data Collection
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../07/existing-data.html">
+     Using Existing Data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../07/requests.html">
+     HTTP Requests
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../07/html.html">
+     Parsing HTML
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../08/introduction.html">
+   Information Extaction
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../08/patterns.html">
+     Text Processing
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../08/nlp.html">
+     Natural Language Processing
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../09/introduction.html">
+   Introduction to Features
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../09/features.html">
+     Feature Engineering
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../09/data-pipelines.html">
+     Data Pipelines
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Modeling With Data
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../10/introduction.html">
+   Modeling Basics
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../10/intro-modeling.html">
+     Introduction to Statistical Models
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../10/model-building.html">
+     Building Modeling Pipelines
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../11/introduction.html">
+   Bias and Variance
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../11/fitting-inference.html">
+     Model Quality (Inference)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../11/fitting-prediction.html">
+     Model Quality (Prediction)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../11/cross-validation.html">
+     Cross Validation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../11/parameter-search.html">
+     Parameter Search
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../12/introduction.html">
+   Evaluating Models; Fairness
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../12/eval.html">
+     Evaluation metrics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../12/parity.html">
+     Parity Measures
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../12/fairness.html">
+     Fairness in Machine Learning
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../_sources/content/06/introduction.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.md</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+        <!-- Source interaction buttons -->
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#content-sumamry">
+   Content Sumamry
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#identifying-mechanisms-of-missing-data">
+   Identifying Mechanisms of Missing Data
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="missing-data">
+<h1>Missing Data<a class="headerlink" href="#missing-data" title="Permalink to this headline">¶</a></h1>
+<hr class="docutils" />
+<div class="section" id="content-sumamry">
+<h2>Content Sumamry<a class="headerlink" href="#content-sumamry" title="Permalink to this headline">¶</a></h2>
+<p>This chapter explores in detail the different ways in which missing data appear and the statistical implications of handling it. Missing data occur in many different ways, which affects how the data should be used and interpreted.</p>
+<p>The topics covered include:</p>
+<ul class="simple">
+<li><p>Identifying the mechanisms that explain <em>when</em> data are missing in terms of the data generating process,</p></li>
+<li><p>Understanding how to handle missing data – whether it can safely ignored, replaced with an approximation (i.e. imputed), or modeled using assumptions based on domain expertise.</p></li>
+</ul>
+<p>As with most reasoning about the unknown, the language developed in this chapter encourages critical thinking about the data in terms of what is known about the process that generates it. Generally, there is no ‘correct way’ of handling missing data; such concepts are rarely black-and-white and relies on reasoning about the severity of effect.</p>
+<p>A detailed look at much of this subject is nicely covered in Van Buuren’s <a class="reference external" href="https://stefvanbuuren.name/fimd/">Flexible Imputation of Missing Data</a>. While the book is aimed at an advanced audience, much the exposition is still quite accessible.</p>
+</div>
+<div class="section" id="identifying-mechanisms-of-missing-data">
+<h2>Identifying Mechanisms of Missing Data<a class="headerlink" href="#identifying-mechanisms-of-missing-data" title="Permalink to this headline">¶</a></h2>
+<p>When assessing the ability of a dataset to work for an investigation into a problem, there are two important concepts that lurk behind the dataset:</p>
+<ol class="simple">
+<li><p>The ‘true model’ is the phenomenon under investigation that one hopes to understand,</p></li>
+<li><p>The ‘data generating process’ are the (multitude of) real world mechanisms that create the data that will be recorded (e.g. probabilistic, noisy)</p></li>
+</ol>
+<p><img alt="missing-mechanisms" src="../../_images/missing-mech.png" /></p>
+<p>Ideally, a dataset well-represents whatever problem is being
+investigated; this similarity is the foundation of drawing inferences
+about actual events from data. However, what if the data is a poor
+sample of events? Or what if the data recording process is flawed or
+incomplete?</p>
+<p>These problems create systematic biases in results drawn from the
+data. However, no data generating process perfectly reflect the true
+model, and data generating processes always most always produce noisy
+data. The question isn’t “is this dataset representative?”, but rather
+“is this dataset representative <em>enough</em>?”</p>
+<p>Data quality is measured on a spectrum and evaluated using knowledge
+of the domain: “Does the description of the data look like what’s
+understood about the data generating process?”</p>
+<p>Incomplete measurements result in missing data; this affects the
+quality of the sample. Understanding how that missing data arises is
+crucial to understanding the quality of a sample. As the observations
+are missing, this understanding cannot be made using the dataset
+itself. Instead, it involves reasoning about the data generating
+process</p>
+<p><strong>Example:</strong> Suppose the owner of a company selling custom phone cases wants to understand how satisfied her customers are with their purchase. To do so, she sends a text message to all previous customers asking to reply, rating their purchase on a scale of 1-5. In this scenario,</p>
+<ol class="simple">
+<li><p>The true model is the true opinion of every customer</p></li>
+<li><p>The data generating process describes the detailed mechanisms under which customer’s responded with an answer. This may include: different customer’s satisfaction with the product <em>at the time</em> of receiving the message, their mood at the time, whether their schedule upon receiving the message made them too busy to reply, the receiver’s cell-service at the time, etc…</p></li>
+<li><p>The data consist of all replies, entered into the dataset.</p></li>
+</ol>
+<p>The true model is only inferred through the data generating process, which is full of noise and random events – some of which result in data not being recorded at all. Understanding and modeling how missing data come to be is a difficult but necessary part of inference from resulting data. In this case, it’s likely that customer who <em>really like</em> their purchase are more likely to respond to the question if they were busy when they received the text message. This leads to <em>non-response</em> bias: ignoring the missing data leads to under-emphasizing customers with weak-feelings toward the product.</p>
+<div class="toctree-wrapper compound">
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./content/06"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="../05/eda-2.html" title="previous page">Exploratory Data Analysis (EDA): Part II</a>
+    <a class='right-next' id="next-link" href="defining-missing.html" title="next page">Definitions: mechanisms of missing data</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Aaron Fraenkel<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="../../_static/js/index.3da636dd464baa7582d2.js"></script>
+
+
+    
+  </body>
+</html>

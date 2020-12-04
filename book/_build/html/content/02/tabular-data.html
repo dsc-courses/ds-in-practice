@@ -1,0 +1,1356 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tabular Data &#8212; The Practice of Data Science</title>
+    
+  <link rel="stylesheet" href="../../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../../_static/js/index.3da636dd464baa7582d2.js">
+
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Methods and Descriptive Statistics" href="methods.html" />
+    <link rel="prev" title="The Basics of Tabular Data" href="introduction.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../../index.html">
+  
+  <img src="../../_static/toolbox.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">The Practice of Data Science</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../introduction.html">
+   Data Science in Practice
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Understanding Data
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../01/introduction.html">
+   Introduction to Data Science
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../01/what-is-data-science.html">
+     What is Data Science?
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../01/scientific-method.html">
+     The Scientific Method
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../01/data-science-example.html">
+     A Data Science Example
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 current active collapsible-parent">
+  <a class="reference internal" href="introduction.html">
+   The Basics of Tabular Data
+  </a>
+  <ul class="current collapse-ul">
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Tabular Data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="#tables-in-python-using-pandas">
+     Tables in python, using Pandas.
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="methods.html">
+     Table Methods
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="data-types.html">
+     Data Types and Performance
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../03/introduction.html">
+   Querying and Describing Data
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../03/selecting-data.html">
+     Selecting Data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../03/kinds-of-data.html">
+     Kinds of Data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../03/categorical-distributions.html">
+     Categorical Distributions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../03/quantitative-distributions.html">
+     Quantitative Distributions
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../04/introduction.html">
+   Understanding Assumptions and Data Cleaning
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../04/modifying-dataframes.html">
+     Modifying DataFrames
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../04/cleaning.html">
+     Cleaning Messy Data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../04/eda.html">
+     Exploratory Data Analysis
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../05/introduction.html">
+   Aggregation and Extension of Data
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../05/grouping.html">
+     Data Granularity
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../05/understanding-aggregations.html">
+     Understanding Aggregations
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../05/appending-data.html">
+     Combining Data (Observations)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../05/joining-data.html">
+     Combining Data: Attributes
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../05/joining-data.html#combining-different-measurements-over-the-same-individuals">
+     Combining different measurements over the same individuals
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../05/permutation-tests.html">
+     Permutation Tests
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../05/eda-2.html">
+     Exploratory Data Analysis II
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../06/introduction.html">
+   Missing Data
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../06/defining-missing.html">
+     Definitions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../06/identifying-missing.html">
+     Identifying Missing Data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../06/handling-missing-data.html">
+     Handling Missing Data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../06/single-valued-imputation.html">
+     Single-Valued Imputation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../06/probabilistic-imputation.html">
+     Probabilistic Imputation
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Collecting Data
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../07/introduction.html">
+   Data Collection
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../07/existing-data.html">
+     Using Existing Data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../07/requests.html">
+     HTTP Requests
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../07/html.html">
+     Parsing HTML
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../08/introduction.html">
+   Information Extaction
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../08/patterns.html">
+     Text Processing
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../08/nlp.html">
+     Natural Language Processing
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../09/introduction.html">
+   Introduction to Features
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../09/features.html">
+     Feature Engineering
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../09/data-pipelines.html">
+     Data Pipelines
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Modeling With Data
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../10/introduction.html">
+   Modeling Basics
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../10/intro-modeling.html">
+     Introduction to Statistical Models
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../10/model-building.html">
+     Building Modeling Pipelines
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../11/introduction.html">
+   Bias and Variance
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../11/fitting-inference.html">
+     Model Quality (Inference)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../11/fitting-prediction.html">
+     Model Quality (Prediction)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../11/cross-validation.html">
+     Cross Validation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../11/parameter-search.html">
+     Parameter Search
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../12/introduction.html">
+   Evaluating Models; Fairness
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../12/eval.html">
+     Evaluation metrics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../12/parity.html">
+     Parity Measures
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../12/fairness.html">
+     Fairness in Machine Learning
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../_sources/content/02/tabular-data.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+        <!-- Source interaction buttons -->
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/afraenkel/ds-in-practice/master?urlpath=tree/book/content/02/tabular-data.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   Tabular Data
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#the-tabular-data-model">
+     The Tabular Data Model
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#learning-outcomes">
+       Learning outcomes
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#introduction">
+       Introduction
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#the-anatomy-of-a-table">
+       The anatomy of a table
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#tables-in-python-using-pandas">
+   Tables in python, using Pandas.
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#creating-dataframe-objects">
+     Creating
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       DataFrame
+      </span>
+     </code>
+     objects
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#reading-tables-into-pandas-from-external-sources">
+     Reading tables into Pandas from external sources
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#the-anatomy-of-a-dataframe">
+     The anatomy of a
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       DataFrame
+      </span>
+     </code>
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#basic-properties">
+       Basic Properties
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#row-and-column-elements-series-objects">
+       Row and column elements:
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         Series
+        </span>
+       </code>
+       objects
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#selecting-rows-with-loc-and-columns-with">
+       Selecting rows with
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         loc
+        </span>
+       </code>
+       and columns with
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         []
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+        </nav>
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="tabular-data">
+<h1>Tabular Data<a class="headerlink" href="#tabular-data" title="Permalink to this headline">¶</a></h1>
+<hr class="docutils" />
+<div class="section" id="the-tabular-data-model">
+<h2>The Tabular Data Model<a class="headerlink" href="#the-tabular-data-model" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="learning-outcomes">
+<h3>Learning outcomes<a class="headerlink" href="#learning-outcomes" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Understand the tabular data model.</p></li>
+<li><p>Describe the contents of simple tables.</p></li>
+</ul>
+</div>
+<div class="section" id="introduction">
+<h3>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h3>
+<p>Investigations into phenomena require taking <em>measurements</em> of <em>events</em> or <em>individuals</em> in question. These two primary components of a study are typically kept in tabular data structures. The rows of a table consist of observations (e.g. individuals or events), whereas the columns of a table contain the measurements made on each individual.</p>
+<p>For example, the table below consists of the answers to survey questions sent to a group of people. Each person (individual) provides answers to the questions posed (the measurements).</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Respondent Id</p></th>
+<th class="head"><p>Name</p></th>
+<th class="head"><p>Job Title</p></th>
+<th class="head"><p>Favorite Color</p></th>
+<th class="head"><p>Age</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>120</p></td>
+<td><p>Alice</p></td>
+<td><p>CEO</p></td>
+<td><p>Green</p></td>
+<td><p>47</p></td>
+</tr>
+<tr class="row-odd"><td><p>121</p></td>
+<td><p>Bob</p></td>
+<td><p>Store Manager</p></td>
+<td><p>Yellow</p></td>
+<td><p>35</p></td>
+</tr>
+<tr class="row-even"><td><p>122</p></td>
+<td><p>Cai</p></td>
+<td><p>Writer</p></td>
+<td><p>Orange</p></td>
+<td><p>38</p></td>
+</tr>
+<tr class="row-odd"><td><p>129</p></td>
+<td><p>Daniela</p></td>
+<td><p>Engineer</p></td>
+<td><p>Pink</p></td>
+<td><p>26</p></td>
+</tr>
+<tr class="row-even"><td><p>…</p></td>
+<td><p>…</p></td>
+<td><p>…</p></td>
+<td><p>…</p></td>
+<td><p>…</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="the-anatomy-of-a-table">
+<h3>The anatomy of a table<a class="headerlink" href="#the-anatomy-of-a-table" title="Permalink to this headline">¶</a></h3>
+<!-- Add relational algebra? -->
+<p>Tables are two-dimensional data structures holding observations; each observation is composed of different measurements or attributes.</p>
+<ul class="simple">
+<li><p>A <strong>row</strong> of a table consists of an individual observation. As a table may contain a wide variety of attributes, a given row may describe a single individual in a variety of ways.</p></li>
+<li><p>A <strong>column</strong> of a table consists of the collection of a single measurement for all observations. A column consists of data of <em>homogeneous scale</em> on which statistics are calculated. Columns are often called <strong>variables</strong> or <strong>attributes</strong> as well.</p></li>
+<li><p>Tables have <strong>labels</strong> that identify their rows and columns:</p>
+<ul>
+<li><p>The row labels are referred to as the <strong>index</strong> of the table.</p></li>
+<li><p>The column labels are referred to as the <strong>column names</strong> of the table.</p></li>
+</ul>
+</li>
+</ul>
+<p><img alt="Anatomy of a Table" src="../../_images/table.png" /></p>
+<p><strong>Example:</strong> In the table above, the red column is the <em>favorite color</em> variable, the yellow row contains the survey response for <em>respondent 129</em>, the blue portions of the table contain the index and column labels.</p>
+</div>
+</div>
+</div>
+<div class="section" id="tables-in-python-using-pandas">
+<h1>Tables in python, using Pandas.<a class="headerlink" href="#tables-in-python-using-pandas" title="Permalink to this headline">¶</a></h1>
+<p>Python’s most popular library for table manipulation is called <code class="docutils literal notranslate"><span class="pre">Pandas</span></code>. The name derives from the term ‘Panel Data’. <code class="docutils literal notranslate"><span class="pre">Pandas</span></code> is a large, active library used by a large community of pythond developers engaged in data manipulation. Learning to use this library comes with both the advantages and frustrations of using any active code-base:</p>
+<p>The advantages:</p>
+<ul class="simple">
+<li><p>it has <em>many</em> useful features that makes data manipulation quick and easy,</p></li>
+<li><p>many of <code class="docutils literal notranslate"><span class="pre">Pandas</span></code>’ features are <code class="docutils literal notranslate"><span class="pre">C</span></code>-optimized, making it far more performant than pure python code</p></li>
+</ul>
+<p>The disadvantages:</p>
+<ul class="simple">
+<li><p>the library evolved organically, yielding an interface that is sometimes awkward and unintuitive,</p></li>
+<li><p>much of the library is under active development, so don’t be surprised if newer versions behaving differently!</p></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">Pandas</span></code> typically has <strong>many</strong> ways of coding the same logic using a wide variety of functions and methods. These notes will restrict usage to a minimal set of the <code class="docutils literal notranslate"><span class="pre">Pandas</span></code> library that lend themselves toward the general patterns of tabular computing, applicable beyond <code class="docutils literal notranslate"><span class="pre">Pandas</span></code> (e.g. in <code class="docutils literal notranslate"><span class="pre">SQL</span></code>, <code class="docutils literal notranslate"><span class="pre">R</span></code>, <code class="docutils literal notranslate"><span class="pre">Spark</span></code>).</p>
+<p>While the reader is encouraged to explore the myriad functions and methods of the <code class="docutils literal notranslate"><span class="pre">Pandas</span></code> API, they are also encouraged to attempt to implement solutions using the smaller set of functions considered in these notes. Regardless, the reader is encouraged to explore the <code class="docutils literal notranslate"><span class="pre">Pandas</span></code> documentation (which is quite good!) and understand the possible inputs and outputs of each function they use.</p>
+<p>To begin using <code class="docutils literal notranslate"><span class="pre">Pandas</span></code>, import the library as follows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="creating-dataframe-objects">
+<h2>Creating <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> objects<a class="headerlink" href="#creating-dataframe-objects" title="Permalink to this headline">¶</a></h2>
+<p>Depending on the perspective, tables can be considered either a collection of rows (observations) or columns (measurements). As such, a table is constructed by either one of these structures.</p>
+<p>To create a table in <code class="docutils literal notranslate"><span class="pre">Pandas</span></code>, pass either of the following to the <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> constructor:</p>
+<ol class="simple">
+<li><p>an ordered collection of observations representing the rows of a table (e.g. a list-of-lists), or</p></li>
+<li><p>an collection of measurements representing the columns of the table (e.g. a dictionary of lists, keyed by column name).</p></li>
+</ol>
+<p><strong>Example:</strong> Defining a table via a collection of observations (rows):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Name&#39;</span><span class="p">,</span> <span class="s1">&#39;Job Title&#39;</span><span class="p">,</span> <span class="s1">&#39;Favorite Color&#39;</span><span class="p">,</span> <span class="s1">&#39;Age&#39;</span><span class="p">]</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">[</span><span class="s1">&#39;Alice&#39;</span><span class="p">,</span> <span class="s1">&#39;CEO&#39;</span><span class="p">,</span> <span class="s1">&#39;Green&#39;</span><span class="p">,</span> <span class="mi">47</span><span class="p">],</span>
+    <span class="p">[</span><span class="s1">&#39;Bob&#39;</span><span class="p">,</span> <span class="s1">&#39;Store Manager&#39;</span><span class="p">,</span> <span class="s1">&#39;Yellow&#39;</span><span class="p">,</span> <span class="mi">35</span><span class="p">],</span>
+    <span class="p">[</span><span class="s1">&#39;Cai&#39;</span><span class="p">,</span> <span class="s1">&#39;Writer&#39;</span><span class="p">,</span> <span class="s1">&#39;Orange&#39;</span><span class="p">,</span> <span class="mi">38</span><span class="p">],</span>
+    <span class="p">[</span><span class="s1">&#39;Daniela&#39;</span><span class="p">,</span> <span class="s1">&#39;Engineer&#39;</span><span class="p">,</span> <span class="s1">&#39;Pink&#39;</span><span class="p">,</span> <span class="mi">26</span><span class="p">],</span>
+    <span class="p">[</span><span class="s1">&#39;Erykah&#39;</span><span class="p">,</span> <span class="s1">&#39;Marketing&#39;</span><span class="p">,</span> <span class="s1">&#39;Blue&#39;</span><span class="p">,</span> <span class="mi">24</span><span class="p">]</span>
+<span class="p">]</span>
+
+<span class="n">survey</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">columns</span><span class="p">)</span>
+<span class="n">survey</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Name</th>
+      <th>Job Title</th>
+      <th>Favorite Color</th>
+      <th>Age</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Alice</td>
+      <td>CEO</td>
+      <td>Green</td>
+      <td>47</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Bob</td>
+      <td>Store Manager</td>
+      <td>Yellow</td>
+      <td>35</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Cai</td>
+      <td>Writer</td>
+      <td>Orange</td>
+      <td>38</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Daniela</td>
+      <td>Engineer</td>
+      <td>Pink</td>
+      <td>26</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Erykah</td>
+      <td>Marketing</td>
+      <td>Blue</td>
+      <td>24</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p><strong>Example:</strong> Defining a <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> via a named collection of attributes (columns):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">column_dict</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;Name&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Alice&#39;</span><span class="p">,</span> <span class="s1">&#39;Bob&#39;</span><span class="p">,</span> <span class="s1">&#39;Cai&#39;</span><span class="p">,</span> <span class="s1">&#39;Daniela&#39;</span><span class="p">,</span> <span class="s1">&#39;Erykah&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;Job Title&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;CEO&#39;</span><span class="p">,</span> <span class="s1">&#39;Store Manager&#39;</span><span class="p">,</span> <span class="s1">&#39;Writer&#39;</span><span class="p">,</span> <span class="s1">&#39;Engineer&#39;</span><span class="p">,</span> <span class="s1">&#39;Marketing&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;Favorite Color&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Green&#39;</span><span class="p">,</span> <span class="s1">&#39;Yellow&#39;</span><span class="p">,</span> <span class="s1">&#39;Orange&#39;</span><span class="p">,</span> <span class="s1">&#39;Pink&#39;</span><span class="p">,</span> <span class="s1">&#39;Blue&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;Age&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">47</span><span class="p">,</span> <span class="mi">35</span><span class="p">,</span> <span class="mi">38</span><span class="p">,</span> <span class="mi">26</span><span class="p">,</span> <span class="mi">24</span><span class="p">]</span>
+<span class="p">}</span>
+
+<span class="n">survey</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">column_dict</span><span class="p">)</span>
+<span class="n">survey</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Name</th>
+      <th>Job Title</th>
+      <th>Favorite Color</th>
+      <th>Age</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Alice</td>
+      <td>CEO</td>
+      <td>Green</td>
+      <td>47</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Bob</td>
+      <td>Store Manager</td>
+      <td>Yellow</td>
+      <td>35</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Cai</td>
+      <td>Writer</td>
+      <td>Orange</td>
+      <td>38</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Daniela</td>
+      <td>Engineer</td>
+      <td>Pink</td>
+      <td>26</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Erykah</td>
+      <td>Marketing</td>
+      <td>Blue</td>
+      <td>24</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</div>
+<div class="section" id="reading-tables-into-pandas-from-external-sources">
+<h2>Reading tables into Pandas from external sources<a class="headerlink" href="#reading-tables-into-pandas-from-external-sources" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">read_csv</span></code> is the primary Pandas function used to read <code class="docutils literal notranslate"><span class="pre">DataFrames</span></code> from <code class="docutils literal notranslate"><span class="pre">csv</span></code> files on disk.</p></li>
+<li><p>Other Pandas functions that read tables from other sources include:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">read_excel</span></code> parses Excel workbooks into dictionaries of <code class="docutils literal notranslate"><span class="pre">DataFrames</span></code> keyed by worksheet name.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">read_html</span></code> parses tables on a given html page into a list of <code class="docutils literal notranslate"><span class="pre">DataFrames</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">read_sql</span></code> reads tabular data from a database using structured query language.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">read_json</span></code> parses JSON record files into a <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>.</p></li>
+</ul>
+</li>
+</ul>
+<p><em>Remark:</em> These parsing functions have copious options. See the Pandas <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/user_guide/io.html">documentation</a> for details.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;survey.csv&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Name</th>
+      <th>Job Title</th>
+      <th>Favorite Color</th>
+      <th>Age</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Alice</td>
+      <td>CEO</td>
+      <td>Green</td>
+      <td>47</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Bob</td>
+      <td>Store Manager</td>
+      <td>Yellow</td>
+      <td>35</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Cai</td>
+      <td>Writer</td>
+      <td>Orange</td>
+      <td>38</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Daniela</td>
+      <td>Engineer</td>
+      <td>Pink</td>
+      <td>26</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Erykah</td>
+      <td>Marketing</td>
+      <td>Blue</td>
+      <td>24</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Writing a <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> to a <code class="docutils literal notranslate"><span class="pre">csv</span></code> file is done using the <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> method <code class="docutils literal notranslate"><span class="pre">to_csv</span></code>.</p>
+</div>
+<div class="section" id="the-anatomy-of-a-dataframe">
+<h2>The anatomy of a <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code><a class="headerlink" href="#the-anatomy-of-a-dataframe" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">Pandas</span></code> tabular data structure is called a <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>; they are built upon two-dimensional <code class="docutils literal notranslate"><span class="pre">numpy</span></code> arrays. The data in these tables are accessed using labels (e.g. columns and indices) and manipulated with a large library of useful table methods.</p>
+<p>The defining table properties given in the section above correspond to the following <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> properties, each of which will be reviewed in more detail below.</p>
+<ol class="simple">
+<li><p>The observations of a <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> are labeled by the <code class="docutils literal notranslate"><span class="pre">index</span></code>.</p></li>
+<li><p>The columns of a <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> are labeled by <code class="docutils literal notranslate"><span class="pre">columns</span></code>.</p></li>
+<li><p>A column of a <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> is a one dimensional array index by the <code class="docutils literal notranslate"><span class="pre">index</span></code> of the table (called a <code class="docutils literal notranslate"><span class="pre">Series</span></code>).</p></li>
+<li><p>A row of a <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> is a one dimensional array indexed by the <code class="docutils literal notranslate"><span class="pre">columns</span></code> of the table (called a <code class="docutils literal notranslate"><span class="pre">Series</span></code>).</p></li>
+</ol>
+<div class="section" id="basic-properties">
+<h3>Basic Properties<a class="headerlink" href="#basic-properties" title="Permalink to this headline">¶</a></h3>
+<p>A number of basic properties of <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> are stored as attributes.</p>
+<p>The number of rows and number of columns of a <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> are returned as a tuple by the property <code class="docutils literal notranslate"><span class="pre">shape</span></code>. Note that the <code class="docutils literal notranslate"><span class="pre">survey</span></code> table has 5 rows and 4 columns.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">survey</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(5, 4)
+</pre></div>
+</div>
+</div>
+</div>
+<p>The index and columns of a <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> are accessed using attributes of the same name. A few relevant observations of tabular labels in <code class="docutils literal notranslate"><span class="pre">Pandas</span></code>:</p>
+<ol class="simple">
+<li><p>The index and columns of a <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> are both <code class="docutils literal notranslate"><span class="pre">Pandas</span></code> <em>index</em> objects,</p></li>
+<li><p>index objects are immutable <code class="docutils literal notranslate"><span class="pre">numpy</span></code> arrays,</p></li>
+<li><p>index/column attributes can be <em>reassigned</em>,</p></li>
+<li><p>while <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> indices default to row-number, an index can generally contain <em>anything</em>.</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">survey</span><span class="o">.</span><span class="n">columns</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;Name&#39;, &#39;Job Title&#39;, &#39;Favorite Color&#39;, &#39;Age&#39;], dtype=&#39;object&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">survey</span><span class="o">.</span><span class="n">index</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>RangeIndex(start=0, stop=5, step=1)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">survey</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="s1">&#39;a b c d e&#39;</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+<span class="n">survey</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Name</th>
+      <th>Job Title</th>
+      <th>Favorite Color</th>
+      <th>Age</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>a</th>
+      <td>Alice</td>
+      <td>CEO</td>
+      <td>Green</td>
+      <td>47</td>
+    </tr>
+    <tr>
+      <th>b</th>
+      <td>Bob</td>
+      <td>Store Manager</td>
+      <td>Yellow</td>
+      <td>35</td>
+    </tr>
+    <tr>
+      <th>c</th>
+      <td>Cai</td>
+      <td>Writer</td>
+      <td>Orange</td>
+      <td>38</td>
+    </tr>
+    <tr>
+      <th>d</th>
+      <td>Daniela</td>
+      <td>Engineer</td>
+      <td>Pink</td>
+      <td>26</td>
+    </tr>
+    <tr>
+      <th>e</th>
+      <td>Erykah</td>
+      <td>Marketing</td>
+      <td>Blue</td>
+      <td>24</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</div>
+<div class="section" id="row-and-column-elements-series-objects">
+<h3>Row and column elements: <code class="docutils literal notranslate"><span class="pre">Series</span></code> objects<a class="headerlink" href="#row-and-column-elements-series-objects" title="Permalink to this headline">¶</a></h3>
+<p>The rows and columns of a <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> are represented using a <code class="docutils literal notranslate"><span class="pre">Pandas.Series</span></code>, a class of 1-dimensional arrays. <code class="docutils literal notranslate"><span class="pre">Series</span></code> are 1-dimensional <code class="docutils literal notranslate"><span class="pre">numpy</span></code> arrays with labels accessed through an <code class="docutils literal notranslate"><span class="pre">index</span></code> attribute.</p>
+<ol class="simple">
+<li><p>A container of <code class="docutils literal notranslate"><span class="pre">Series</span></code> objects may be passed to the <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> constructor to create a table.</p></li>
+<li><p>Selecting a single row/column of a <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> returns a <code class="docutils literal notranslate"><span class="pre">Series</span></code>.</p></li>
+</ol>
+<p>The <code class="docutils literal notranslate"><span class="pre">Series</span></code> constructor accepts a 1-dimensional container of data, along with an optional index:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ser</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">8</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">])</span>
+<span class="n">ser</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a    2
+b    4
+c    6
+d    8
+dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ser</span><span class="o">.</span><span class="n">index</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;], dtype=&#39;object&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ser</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(4,)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Creating a <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> using a collection of <code class="docutils literal notranslate"><span class="pre">Series</span></code> is similar to any container; notice the columns are passed into the <code class="docutils literal notranslate"><span class="pre">Series</span></code> constructors as opposed to the <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> constructor!</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Name&#39;</span><span class="p">,</span> <span class="s1">&#39;Job Title&#39;</span><span class="p">,</span> <span class="s1">&#39;Favorite Color&#39;</span><span class="p">,</span> <span class="s1">&#39;Age&#39;</span><span class="p">]</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="s1">&#39;Alice&#39;</span><span class="p">,</span> <span class="s1">&#39;CEO&#39;</span><span class="p">,</span> <span class="s1">&#39;Green&#39;</span><span class="p">,</span> <span class="mi">47</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="n">columns</span><span class="p">),</span>
+    <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="s1">&#39;Bob&#39;</span><span class="p">,</span> <span class="s1">&#39;Store Manager&#39;</span><span class="p">,</span> <span class="s1">&#39;Yellow&#39;</span><span class="p">,</span> <span class="mi">35</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="n">columns</span><span class="p">),</span>
+    <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="s1">&#39;Cai&#39;</span><span class="p">,</span> <span class="s1">&#39;Writer&#39;</span><span class="p">,</span> <span class="s1">&#39;Orange&#39;</span><span class="p">,</span> <span class="mi">38</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="n">columns</span><span class="p">),</span>
+    <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="s1">&#39;Daniela&#39;</span><span class="p">,</span> <span class="s1">&#39;Engineer&#39;</span><span class="p">,</span> <span class="s1">&#39;Pink&#39;</span><span class="p">,</span> <span class="mi">26</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="n">columns</span><span class="p">),</span>
+    <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="s1">&#39;Erykah&#39;</span><span class="p">,</span> <span class="s1">&#39;Marketing&#39;</span><span class="p">,</span> <span class="s1">&#39;Blue&#39;</span><span class="p">,</span> <span class="mi">24</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="n">columns</span><span class="p">)</span>
+<span class="p">]</span>
+
+<span class="n">survey</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="s1">&#39;a b c d e&#39;</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+<span class="n">survey</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Name</th>
+      <th>Job Title</th>
+      <th>Favorite Color</th>
+      <th>Age</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>a</th>
+      <td>Alice</td>
+      <td>CEO</td>
+      <td>Green</td>
+      <td>47</td>
+    </tr>
+    <tr>
+      <th>b</th>
+      <td>Bob</td>
+      <td>Store Manager</td>
+      <td>Yellow</td>
+      <td>35</td>
+    </tr>
+    <tr>
+      <th>c</th>
+      <td>Cai</td>
+      <td>Writer</td>
+      <td>Orange</td>
+      <td>38</td>
+    </tr>
+    <tr>
+      <th>d</th>
+      <td>Daniela</td>
+      <td>Engineer</td>
+      <td>Pink</td>
+      <td>26</td>
+    </tr>
+    <tr>
+      <th>e</th>
+      <td>Erykah</td>
+      <td>Marketing</td>
+      <td>Blue</td>
+      <td>24</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</div>
+<div class="section" id="selecting-rows-with-loc-and-columns-with">
+<h3>Selecting rows with <code class="docutils literal notranslate"><span class="pre">loc</span></code> and columns with <code class="docutils literal notranslate"><span class="pre">[]</span></code><a class="headerlink" href="#selecting-rows-with-loc-and-columns-with" title="Permalink to this headline">¶</a></h3>
+<p>The most basic task of data selection from a table is extracting a row or column. Given a <code class="docutils literal notranslate"><span class="pre">Pandas.DataFrame</span></code> named <code class="docutils literal notranslate"><span class="pre">df</span></code>,</p>
+<ol class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">df.loc[idx]</span></code> selects the row indexed by the value <code class="docutils literal notranslate"><span class="pre">idx</span></code>,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">df[col]</span></code> selects the column labeled by the value <code class="docutils literal notranslate"><span class="pre">col</span></code>.
+Each selection results in a <code class="docutils literal notranslate"><span class="pre">Pandas.Series</span></code> object indexed by the columns/index of <code class="docutils literal notranslate"><span class="pre">df</span></code> respectively.</p></li>
+</ol>
+<p><em>Note 1:</em> <code class="docutils literal notranslate"><span class="pre">df.loc</span></code> is not a <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> method, but rather a <code class="docutils literal notranslate"><span class="pre">Pandas</span></code> <em>indexer object</em>. As such, it uses square brackets.</p>
+<p><em>Note 2:</em> <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> objects are column-oriented by default; most tabular computations (e.g. statistics) are done on columns. As such, the list-like <code class="docutils literal notranslate"><span class="pre">__getitem__</span></code> syntax takes in a column name and returns a column.</p>
+<p><strong>Example:</strong> Selecting observation <code class="docutils literal notranslate"><span class="pre">a</span></code> using <code class="docutils literal notranslate"><span class="pre">loc</span></code> results in a <code class="docutils literal notranslate"><span class="pre">Series</span></code> indexed by the columns of <code class="docutils literal notranslate"><span class="pre">survey</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">survey</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Name              Alice
+Job Title           CEO
+Favorite Color    Green
+Age                  47
+Name: a, dtype: object
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Example:</strong> Selecting the <code class="docutils literal notranslate"><span class="pre">Name</span></code> column using <code class="docutils literal notranslate"><span class="pre">[]</span></code> results in a <code class="docutils literal notranslate"><span class="pre">Series</span></code> indexed by the index of <code class="docutils literal notranslate"><span class="pre">survey</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">survey</span><span class="p">[</span><span class="s1">&#39;Name&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a      Alice
+b        Bob
+c        Cai
+d    Daniela
+e     Erykah
+Name: Name, dtype: object
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./content/02"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="introduction.html" title="previous page">The Basics of Tabular Data</a>
+    <a class='right-next' id="next-link" href="methods.html" title="next page">Methods and Descriptive Statistics</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Aaron Fraenkel<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="../../_static/js/index.3da636dd464baa7582d2.js"></script>
+
+
+    
+  </body>
+</html>

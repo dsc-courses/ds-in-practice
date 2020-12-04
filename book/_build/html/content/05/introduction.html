@@ -1,0 +1,719 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aggregation and Extension of Data &#8212; The Practice of Data Science</title>
+    
+  <link rel="stylesheet" href="../../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../../_static/js/index.3da636dd464baa7582d2.js">
+
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Data Granularity:" href="grouping.html" />
+    <link rel="prev" title="&lt;no title&gt;" href="../04/asking-questions.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../../index.html">
+  
+  <img src="../../_static/toolbox.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">The Practice of Data Science</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../introduction.html">
+   Data Science in Practice
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Understanding Data
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../01/introduction.html">
+   Introduction to Data Science
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../01/what-is-data-science.html">
+     What is Data Science?
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../01/scientific-method.html">
+     The Scientific Method
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../01/data-science-example.html">
+     A Data Science Example
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../02/introduction.html">
+   The Basics of Tabular Data
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../02/tabular-data.html">
+     Tabular Data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../02/tabular-data.html#tables-in-python-using-pandas">
+     Tables in python, using Pandas.
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../02/methods.html">
+     Table Methods
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../02/data-types.html">
+     Data Types and Performance
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../03/introduction.html">
+   Querying and Describing Data
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../03/selecting-data.html">
+     Selecting Data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../03/kinds-of-data.html">
+     Kinds of Data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../03/categorical-distributions.html">
+     Categorical Distributions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../03/quantitative-distributions.html">
+     Quantitative Distributions
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../04/introduction.html">
+   Understanding Assumptions and Data Cleaning
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../04/modifying-dataframes.html">
+     Modifying DataFrames
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../04/cleaning.html">
+     Cleaning Messy Data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../04/eda.html">
+     Exploratory Data Analysis
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 current active collapsible-parent">
+  <a class="current reference internal" href="#">
+   Aggregation and Extension of Data
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="grouping.html">
+     Data Granularity
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="understanding-aggregations.html">
+     Understanding Aggregations
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="appending-data.html">
+     Combining Data (Observations)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="joining-data.html">
+     Combining Data: Attributes
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="joining-data.html#combining-different-measurements-over-the-same-individuals">
+     Combining different measurements over the same individuals
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="permutation-tests.html">
+     Permutation Tests
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="eda-2.html">
+     Exploratory Data Analysis II
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../06/introduction.html">
+   Missing Data
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../06/defining-missing.html">
+     Definitions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../06/identifying-missing.html">
+     Identifying Missing Data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../06/handling-missing-data.html">
+     Handling Missing Data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../06/single-valued-imputation.html">
+     Single-Valued Imputation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../06/probabilistic-imputation.html">
+     Probabilistic Imputation
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Collecting Data
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../07/introduction.html">
+   Data Collection
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../07/existing-data.html">
+     Using Existing Data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../07/requests.html">
+     HTTP Requests
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../07/html.html">
+     Parsing HTML
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../08/introduction.html">
+   Information Extaction
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../08/patterns.html">
+     Text Processing
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../08/nlp.html">
+     Natural Language Processing
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../09/introduction.html">
+   Introduction to Features
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../09/features.html">
+     Feature Engineering
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../09/data-pipelines.html">
+     Data Pipelines
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Modeling With Data
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../10/introduction.html">
+   Modeling Basics
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../10/intro-modeling.html">
+     Introduction to Statistical Models
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../10/model-building.html">
+     Building Modeling Pipelines
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../11/introduction.html">
+   Bias and Variance
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../11/fitting-inference.html">
+     Model Quality (Inference)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../11/fitting-prediction.html">
+     Model Quality (Prediction)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../11/cross-validation.html">
+     Cross Validation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../11/parameter-search.html">
+     Parameter Search
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../12/introduction.html">
+   Evaluating Models; Fairness
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../12/eval.html">
+     Evaluation metrics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../12/parity.html">
+     Parity Measures
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../12/fairness.html">
+     Fairness in Machine Learning
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../_sources/content/05/introduction.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.md</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+        <!-- Source interaction buttons -->
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#content-summary">
+   Content Summary
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#datasets">
+   Datasets
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#summary-of-library-references">
+   Summary of Library References
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="aggregation-and-extension-of-data">
+<h1>Aggregation and Extension of Data<a class="headerlink" href="#aggregation-and-extension-of-data" title="Permalink to this headline">¶</a></h1>
+<hr class="docutils" />
+<div class="section" id="content-summary">
+<h2>Content Summary<a class="headerlink" href="#content-summary" title="Permalink to this headline">¶</a></h2>
+<p>This chapter covers more drastic data manipulation and data
+transformation techniques to improve usefulness of a dataset. These
+techniques include:</p>
+<ul class="simple">
+<li><p>Grouping data and applying transformations across those groups,</p></li>
+<li><p>Manipulating the granulary to a coarser view of the data, while
+understanding the information lost from applying such a
+transformation,</p></li>
+<li><p>Adding new observations to an existing dataset, paying special
+attention to potential differences in the process that generated the
+datasets,</p></li>
+<li><p>Adding new attributes to existing observations, paying special
+attention to how an imperfect correndspondence may bias the original
+dataset.</p></li>
+<li><p>Assesing the differences between populations of a dataset using
+statistical inference (permutation tests).</p></li>
+</ul>
+</div>
+<div class="section" id="datasets">
+<h2>Datasets<a class="headerlink" href="#datasets" title="Permalink to this headline">¶</a></h2>
+<p>The two datasets used in this chapter consist of:</p>
+<ul class="simple">
+<li><p>All attempts to climb Mt. Rainier, in Washington State.</p></li>
+<li><p>The population and average income of California counties and cities.</p></li>
+</ul>
+</div>
+<div class="section" id="summary-of-library-references">
+<h2>Summary of Library References<a class="headerlink" href="#summary-of-library-references" title="Permalink to this headline">¶</a></h2>
+<p>In the lists below, assume that the usual imports have been executed:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+</pre></div>
+</div>
+<p>Aggregation methods:</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Function or Method Name</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.groupby.html"><code class="docutils literal notranslate"><span class="pre">groupby</span></code></a></p></td>
+<td><p>Split-Apply-Combine processing on tables</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/groupby.html"><code class="docutils literal notranslate"><span class="pre">agg</span></code></a></p></td>
+<td><p>Apply collections of functions to groups</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/groupby.html"><code class="docutils literal notranslate"><span class="pre">transform</span></code></a></p></td>
+<td><p>Apply transformations to groups</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/groupby.html"><code class="docutils literal notranslate"><span class="pre">apply</span></code></a></p></td>
+<td><p>Apply general functions to groups</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/groupby.html"><code class="docutils literal notranslate"><span class="pre">filter</span></code></a></p></td>
+<td><p>Filter out groups based on conditions</p></td>
+</tr>
+</tbody>
+</table>
+<p>Reshaping methods:</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Function or Method Name</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.pivot_table.html"><code class="docutils literal notranslate"><span class="pre">pivot_table</span></code></a></p></td>
+<td><p>Reshape (pivot) the entries of a DataFrame</p></td>
+</tr>
+</tbody>
+</table>
+<p>Appending and joining methods:</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Function or Method Name</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.concat.html"><code class="docutils literal notranslate"><span class="pre">pd.concat</span></code></a></p></td>
+<td><p>Concatentate a list of dataframes by rows/columns</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.merge.html"><code class="docutils literal notranslate"><span class="pre">merge</span></code></a></p></td>
+<td><p>Join two DataFrames by common columns</p></td>
+</tr>
+</tbody>
+</table>
+<p>Datetime:</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Function or Method Name</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.to_datetime.html"><code class="docutils literal notranslate"><span class="pre">pd.to_datetime</span></code></a></p></td>
+<td><p>convert strings to datetime objects</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/series.html#accessors"><code class="docutils literal notranslate"><span class="pre">dt</span></code> namespace</a></p></td>
+<td><p>datetime related properties and methods</p></td>
+</tr>
+</tbody>
+</table>
+<p>Plotting:</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Function or Method Name</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.plotting.scatter_matrix.html"><code class="docutils literal notranslate"><span class="pre">pd.plotting.scatter_matrix</span></code></a></p></td>
+<td><p>plot a scatter-matrix</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://seaborn.pydata.org/generated/seaborn.scatterplot.html"><code class="docutils literal notranslate"><span class="pre">sns.scatterplot</span></code></a></p></td>
+<td><p>scatter-plot with easy customization</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://seaborn.pydata.org/generated/seaborn.catplot.html"><code class="docutils literal notranslate"><span class="pre">sns.catplot</span></code></a></p></td>
+<td><p>(strip/box)-plotting by categories</p></td>
+</tr>
+</tbody>
+</table>
+<div class="toctree-wrapper compound">
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./content/05"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="../04/asking-questions.html" title="previous page">&lt;no title&gt;</a>
+    <a class='right-next' id="next-link" href="grouping.html" title="next page">Data Granularity:</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Aaron Fraenkel<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="../../_static/js/index.3da636dd464baa7582d2.js"></script>
+
+
+    
+  </body>
+</html>

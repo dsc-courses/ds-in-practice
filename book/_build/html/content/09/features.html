@@ -1,0 +1,887 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Feature Engineering &#8212; The Practice of Data Science</title>
+    
+  <link rel="stylesheet" href="../../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../../_static/js/index.3da636dd464baa7582d2.js">
+
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Features with Data Pipelines" href="data-pipelines.html" />
+    <link rel="prev" title="Introduction to Features" href="introduction.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../../index.html">
+  
+  <img src="../../_static/toolbox.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">The Practice of Data Science</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../introduction.html">
+   Data Science in Practice
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Understanding Data
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../01/introduction.html">
+   Introduction to Data Science
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../01/what-is-data-science.html">
+     What is Data Science?
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../01/scientific-method.html">
+     The Scientific Method
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../01/data-science-example.html">
+     A Data Science Example
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../02/introduction.html">
+   The Basics of Tabular Data
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../02/tabular-data.html">
+     Tabular Data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../02/tabular-data.html#tables-in-python-using-pandas">
+     Tables in python, using Pandas.
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../02/methods.html">
+     Table Methods
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../02/data-types.html">
+     Data Types and Performance
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../03/introduction.html">
+   Querying and Describing Data
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../03/selecting-data.html">
+     Selecting Data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../03/kinds-of-data.html">
+     Kinds of Data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../03/categorical-distributions.html">
+     Categorical Distributions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../03/quantitative-distributions.html">
+     Quantitative Distributions
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../04/introduction.html">
+   Understanding Assumptions and Data Cleaning
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../04/modifying-dataframes.html">
+     Modifying DataFrames
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../04/cleaning.html">
+     Cleaning Messy Data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../04/eda.html">
+     Exploratory Data Analysis
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../05/introduction.html">
+   Aggregation and Extension of Data
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../05/grouping.html">
+     Data Granularity
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../05/understanding-aggregations.html">
+     Understanding Aggregations
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../05/appending-data.html">
+     Combining Data (Observations)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../05/joining-data.html">
+     Combining Data: Attributes
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../05/joining-data.html#combining-different-measurements-over-the-same-individuals">
+     Combining different measurements over the same individuals
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../05/permutation-tests.html">
+     Permutation Tests
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../05/eda-2.html">
+     Exploratory Data Analysis II
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../06/introduction.html">
+   Missing Data
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../06/defining-missing.html">
+     Definitions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../06/identifying-missing.html">
+     Identifying Missing Data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../06/handling-missing-data.html">
+     Handling Missing Data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../06/single-valued-imputation.html">
+     Single-Valued Imputation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../06/probabilistic-imputation.html">
+     Probabilistic Imputation
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Collecting Data
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../07/introduction.html">
+   Data Collection
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../07/existing-data.html">
+     Using Existing Data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../07/requests.html">
+     HTTP Requests
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../07/html.html">
+     Parsing HTML
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../08/introduction.html">
+   Information Extaction
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../08/patterns.html">
+     Text Processing
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../08/nlp.html">
+     Natural Language Processing
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 current active collapsible-parent">
+  <a class="reference internal" href="introduction.html">
+   Introduction to Features
+  </a>
+  <ul class="current collapse-ul">
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Feature Engineering
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="data-pipelines.html">
+     Data Pipelines
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Modeling With Data
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../10/introduction.html">
+   Modeling Basics
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../10/intro-modeling.html">
+     Introduction to Statistical Models
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../10/model-building.html">
+     Building Modeling Pipelines
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../11/introduction.html">
+   Bias and Variance
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../11/fitting-inference.html">
+     Model Quality (Inference)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../11/fitting-prediction.html">
+     Model Quality (Prediction)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../11/cross-validation.html">
+     Cross Validation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../11/parameter-search.html">
+     Parameter Search
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../12/introduction.html">
+   Evaluating Models; Fairness
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../12/eval.html">
+     Evaluation metrics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../12/parity.html">
+     Parity Measures
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../12/fairness.html">
+     Fairness in Machine Learning
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../_sources/content/09/features.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+        <!-- Source interaction buttons -->
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/afraenkel/ds-in-practice/master?urlpath=tree/book/content/09/features.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#features">
+   Features
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#example-predicting-home-prices">
+     Example: Predicting Home Prices
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#feature-engineering-ordinal-data">
+   Feature Engineering: Ordinal Data
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#feature-engineering-nominal-data">
+   Feature Engineering: Nominal Data
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#feature-engineering-quantitative-data">
+   Feature Engineering: Quantitative Data
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#scaling">
+     Scaling
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#polynomial-encoding">
+     Polynomial Encoding
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#capturing-periodicity">
+     Capturing Periodicity
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+        </nav>
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="feature-engineering">
+<h1>Feature Engineering<a class="headerlink" href="#feature-engineering" title="Permalink to this headline">¶</a></h1>
+<hr class="docutils" />
+<p>Up until this chapter, attributes of tables have been analyzed in an ad hoc way. All of these techniques involve transforming attributes into an easily understood form. Some examples might include:</p>
+<ul class="simple">
+<li><p>scaling salaries to standardize the differences by job type,</p></li>
+<li><p>choosing bins to smooth noisy time-series data,</p></li>
+<li><p>aggregating cities into their counties to plot population data,</p></li>
+<li><p>vector encoding into raw text using the Bag of Words model.</p></li>
+</ul>
+<p>These examples are instances of <em>feature engineering</em>: the process of transforming data into understandable, useful measurements.</p>
+<div class="section" id="features">
+<h2>Features<a class="headerlink" href="#features" title="Permalink to this headline">¶</a></h2>
+<p><strong>Definition:</strong> A <em>feature</em> is a measurable property or characteristic of a phenomenon being observed. Other synonyms include <em>attribute</em> and <em>(explanatory) variable</em>.</p>
+<p>In the context of quantitative, tabular data, features are the columns of the dataset. However, not all features are equally effective:</p>
+<p><strong>Definition:</strong> <em>Feature engineering</em> is the process of creating effective, quantitative attributes from data to effectively understand the phenomena the data represents.</p>
+<p>What makes an effective feature depends on how the dataset is used:</p>
+<ul class="simple">
+<li><p>The features of a dataset used for EDA and visual analysis should summarize information neatly for the human eye. The data should be evenly distributed without too many features.</p></li>
+<li><p>A dataset used to fit a model needs features with appropriate properties for that model. Nearly all statistical models require <em>quantitative</em> features; individual models may have varying requirements:</p>
+<ul>
+<li><p>Linear models require minimally correlated features that are well-approximated by a plane. Feature transformations might scale non-linear attributes to approximately-linear features.</p></li>
+<li><p>Neural Networks work well with features scaled between 0 and 1.</p></li>
+</ul>
+</li>
+</ul>
+<p>The goal of feature engineering is to transformation a dataset so that ‘similar’ observations in the data are mapped to nearby points in the quantitative space of features. That is, effective feature engineering transforms a dataset into a subset of Euclidean space, while maintaining the notion of similarity in the original data. This translation allows statistical model to summarize the data in a relevant, useful way.</p>
+<p><strong>Definition:</strong> A feature is a function
+function <span class="math notranslate nohighlight">\(\phi:{\rm DATA}\to\mathbb{R}^d\)</span>, where similar observations <span class="math notranslate nohighlight">\(x,y\in {\rm DATA}\)</span> have close images <span class="math notranslate nohighlight">\(\phi(x), \phi(y)\in \mathbb{R}^d\)</span></p>
+<div class="section" id="example-predicting-home-prices">
+<h3>Example: Predicting Home Prices<a class="headerlink" href="#example-predicting-home-prices" title="Permalink to this headline">¶</a></h3>
+<p>What is the relationship between home amenities and their sale-price? Suppose a dataset <code class="docutils literal notranslate"><span class="pre">housing</span></code> consists of houses (observations) and their properties (attributes):</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Id</p></th>
+<th class="head"><p>LotArea</p></th>
+<th class="head"><p>LandSlope</p></th>
+<th class="head"><p>Neighborhood</p></th>
+<th class="head"><p>YearBuilt</p></th>
+<th class="head"><p>SaleCondition</p></th>
+<th class="head"><p>SalePrice</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>120</p></td>
+<td><p>8461</p></td>
+<td><p>Gtl</p></td>
+<td><p>CollgCr</p></td>
+<td><p>2005</p></td>
+<td><p>Partial</p></td>
+<td><p>163990</p></td>
+</tr>
+<tr class="row-odd"><td><p>273</p></td>
+<td><p>11764</p></td>
+<td><p>Gtl</p></td>
+<td><p>NoRidge</p></td>
+<td><p>1999</p></td>
+<td><p>Normal</p></td>
+<td><p>290000</p></td>
+</tr>
+<tr class="row-even"><td><p>1171</p></td>
+<td><p>9880</p></td>
+<td><p>Gtl</p></td>
+<td><p>Mitchel</p></td>
+<td><p>1977</p></td>
+<td><p>Normal</p></td>
+<td><p>171000</p></td>
+</tr>
+<tr class="row-odd"><td><p>997</p></td>
+<td><p>10659</p></td>
+<td><p>Mod</p></td>
+<td><p>NAmes</p></td>
+<td><p>1961</p></td>
+<td><p>Normal</p></td>
+<td><p>136500</p></td>
+</tr>
+<tr class="row-even"><td><p>212</p></td>
+<td><p>10420</p></td>
+<td><p>Gtl</p></td>
+<td><p>Edwards</p></td>
+<td><p>2009</p></td>
+<td><p>Normal</p></td>
+<td><p>186000</p></td>
+</tr>
+<tr class="row-odd"><td><p>828</p></td>
+<td><p>8529</p></td>
+<td><p>Gtl</p></td>
+<td><p>SawyerW</p></td>
+<td><p>2001</p></td>
+<td><p>Normal</p></td>
+<td><p>189000</p></td>
+</tr>
+<tr class="row-even"><td><p>801</p></td>
+<td><p>12798</p></td>
+<td><p>Sev</p></td>
+<td><p>ClearCr</p></td>
+<td><p>1997</p></td>
+<td><p>Normal</p></td>
+<td><p>200000</p></td>
+</tr>
+<tr class="row-odd"><td><p>1010</p></td>
+<td><p>6000</p></td>
+<td><p>Gtl</p></td>
+<td><p>SWISU</p></td>
+<td><p>1926</p></td>
+<td><p>Normal</p></td>
+<td><p>102000</p></td>
+</tr>
+<tr class="row-even"><td><p>1246</p></td>
+<td><p>12090</p></td>
+<td><p>Gtl</p></td>
+<td><p>NWAmes</p></td>
+<td><p>1984</p></td>
+<td><p>Abnorml</p></td>
+<td><p>178000</p></td>
+</tr>
+<tr class="row-odd"><td><p>129</p></td>
+<td><p>7590</p></td>
+<td><p>Mod</p></td>
+<td><p>NAmes</p></td>
+<td><p>1966</p></td>
+<td><p>Normal</p></td>
+<td><p>155000</p></td>
+</tr>
+</tbody>
+</table>
+<p>Before attempting to formalize this investigation with a statistical model, it’s helpful to understand how each column contains useful information.</p>
+<ul class="simple">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">Id</span></code> column is a nominal attribute as the integers are distinct labels for each property; there is not correspondence between the label given to a home and any property of the house external to the dataset. As such, this column has no value in understanding the relationship between a home and its sales price. The <code class="docutils literal notranslate"><span class="pre">Id</span></code> column is an <em>uninformative feature</em>. Such features are best to drop from a dataset before analysis.</p></li>
+<li><p>While the <code class="docutils literal notranslate"><span class="pre">LotArea</span></code> column is quantitative, the existing values don’t lend themselves to explanation. The distribution of the majority of lot sizes (left) is hidden by a few houses with very large lot sizes. Focus on what the typical variation is lot sizes is better explained using a log-scaled box-plot:</p>
+<ul>
+<li><p>The box plot describes the lot sizes in percentile terms that conveys the range of typical lot size.</p></li>
+<li><p>The log-scale is appropriate when most observations are small.</p></li>
+</ul>
+</li>
+</ul>
+<p><img alt="LotArea" src="../../_images/LotArea.png" /></p>
+<ul class="simple">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">LandSlope</span></code> column describes the contour of the land on which the house is built. The possible values are: Gentle Slope (<code class="docutils literal notranslate"><span class="pre">Gtl</span></code>), Moderate Slope (<code class="docutils literal notranslate"><span class="pre">Mod</span></code>), Severe Slope (<code class="docutils literal notranslate"><span class="pre">Sev</span></code>). This column is an ordinal attribute with ordering given as listed. Such attributes can be encoded using the natural correspondence with the integers; this procedure is called <em>ordinal encoding</em>.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">Neighborhood</span></code> column is a nominal attribute without an obvious ordering. Engineering a feature from the <code class="docutils literal notranslate"><span class="pre">Neighborhood</span></code> column involves defining a notion of <em>similarity</em> between neighborhoods. A number of possibilities to encode the <code class="docutils literal notranslate"><span class="pre">Neighborhood</span></code> as quantitative columns are:</p>
+<ul>
+<li><p>Map a neighborhood name to the latitude/longitude of the geographical center of the neighborhood. This encodes the notion of distance on a map; neighborhoods are similar if they are nearby each other.</p></li>
+<li><p>Map a neighborhood name to the median annual income of the population of that neighborhood. Thus, two neighborhoods are similar if their resident income profiles are similar. This encoding seems highly relevant to the problem at hand.</p></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="feature-engineering-ordinal-data">
+<h2>Feature Engineering: Ordinal Data<a class="headerlink" href="#feature-engineering-ordinal-data" title="Permalink to this headline">¶</a></h2>
+<p>While categorical, ordinal data have an obvious notion of similarity through the ordering of the category. The obvious categorical encoding for ordinal data uses the correspondence of ordinal data with the integers.</p>
+<p><strong>Definition:</strong> By definition, the values <code class="docutils literal notranslate"><span class="pre">A1,...,AN</span></code> of an ordinal attribute have a correspondence with the integer <span class="math notranslate nohighlight">\(1,\ldots,N\)</span>, where <code class="docutils literal notranslate"><span class="pre">A1</span></code> is the ‘smallest’ value and <code class="docutils literal notranslate"><span class="pre">AN</span></code> is the ‘largest’ value. The ordinal encoding of the column maps each value to its corresponding integer: <span class="math notranslate nohighlight">\(\phi(A_i) = i\)</span>. This transformation preserves the notion of similarity in the categorical values.</p>
+<p><strong>Example:</strong> The <code class="docutils literal notranslate"><span class="pre">LandSlope</span></code> attribute in the <code class="docutils literal notranslate"><span class="pre">housing</span></code> dataset has a natural ordering from ‘gentle’ to ‘severe’. The ordinal encoding of that column is:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\phi_i(x) = \left\{\begin{array}{ll}0 &amp; {\rm if\ } x = {\rm Gtl} \\ 1 &amp;  {\rm if\ } x = {\rm Mod} \\ 2 &amp; {\rm if\ } x = {\rm Sev} \\ \end{array}\right. \end{split}\]</div>
+<p>Pandas code that generates the ordinal encoding looks like:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">order_values</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Gtl&#39;</span><span class="p">,</span> <span class="s1">&#39;Mod&#39;</span><span class="p">,</span> <span class="s1">&#39;Sev&#39;</span><span class="p">]</span>
+<span class="n">ordinal_enc</span> <span class="o">=</span> <span class="p">{</span><span class="n">y</span><span class="p">:</span><span class="n">x</span> <span class="k">for</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">order_values</span><span class="p">)}</span>
+<span class="n">housing</span><span class="p">[</span><span class="s1">&#39;LandSlope&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">ordinal_enc</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="feature-engineering-nominal-data">
+<h2>Feature Engineering: Nominal Data<a class="headerlink" href="#feature-engineering-nominal-data" title="Permalink to this headline">¶</a></h2>
+<p>Nominal data has no inherent notion of similarity; such attributes appear a labels given to observations. While a column may not have any obvious correspondence to the number line, that does not preclude the column from containing rich information with sophisticated notions of similarity. Usually features derived from a single nominal column lie in multiple dimension.</p>
+<p>Engineering features out of nominal columns requires ingenuity to effectively capture notions of similarity between nominal values. Examples of this include:</p>
+<ul class="simple">
+<li><p>Mapping neighborhoods in the housing dataset to pairs of quantitative values (latitude and longitude); similarity between neighborhood names corresponds to the geographical distance between the neighborhoods.</p></li>
+<li><p>Mapping a text phrase to it’s Bag-of-Word embedding; similarity between vectors is proportional to the number of words two phrases have in common.</p></li>
+</ul>
+<p>Sometimes, it’s unclear how to effectively engineer a feature from nominal data. One can always transform a nominal attribute using <em>one-hot encoding</em>. One-hot encoding maps the values of a nominal column to binary columns that simply measure whether a given observation is equal to a set value:</p>
+<p><strong>Definition:</strong> Given a column <code class="docutils literal notranslate"><span class="pre">col</span></code> with distinct values <code class="docutils literal notranslate"><span class="pre">A1,...,AN</span></code>, define the following quantitative binary columns:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\phi_i(x) = \left\{\begin{array}{ll}1 &amp; {\rm if\ } x = A_i \\ 0 &amp;  {\rm if\ } x\neq A_i \\ \end{array}\right. \end{split}\]</div>
+<p>The <em>one-hot encoding</em> of the column <code class="docutils literal notranslate"><span class="pre">col</span></code> is the collection of <code class="docutils literal notranslate"><span class="pre">N</span></code> binary columns <span class="math notranslate nohighlight">\(\phi_1,\ldots,\phi_N\)</span>.</p>
+<p><em>Remark:</em> The resulting variables are also called <em>dummy variables</em> or <em>indicator variables</em>.</p>
+<p><strong>Example:</strong> The <code class="docutils literal notranslate"><span class="pre">Neighborhood</span></code> column contains values <code class="docutils literal notranslate"><span class="pre">NAmes</span></code>, <code class="docutils literal notranslate"><span class="pre">CollgCr</span></code>, <code class="docutils literal notranslate"><span class="pre">OldTown</span></code>, <code class="docutils literal notranslate"><span class="pre">Edwards</span></code>. The one-hot encoding creates four columns: <code class="docutils literal notranslate"><span class="pre">is_NAmes</span></code>, <code class="docutils literal notranslate"><span class="pre">is_CollgCr</span></code>, <code class="docutils literal notranslate"><span class="pre">is_OldTown</span></code>, <code class="docutils literal notranslate"><span class="pre">is_Edwards</span></code>. The transformation of the <code class="docutils literal notranslate"><span class="pre">Neighborhood</span></code> column looks like:</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p><code class="docutils literal notranslate"><span class="pre">Neighborhood</span></code></p></th>
+<th class="head"><p><code class="docutils literal notranslate"><span class="pre">is_NAmes</span></code></p></th>
+<th class="head"><p><code class="docutils literal notranslate"><span class="pre">is_CollgCr</span></code></p></th>
+<th class="head"><p><code class="docutils literal notranslate"><span class="pre">is_OldTown</span></code></p></th>
+<th class="head"><p><code class="docutils literal notranslate"><span class="pre">is_Edwards</span></code></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>NAmes</p></td>
+<td><p>1</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><td><p>OldTown</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-even"><td><p>NAmes</p></td>
+<td><p>1</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><td><p>CollgCr</p></td>
+<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-even"><td><p>Edwards</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>1</p></td>
+</tr>
+<tr class="row-odd"><td><p>…</p></td>
+<td><p>…</p></td>
+<td><p>…</p></td>
+<td><p>…</p></td>
+<td><p>…</p></td>
+</tr>
+</tbody>
+</table>
+<p>Notice that each value is equidistant from every other distinct value; this aligns with the notion that nominal attributes have no inherent notion of distance.</p>
+<p>Pandas code that generates the one-hot encoding for the <code class="docutils literal notranslate"><span class="pre">Neighborhood</span></code> column looks like:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">nbds</span> <span class="o">=</span> <span class="n">housing</span><span class="p">[</span><span class="s1">&#39;Neighborhood&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+<span class="n">housing</span><span class="p">[</span><span class="s1">&#39;Neighborhood&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">nbd</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">nbd</span> <span class="o">==</span> <span class="n">nbds</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">nbds</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="feature-engineering-quantitative-data">
+<h2>Feature Engineering: Quantitative Data<a class="headerlink" href="#feature-engineering-quantitative-data" title="Permalink to this headline">¶</a></h2>
+<p>The follow are to be competed: see the lecture notes.</p>
+<div class="section" id="scaling">
+<h3>Scaling<a class="headerlink" href="#scaling" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="polynomial-encoding">
+<h3>Polynomial Encoding<a class="headerlink" href="#polynomial-encoding" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="capturing-periodicity">
+<h3>Capturing Periodicity<a class="headerlink" href="#capturing-periodicity" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./content/09"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="introduction.html" title="previous page">Introduction to Features</a>
+    <a class='right-next' id="next-link" href="data-pipelines.html" title="next page">Features with Data Pipelines</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Aaron Fraenkel<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="../../_static/js/index.3da636dd464baa7582d2.js"></script>
+
+
+    
+  </body>
+</html>

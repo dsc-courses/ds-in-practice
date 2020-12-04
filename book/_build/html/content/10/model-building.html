@@ -1,0 +1,1140 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Creating Modeling Pipelines &#8212; The Practice of Data Science</title>
+    
+  <link rel="stylesheet" href="../../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../../_static/js/index.3da636dd464baa7582d2.js">
+
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Bias and Variance" href="../11/introduction.html" />
+    <link rel="prev" title="Introduction to Modeling" href="intro-modeling.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../../index.html">
+  
+  <img src="../../_static/toolbox.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">The Practice of Data Science</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../introduction.html">
+   Data Science in Practice
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Understanding Data
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../01/introduction.html">
+   Introduction to Data Science
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../01/what-is-data-science.html">
+     What is Data Science?
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../01/scientific-method.html">
+     The Scientific Method
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../01/data-science-example.html">
+     A Data Science Example
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../02/introduction.html">
+   The Basics of Tabular Data
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../02/tabular-data.html">
+     Tabular Data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../02/tabular-data.html#tables-in-python-using-pandas">
+     Tables in python, using Pandas.
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../02/methods.html">
+     Table Methods
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../02/data-types.html">
+     Data Types and Performance
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../03/introduction.html">
+   Querying and Describing Data
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../03/selecting-data.html">
+     Selecting Data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../03/kinds-of-data.html">
+     Kinds of Data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../03/categorical-distributions.html">
+     Categorical Distributions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../03/quantitative-distributions.html">
+     Quantitative Distributions
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../04/introduction.html">
+   Understanding Assumptions and Data Cleaning
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../04/modifying-dataframes.html">
+     Modifying DataFrames
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../04/cleaning.html">
+     Cleaning Messy Data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../04/eda.html">
+     Exploratory Data Analysis
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../05/introduction.html">
+   Aggregation and Extension of Data
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../05/grouping.html">
+     Data Granularity
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../05/understanding-aggregations.html">
+     Understanding Aggregations
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../05/appending-data.html">
+     Combining Data (Observations)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../05/joining-data.html">
+     Combining Data: Attributes
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../05/joining-data.html#combining-different-measurements-over-the-same-individuals">
+     Combining different measurements over the same individuals
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../05/permutation-tests.html">
+     Permutation Tests
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../05/eda-2.html">
+     Exploratory Data Analysis II
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../06/introduction.html">
+   Missing Data
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../06/defining-missing.html">
+     Definitions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../06/identifying-missing.html">
+     Identifying Missing Data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../06/handling-missing-data.html">
+     Handling Missing Data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../06/single-valued-imputation.html">
+     Single-Valued Imputation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../06/probabilistic-imputation.html">
+     Probabilistic Imputation
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Collecting Data
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../07/introduction.html">
+   Data Collection
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../07/existing-data.html">
+     Using Existing Data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../07/requests.html">
+     HTTP Requests
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../07/html.html">
+     Parsing HTML
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../08/introduction.html">
+   Information Extaction
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../08/patterns.html">
+     Text Processing
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../08/nlp.html">
+     Natural Language Processing
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../09/introduction.html">
+   Introduction to Features
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../09/features.html">
+     Feature Engineering
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../09/data-pipelines.html">
+     Data Pipelines
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Modeling With Data
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1 current active collapsible-parent">
+  <a class="reference internal" href="introduction.html">
+   Modeling Basics
+  </a>
+  <ul class="current collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="intro-modeling.html">
+     Introduction to Statistical Models
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Building Modeling Pipelines
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../11/introduction.html">
+   Bias and Variance
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../11/fitting-inference.html">
+     Model Quality (Inference)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../11/fitting-prediction.html">
+     Model Quality (Prediction)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../11/cross-validation.html">
+     Cross Validation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../11/parameter-search.html">
+     Parameter Search
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../12/introduction.html">
+   Evaluating Models; Fairness
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../12/eval.html">
+     Evaluation metrics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../12/parity.html">
+     Parity Measures
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../12/fairness.html">
+     Fairness in Machine Learning
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../_sources/content/10/model-building.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+        <!-- Source interaction buttons -->
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/afraenkel/ds-in-practice/master?urlpath=tree/book/content/10/model-building.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#modeling-pipelines-in-scikit-learn">
+   Modeling Pipelines in Scikit-Learn
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#using-estimators-in-scikit-learn-pipelines">
+   Using Estimators in Scikit-Learn Pipelines
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="creating-modeling-pipelines">
+<h1>Creating Modeling Pipelines<a class="headerlink" href="#creating-modeling-pipelines" title="Permalink to this headline">¶</a></h1>
+<hr class="docutils" />
+<p>Building a statistical model requires developing the following steps:</p>
+<ol class="simple">
+<li><p>Create features to best reflect the meaning behind the data,</p></li>
+<li><p>Choose a model that captures relationships between features,</p></li>
+<li><p>Select a loss function and fit the model,</p></li>
+<li><p>Evaluate the model using the appropriate notion of error.</p></li>
+</ol>
+<p>Once these steps are completed, the model can be used for prediction or inference.</p>
+<p>Each of these steps may contain complicated transformations and logic, often involving thousands of choices among which parameters and features are most effective. Data pipelines handle this complexity, keeping track of these myriad choices in a organized fashion.</p>
+<div class="section" id="modeling-pipelines-in-scikit-learn">
+<h2>Modeling Pipelines in Scikit-Learn<a class="headerlink" href="#modeling-pipelines-in-scikit-learn" title="Permalink to this headline">¶</a></h2>
+<p>Models in Scikit-learn are defined as <em>Estimators</em>. The Estimator class is similar to the Transformer class for generating features. The Estimator class implements the following interface:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Estimator.set_params</span></code> defines parameters needed for fitting the model.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Estimator.fit(X,</span> <span class="pre">y)</span></code> fits the model on the features <code class="docutils literal notranslate"><span class="pre">X</span></code> and the target variable <code class="docutils literal notranslate"><span class="pre">y</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Estimator.predict(X)</span></code> returns predictions for observations in <code class="docutils literal notranslate"><span class="pre">X</span></code> from the fit model.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Estimator.score(X,</span> <span class="pre">y)</span></code> returns an evaluation of the fit model on data <code class="docutils literal notranslate"><span class="pre">X</span></code> and target <code class="docutils literal notranslate"><span class="pre">y</span></code>.</p>
+<ul>
+<li><p>A custom evaluation metric may be specified to generate the score.</p></li>
+<li><p>For classifiers, the default score is the <em>accuracy</em>.</p></li>
+<li><p>For regressors, the default score is the <em>coefficient of determination</em> (<span class="math notranslate nohighlight">\(R^2\)</span>).</p></li>
+</ul>
+</li>
+</ul>
+<p><em>Remark:</em> The Estimator class is similar to the transformer class. The main difference is the presence of the <em>target variable</em> <code class="docutils literal notranslate"><span class="pre">y</span></code>. In fact, a fit model behaves like a transformer, where <code class="docutils literal notranslate"><span class="pre">predict</span></code> corresponds to <code class="docutils literal notranslate"><span class="pre">transform</span></code>.</p>
+<p><strong>Example:</strong> Fitting a multivariate regression model is straightforward using Estimators. Below is a small dataset with two independent variables (<code class="docutils literal notranslate"><span class="pre">x1</span></code> and <code class="docutils literal notranslate"><span class="pre">x2</span></code>) and one target variable <code class="docutils literal notranslate"><span class="pre">y</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>x1</th>
+      <th>x2</th>
+      <th>y</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>-9.623415</td>
+      <td>-0.991037</td>
+      <td>-19.420887</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>-9.109035</td>
+      <td>-1.145796</td>
+      <td>-17.835602</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>-8.583274</td>
+      <td>0.885662</td>
+      <td>-14.760810</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>4.246154</td>
+      <td>2.712184</td>
+      <td>15.964720</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>4.759243</td>
+      <td>4.643905</td>
+      <td>17.381630</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>5.121245</td>
+      <td>3.419691</td>
+      <td>21.253360</td>
+    </tr>
+  </tbody>
+</table>
+<p>20 rows × 3 columns</p>
+</div></div></div>
+</div>
+<p>A linear regression is fit on the variables and target:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">]</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">lr</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
+<span class="n">lr</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The RMSE and <span class="math notranslate nohighlight">\(R^2\)</span> are computed as follows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">((</span><span class="n">lr</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">-</span> <span class="n">y</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span> <span class="c1"># RMSE</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2.1591119732981725
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lr</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="c1"># R^2</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.9689164664534166
+</pre></div>
+</div>
+</div>
+</div>
+<p>The plane of best-fit is visualized below:</p>
+<div class="cell tag_hide_input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot3Dscatter</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="s1">&#39;x1&#39;</span><span class="p">,</span> <span class="s1">&#39;x2&#39;</span><span class="p">,</span> <span class="n">lr</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/model-building_11_0.png" src="../../_images/model-building_11_0.png" />
+</div>
+</div>
+<p>The regression coefficients are contained in the <code class="docutils literal notranslate"><span class="pre">coef_</span></code> attribute; the coefficients are the slopes of the projection of the plane of best fit onto the <code class="docutils literal notranslate"><span class="pre">x1-y</span></code>-plane and the <code class="docutils literal notranslate"><span class="pre">x2-y</span></code>-plane respectively.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lr</span><span class="o">.</span><span class="n">coef_</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([2.4586771 , 0.33546627])
+</pre></div>
+</div>
+</div>
+</div>
+<p>Other estimators have parameters that must be passed into the constructor.</p>
+<p><strong>Example:</strong> A <em>k-nearest neighbor</em> regressor finds the makes predictions by averaging the y-values of the k-nearest examples to a given data point. The example below fixed the number of neighbors at 3:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.neighbors</span> <span class="kn">import</span> <span class="n">KNeighborsRegressor</span>
+<span class="n">knn</span> <span class="o">=</span> <span class="n">KNeighborsRegressor</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>After fitting the model, it predicts new possible outcomes on out-of-sample data:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">knn</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">test_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">]])</span>
+<span class="n">knn</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">test_data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([8.87123925])
+</pre></div>
+</div>
+</div>
+</div>
+<p>The prediction function is visualized as a function of two variables, alongside a scatter-plot of the training data. Every point on the surface is calculated by averaging the value of the nearest three data-points:</p>
+<div class="cell tag_hide_input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot3Dscatter</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="s1">&#39;x1&#39;</span><span class="p">,</span> <span class="s1">&#39;x2&#39;</span><span class="p">,</span> <span class="n">knn</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/model-building_19_0.png" src="../../_images/model-building_19_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="using-estimators-in-scikit-learn-pipelines">
+<h2>Using Estimators in Scikit-Learn Pipelines<a class="headerlink" href="#using-estimators-in-scikit-learn-pipelines" title="Permalink to this headline">¶</a></h2>
+<p>Scikit-learn pipelines may contain Estimators as the final step. As with pipelines composed of transformers, a pipeline containing an estimator is itself an estimator.</p>
+<p>For example, calling <code class="docutils literal notranslate"><span class="pre">pl.fit(X,</span> <span class="pre">y)</span></code> on a pipeline <code class="docutils literal notranslate"><span class="pre">pl</span> <span class="pre">=</span> <span class="pre">Pipeline(steps)</span></code> containing an estimator roughly executes the following logic:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">out</span> <span class="o">=</span> <span class="n">X</span>
+<span class="k">for</span> <span class="n">step</span> <span class="ow">in</span> <span class="n">steps</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">step</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+
+<span class="n">step</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Similar logic applies to the <code class="docutils literal notranslate"><span class="pre">predict</span></code> and <code class="docutils literal notranslate"><span class="pre">score</span></code> methods.</p>
+<p><strong>Example:</strong> The dataset below contains home sales in Ames, Iowa compiled by <a class="reference external" href="https://www.truman.edu/faculty-staff/decock/">Dean De Cock</a>. The variables consist of a mixture of categorical and quantitative variables that describe the characteristics of each home in the dataset. A simple question one might ask:</p>
+<blockquote>
+<div><p>Can the price of the home sale be predicted from the characteristics of the house?</p>
+</div></blockquote>
+<p>Approaching this question thoroughly is involved. This example merely constructs a basic pipeline with the following properties:</p>
+<ul class="simple">
+<li><p>Missing values in quantitative variables are imputed with the value <code class="docutils literal notranslate"><span class="pre">0</span></code>, then passed directly to the model without further feature engineering. Imputing with 0 is reasonable, as all quantitative columns with missing values represent positive quantities.</p></li>
+<li><p>Categorical variables are treated as nominal, imputed with the string <code class="docutils literal notranslate"><span class="pre">NULL</span></code>, then one-hot encoded. This attempt at feature engineering is a bare minimum and serves only as a baseline upon which to improve.</p></li>
+<li><p>The model chosen is a ‘Decision Tree Regressor’, which is well-suited to the features above.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># required imports</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">OneHotEncoder</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">FunctionTransformer</span>
+<span class="kn">from</span> <span class="nn">sklearn.impute</span> <span class="kn">import</span> <span class="n">SimpleImputer</span>
+<span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeRegressor</span>
+<span class="kn">from</span> <span class="nn">sklearn.compose</span> <span class="kn">import</span> <span class="n">ColumnTransformer</span>
+<span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">Pipeline</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The housing data consists of 1460 observations (houses) and 81 attributes: one ‘Id’ column that identifies the distinct houses, the target variable ‘SalePrice’, and 79 features:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">housing</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/housing.csv&#39;</span><span class="p">)</span>
+<span class="n">housing</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Id</th>
+      <th>MSSubClass</th>
+      <th>MSZoning</th>
+      <th>LotFrontage</th>
+      <th>LotArea</th>
+      <th>Street</th>
+      <th>Alley</th>
+      <th>LotShape</th>
+      <th>LandContour</th>
+      <th>Utilities</th>
+      <th>...</th>
+      <th>PoolArea</th>
+      <th>PoolQC</th>
+      <th>Fence</th>
+      <th>MiscFeature</th>
+      <th>MiscVal</th>
+      <th>MoSold</th>
+      <th>YrSold</th>
+      <th>SaleType</th>
+      <th>SaleCondition</th>
+      <th>SalePrice</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>60</td>
+      <td>RL</td>
+      <td>65.0</td>
+      <td>8450</td>
+      <td>Pave</td>
+      <td>NaN</td>
+      <td>Reg</td>
+      <td>Lvl</td>
+      <td>AllPub</td>
+      <td>...</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>2</td>
+      <td>2008</td>
+      <td>WD</td>
+      <td>Normal</td>
+      <td>208500</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>20</td>
+      <td>RL</td>
+      <td>80.0</td>
+      <td>9600</td>
+      <td>Pave</td>
+      <td>NaN</td>
+      <td>Reg</td>
+      <td>Lvl</td>
+      <td>AllPub</td>
+      <td>...</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>5</td>
+      <td>2007</td>
+      <td>WD</td>
+      <td>Normal</td>
+      <td>181500</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>60</td>
+      <td>RL</td>
+      <td>68.0</td>
+      <td>11250</td>
+      <td>Pave</td>
+      <td>NaN</td>
+      <td>IR1</td>
+      <td>Lvl</td>
+      <td>AllPub</td>
+      <td>...</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>9</td>
+      <td>2008</td>
+      <td>WD</td>
+      <td>Normal</td>
+      <td>223500</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>1457</th>
+      <td>1458</td>
+      <td>70</td>
+      <td>RL</td>
+      <td>66.0</td>
+      <td>9042</td>
+      <td>Pave</td>
+      <td>NaN</td>
+      <td>Reg</td>
+      <td>Lvl</td>
+      <td>AllPub</td>
+      <td>...</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>GdPrv</td>
+      <td>Shed</td>
+      <td>2500</td>
+      <td>5</td>
+      <td>2010</td>
+      <td>WD</td>
+      <td>Normal</td>
+      <td>266500</td>
+    </tr>
+    <tr>
+      <th>1458</th>
+      <td>1459</td>
+      <td>20</td>
+      <td>RL</td>
+      <td>68.0</td>
+      <td>9717</td>
+      <td>Pave</td>
+      <td>NaN</td>
+      <td>Reg</td>
+      <td>Lvl</td>
+      <td>AllPub</td>
+      <td>...</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>4</td>
+      <td>2010</td>
+      <td>WD</td>
+      <td>Normal</td>
+      <td>142125</td>
+    </tr>
+    <tr>
+      <th>1459</th>
+      <td>1460</td>
+      <td>20</td>
+      <td>RL</td>
+      <td>75.0</td>
+      <td>9937</td>
+      <td>Pave</td>
+      <td>NaN</td>
+      <td>Reg</td>
+      <td>Lvl</td>
+      <td>AllPub</td>
+      <td>...</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>6</td>
+      <td>2008</td>
+      <td>WD</td>
+      <td>Normal</td>
+      <td>147500</td>
+    </tr>
+  </tbody>
+</table>
+<p>1460 rows × 81 columns</p>
+</div></div></div>
+</div>
+<p>Dropping the ‘Id’ field and removing the ‘SalePrice’ as the target variable:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">housing</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;Id&#39;</span><span class="p">,</span> <span class="s1">&#39;SalePrice&#39;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">housing</span><span class="p">[</span><span class="s1">&#39;SalePrice&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The categorical and quantitative columns are gathered into lists of column names:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">types</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">dtypes</span>
+<span class="n">cat_cols</span> <span class="o">=</span> <span class="n">types</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">types</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">object</span><span class="p">]</span><span class="o">.</span><span class="n">index</span>
+<span class="n">quant_cols</span> <span class="o">=</span> <span class="n">types</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">types</span> <span class="o">!=</span> <span class="n">np</span><span class="o">.</span><span class="n">object</span><span class="p">]</span><span class="o">.</span><span class="n">index</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The pipeline described above is put together:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># categorical features</span>
+<span class="n">cat_process</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s1">&#39;cat_processing&#39;</span><span class="p">,</span>
+    <span class="n">Pipeline</span><span class="p">([</span>
+        <span class="p">(</span><span class="s1">&#39;imputer&#39;</span><span class="p">,</span> <span class="n">SimpleImputer</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s1">&#39;constant&#39;</span><span class="p">,</span> <span class="n">fill_value</span><span class="o">=</span><span class="s1">&#39;NULL&#39;</span><span class="p">)),</span> 
+        <span class="p">(</span><span class="s1">&#39;one-hot&#39;</span><span class="p">,</span> <span class="n">OneHotEncoder</span><span class="p">())</span>
+    <span class="p">]),</span>
+    <span class="n">cat_cols</span>
+<span class="p">)</span>
+
+<span class="c1"># quantitative features</span>
+<span class="n">num_process</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s1">&#39;num_processing&#39;</span><span class="p">,</span>
+    <span class="n">SimpleImputer</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s1">&#39;constant&#39;</span><span class="p">,</span> <span class="n">fill_value</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
+    <span class="n">quant_cols</span>
+<span class="p">)</span>
+
+<span class="n">ct</span> <span class="o">=</span> <span class="n">ColumnTransformer</span><span class="p">([</span><span class="n">cat_process</span><span class="p">,</span> <span class="n">num_process</span><span class="p">])</span>
+
+<span class="c1"># modeling pipeline</span>
+<span class="n">pl</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">([(</span><span class="s1">&#39;features&#39;</span><span class="p">,</span> <span class="n">ct</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;regressor&#39;</span><span class="p">,</span> <span class="n">DecisionTreeRegressor</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">3</span><span class="p">))])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>After fitting the pipeline, the RMSE can be calculated:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pl</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="n">preds</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+<span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">((</span><span class="n">preds</span> <span class="o">-</span> <span class="n">y</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span> <span class="c1"># RMSE</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>40142.374455005905
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./content/10"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="intro-modeling.html" title="previous page">Introduction to Modeling</a>
+    <a class='right-next' id="next-link" href="../11/introduction.html" title="next page">Bias and Variance</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Aaron Fraenkel<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="../../_static/js/index.3da636dd464baa7582d2.js"></script>
+
+
+    
+  </body>
+</html>

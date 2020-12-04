@@ -1,0 +1,1862 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cleaning Messy Data &#8212; The Practice of Data Science</title>
+    
+  <link rel="stylesheet" href="../../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../../_static/js/index.3da636dd464baa7582d2.js">
+
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Exploratory Data Analysis (EDA): Part I" href="eda.html" />
+    <link rel="prev" title="Modifying DataFrames" href="modifying-dataframes.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../../index.html">
+  
+  <img src="../../_static/toolbox.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">The Practice of Data Science</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../introduction.html">
+   Data Science in Practice
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Understanding Data
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../01/introduction.html">
+   Introduction to Data Science
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../01/what-is-data-science.html">
+     What is Data Science?
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../01/scientific-method.html">
+     The Scientific Method
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../01/data-science-example.html">
+     A Data Science Example
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../02/introduction.html">
+   The Basics of Tabular Data
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../02/tabular-data.html">
+     Tabular Data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../02/tabular-data.html#tables-in-python-using-pandas">
+     Tables in python, using Pandas.
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../02/methods.html">
+     Table Methods
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../02/data-types.html">
+     Data Types and Performance
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../03/introduction.html">
+   Querying and Describing Data
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../03/selecting-data.html">
+     Selecting Data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../03/kinds-of-data.html">
+     Kinds of Data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../03/categorical-distributions.html">
+     Categorical Distributions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../03/quantitative-distributions.html">
+     Quantitative Distributions
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 current active collapsible-parent">
+  <a class="reference internal" href="introduction.html">
+   Understanding Assumptions and Data Cleaning
+  </a>
+  <ul class="current collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="modifying-dataframes.html">
+     Modifying DataFrames
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Cleaning Messy Data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="eda.html">
+     Exploratory Data Analysis
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../05/introduction.html">
+   Aggregation and Extension of Data
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../05/grouping.html">
+     Data Granularity
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../05/understanding-aggregations.html">
+     Understanding Aggregations
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../05/appending-data.html">
+     Combining Data (Observations)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../05/joining-data.html">
+     Combining Data: Attributes
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../05/joining-data.html#combining-different-measurements-over-the-same-individuals">
+     Combining different measurements over the same individuals
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../05/permutation-tests.html">
+     Permutation Tests
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../05/eda-2.html">
+     Exploratory Data Analysis II
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../06/introduction.html">
+   Missing Data
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../06/defining-missing.html">
+     Definitions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../06/identifying-missing.html">
+     Identifying Missing Data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../06/handling-missing-data.html">
+     Handling Missing Data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../06/single-valued-imputation.html">
+     Single-Valued Imputation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../06/probabilistic-imputation.html">
+     Probabilistic Imputation
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Collecting Data
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../07/introduction.html">
+   Data Collection
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../07/existing-data.html">
+     Using Existing Data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../07/requests.html">
+     HTTP Requests
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../07/html.html">
+     Parsing HTML
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../08/introduction.html">
+   Information Extaction
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../08/patterns.html">
+     Text Processing
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../08/nlp.html">
+     Natural Language Processing
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../09/introduction.html">
+   Introduction to Features
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../09/features.html">
+     Feature Engineering
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../09/data-pipelines.html">
+     Data Pipelines
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Modeling With Data
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../10/introduction.html">
+   Modeling Basics
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../10/intro-modeling.html">
+     Introduction to Statistical Models
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../10/model-building.html">
+     Building Modeling Pipelines
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../11/introduction.html">
+   Bias and Variance
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../11/fitting-inference.html">
+     Model Quality (Inference)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../11/fitting-prediction.html">
+     Model Quality (Prediction)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../11/cross-validation.html">
+     Cross Validation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../11/parameter-search.html">
+     Parameter Search
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../12/introduction.html">
+   Evaluating Models; Fairness
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../12/eval.html">
+     Evaluation metrics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../12/parity.html">
+     Parity Measures
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../12/fairness.html">
+     Fairness in Machine Learning
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../_sources/content/04/cleaning.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+        <!-- Source interaction buttons -->
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/afraenkel/ds-in-practice/master?urlpath=tree/book/content/04/cleaning.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#raw-data-doesn-t-exist">
+   Raw data doesn’t exist
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#data-cleaning">
+   Data Cleaning
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#data-types">
+     Data types
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#summary-cleaning-up-data-types">
+       Summary: Cleaning up data-types
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#missing-data">
+     Missing data
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#unfaithful-data">
+     Unfaithful data
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#code-design">
+     Code Design
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+        </nav>
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="cleaning-messy-data">
+<h1>Cleaning Messy Data<a class="headerlink" href="#cleaning-messy-data" title="Permalink to this headline">¶</a></h1>
+<hr class="docutils" />
+<div class="section" id="raw-data-doesn-t-exist">
+<h2>Raw data doesn’t exist<a class="headerlink" href="#raw-data-doesn-t-exist" title="Permalink to this headline">¶</a></h2>
+<p>A dataset, at best, represents a process under study. However, information is always lost and biases are often introduced between the occurrence of the process and recording the observations in a dataset. A person must decide what relevant measurements to make and implement the instrumentation. These human decisions create a gap between the process under study and the observations being used to study it.</p>
+<p>The following terms, previously discussed in relation to the scientific method, describe the core objects of study in data science:</p>
+<ul class="simple">
+<li><p>A <strong>data generating process (DGP)</strong> is the underlying, real-world mechanism that generates the observed data.</p></li>
+<li><p><strong>Observed data</strong> (creating a dataset) are incomplete artifacts of the data generating process.</p></li>
+<li><p>A <strong>(probability) model</strong> is a simplified explanation of the data generating process. The process described using a model is compared to the observed data to judge the quality of the explanation.</p></li>
+</ul>
+<p><strong>Example:</strong> …</p>
+<p>To make life more difficult, data scientists often find themselves working with already existing datasets created for purposes different than their current interest. In these cases, special care must be taken to understand both what process the dataset represents and how well it represents it. As such, the data scientist should be an ever-skeptical detective attempting to describe the story of how the dataset came to be, including:</p>
+<ol class="simple">
+<li><p>a rough description of the assumptions on the underlying data generating process,</p></li>
+<li><p>a detailed description of how the DGP came to populate each field in the dataset (the measurements),</p></li>
+<li><p>a detailed description of any data processing and/or storage decisions that affected the values in the dataset.</p></li>
+</ol>
+<p>These descriptions together form the data’s <strong>provenance</strong>.</p>
+<p>“Messy data” are deviations from the process being modeled that <em>are not</em> due to randomness. Armed with the provenance for a dataset, the data scientist “cleans” the messy data to best reflect the data generating process.</p>
+</div>
+<div class="section" id="data-cleaning">
+<h2>Data Cleaning<a class="headerlink" href="#data-cleaning" title="Permalink to this headline">¶</a></h2>
+<p><strong>Definition:</strong> Data cleaning is the process of transforming data into a faithful representation of an underlying data generating process to facilitate subsequent analysis.</p>
+<p>A common procedure for data cleaning often involves:</p>
+<ol class="simple">
+<li><p>Fixing data types so columns reflect the <em>kind</em> of data in each field,</p></li>
+<li><p>Resolving ambiguities and inconsistencies in the data,</p></li>
+<li><p>Identifying corrupt or unlikely values for removal, fixing, or declaration as missing.</p></li>
+</ol>
+<p>Each of these procedures will require applying an arsenal of new Pandas methods to the columns of an existing dataset, while storing the result in a cleaned dataset.</p>
+<div class="section" id="data-types">
+<h3>Data types<a class="headerlink" href="#data-types" title="Permalink to this headline">¶</a></h3>
+<p>Datasets are often designed for human consumption, rather than for computation. Thus, a data scientist attempting to simply describe the contents of a dataset must first fix data-type errors. Whenever possible, one should leverage existing dataset documentation (such as a <em>data dictionary</em> or a <em>database schema</em>) to set the data-types. In the absence of such resources, one must infer the correct types by reasoning about the process that generated the data.</p>
+<ul class="simple">
+<li><p><strong>Cleaning the data types</strong> of the columns of a dataset involves resolving the data types present in the columns of a dataset with the <em>kind of data</em> represented in each column.</p></li>
+</ul>
+<p>Such cleaning is illustrated in the example below.</p>
+<p><strong>Example:</strong> The observations contained in the dataset below consists of each campus of the University of California. These observations derive from the <a class="reference external" href="https://collegescorecard.ed.gov/data/">College Scorecard Dataset</a>. Each observation consists of the follow attributes:</p>
+<ol class="simple">
+<li><p>COLLEGE_ID: unique ID for each college</p></li>
+<li><p>NAME: name of the institution</p></li>
+<li><p>UNDERGRAD_POP: the size of each university’s undergraduate population</p></li>
+<li><p>PCT_FED_LOAN: the percentage of students at the university who took out federal student loans</p></li>
+<li><p>MEDIAN_GRAD_DEBT: the median debt that students hold upon graduation</p></li>
+<li><p>SETTING: the type of environment in which the university is located</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">uc</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/ucschools.csv&#39;</span><span class="p">)</span>
+<span class="n">uc</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>COLLEGE_ID</th>
+      <th>NAME</th>
+      <th>UNDERGRAD_POP</th>
+      <th>PCT_FED_LOAN</th>
+      <th>MEDIAN_GRAD_DEBT</th>
+      <th>SETTING</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>131200.0</td>
+      <td>University of California-Berkeley</td>
+      <td>30574.0</td>
+      <td>23.73%</td>
+      <td>$13200</td>
+      <td>City</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>131300.0</td>
+      <td>University of California-Davis</td>
+      <td>30046.0</td>
+      <td>36.0%</td>
+      <td>$14000</td>
+      <td>City</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>131400.0</td>
+      <td>University of California-Irvine</td>
+      <td>29295.0</td>
+      <td>36.4%</td>
+      <td>$16500</td>
+      <td>Suburban</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>132000.0</td>
+      <td>University of California-Santa Barbara</td>
+      <td>22181.0</td>
+      <td>36.32%</td>
+      <td>$16300</td>
+      <td>Suburban</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>132100.0</td>
+      <td>University of California-Santa Cruz</td>
+      <td>17577.0</td>
+      <td>46.41%</td>
+      <td>$19700</td>
+      <td>Suburban</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>4127100.0</td>
+      <td>University of California-Merced</td>
+      <td>7375.0</td>
+      <td>50.13%</td>
+      <td>$19018</td>
+      <td>Rural</td>
+    </tr>
+  </tbody>
+</table>
+<p>9 rows × 6 columns</p>
+</div></div></div>
+</div>
+<p>Any attempts to perform an exploratory data analysis on the columns of the <code class="docutils literal notranslate"><span class="pre">uc</span></code> dataset would quickly produce type-errors (verify this yourself!). To assess each field of the <code class="docutils literal notranslate"><span class="pre">uc</span></code> dataset, Pandas provides a DataFrame property <code class="docutils literal notranslate"><span class="pre">.dtypes</span></code> that returns a series with the data type of each column.</p>
+<p>The table <code class="docutils literal notranslate"><span class="pre">uc</span></code> contain columns of <code class="docutils literal notranslate"><span class="pre">float</span></code> and <code class="docutils literal notranslate"><span class="pre">object</span></code> data-types. Recall that <code class="docutils literal notranslate"><span class="pre">object</span></code> columns contain mixed data-types and are usually indicative of the presence of <code class="docutils literal notranslate"><span class="pre">string</span></code> values. Determine which data-types in the table match the data-types implied by the kind of attribute each column contains.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">uc</span><span class="o">.</span><span class="n">dtypes</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>COLLEGE_ID          float64
+NAME                 object
+UNDERGRAD_POP       float64
+PCT_FED_LOAN         object
+MEDIAN_GRAD_DEBT     object
+SETTING              object
+dtype: object
+</pre></div>
+</div>
+</div>
+</div>
+<p><em>COLLEGE_ID Column:</em> This column is a unique identifier for each university. As there doesn’t seem to be a meaningful order to the column, it is likely <em>nominal</em>. Since floating-point numbers are subject to rounding errors, representing COLLEGE_ID as a float might change the unique identifier for an observation. Thus, such column should be represented as either an integer-type or string-type. While either choice is faithful to the meaning of the field, storing the values as <code class="docutils literal notranslate"><span class="pre">int</span></code>-types is more space-efficient.</p>
+<p><em>Remark:</em> Why are the values float-type in the first place? Data processing programs often incorrectly infer data-types. If a column is purely numeric, the program will assume the column is quantitative in nature.</p>
+<p>Transform the type of the column using the <code class="docutils literal notranslate"><span class="pre">astype</span></code> Series method:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">uc</span><span class="p">[</span><span class="s1">&#39;COLLEGE_ID&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0     131200
+1     131300
+2     131400
+      ...   
+6     132000
+7     132100
+8    4127100
+Name: COLLEGE_ID, Length: 9, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<p><em>PCT_FED_LOAN Column:</em> This column represents a quantitative column, yet the column in Pandas is of <code class="docutils literal notranslate"><span class="pre">object</span></code> type. One can confirm these values are strings by inspecting one of the entries:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ucb_loans</span> <span class="o">=</span> <span class="n">uc</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;PCT_FED_LOAN&#39;</span><span class="p">]</span>
+<span class="n">ucb_loans</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">ucb_loans</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(&#39;23.73%&#39;, str)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Because of the presence of the <code class="docutils literal notranslate"><span class="pre">%</span></code> symbol, Pandas doesn’t immediately know how to coerce the values of PCT_FED_LOAN to float-type (verify this!). The column requires cleaning first: strip off the <code class="docutils literal notranslate"><span class="pre">%</span></code>, then coerce the remaining number to a float-type. To strip off the <code class="docutils literal notranslate"><span class="pre">%</span></code> characters, use the string methods Pandas provides within its <code class="docutils literal notranslate"><span class="pre">str</span></code> name-space. The cleaning steps are as follows:</p>
+<ol class="simple">
+<li><p>strip the <code class="docutils literal notranslate"><span class="pre">%</span></code> character off the end of each string using <code class="docutils literal notranslate"><span class="pre">Series.str.strip</span></code>,</p></li>
+<li><p>coerce the remain string to a float using <code class="docutils literal notranslate"><span class="pre">astype</span></code>,</p></li>
+<li><p>convert the percentage (between 0-100) to a proportion (between 0-1).</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
+    <span class="n">uc</span><span class="p">[</span><span class="s1">&#39;PCT_FED_LOAN&#39;</span><span class="p">]</span>
+    <span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;%&#39;</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+    <span class="o">/</span> <span class="mi">100</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0    0.2373
+1    0.3600
+2    0.3640
+      ...  
+6    0.3632
+7    0.4641
+8    0.5013
+Name: PCT_FED_LOAN, Length: 9, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p><em>MEDIAN_GRAD_DEBT Column:</em> Similarly, the median debt at graduation is a quantitative column being represent as a string-type because of the presence of the <code class="docutils literal notranslate"><span class="pre">$</span></code> character. A similar process translates these formatted strings into float-types:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
+    <span class="n">uc</span><span class="p">[</span><span class="s1">&#39;MEDIAN_GRAD_DEBT&#39;</span><span class="p">]</span>
+    <span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;$&#39;</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0    13200.0
+1    14000.0
+2    16500.0
+      ...   
+6    16300.0
+7    19700.0
+8    19018.0
+Name: MEDIAN_GRAD_DEBT, Length: 9, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p><em>SETTING Column:</em> This column is ordinal, as there is an ordering of a university’s setting by population density. The ordering of the values is:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Rural</span> <span class="o">&lt;</span> <span class="n">Suburban</span> <span class="o">&lt;</span> <span class="n">City</span> <span class="o">&lt;</span> <span class="n">Urban</span>
+</pre></div>
+</div>
+<p>There are three options for cleaning an ordinal column, each with advantages and disadvantages. The ordinal column can be left as is, using the given string representation, mapped to integer values reflecting the ordering described above, or encoded using a Pandas <code class="docutils literal notranslate"><span class="pre">Categorical</span></code> data-type.</p>
+<p>For example, one can create an explicit integer-encoding by passing a dictionary to the <code class="docutils literal notranslate"><span class="pre">replace</span></code> method:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">encoding</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;Rural&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s1">&#39;Suburban&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s1">&#39;City&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="s1">&#39;Urban&#39;</span><span class="p">:</span> <span class="mi">3</span>
+<span class="p">}</span>
+
+<span class="n">uc</span><span class="p">[</span><span class="s1">&#39;SETTING&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">encoding</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0    2
+1    2
+2    1
+    ..
+6    1
+7    1
+8    0
+Name: SETTING, Length: 9, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<p>Alternatively, Pandas has a <code class="docutils literal notranslate"><span class="pre">categorical</span></code> data-type that does this conversion automatically.  However, a categorical data-type representing an ordinal column must have the order explicitly defined:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">values</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Rural&#39;</span><span class="p">,</span> <span class="s1">&#39;Suburban&#39;</span><span class="p">,</span> <span class="s1">&#39;City&#39;</span><span class="p">,</span> <span class="s1">&#39;Urban&#39;</span><span class="p">]</span> <span class="c1"># with order!</span>
+<span class="n">setting_dtype</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">CategoricalDtype</span><span class="p">(</span><span class="n">categories</span><span class="o">=</span><span class="n">values</span><span class="p">,</span> <span class="n">ordered</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">setting_dtype</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CategoricalDtype(categories=[&#39;Rural&#39;, &#39;Suburban&#39;, &#39;City&#39;, &#39;Urban&#39;], ordered=True)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">uc</span><span class="p">[</span><span class="s1">&#39;SETTING&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">setting_dtype</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0        City
+1        City
+2    Suburban
+       ...   
+6    Suburban
+7    Suburban
+8       Rural
+Name: SETTING, Length: 9, dtype: category
+Categories (4, object): [Rural &lt; Suburban &lt; City &lt; Urban]
+</pre></div>
+</div>
+</div>
+</div>
+<p><em>UNDERGRAD_POP Column:</em> This column is quantitative, as arithmetic on this column makes sense. For example, the average or total undergraduate populations across schools represent meaningful quantities. As such, even though the column represents integer counts (students don’t come in fractions!), float-types can be considered appropriate, along with integer-types.</p>
+<p>Finally, one can combine the cleaning steps above into a new table:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cleaned_uc</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span>
+        <span class="n">COLLEGE_ID</span><span class="o">=</span><span class="n">uc</span><span class="p">[</span><span class="s1">&#39;COLLEGE_ID&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">),</span>
+        <span class="n">NAME</span><span class="o">=</span><span class="n">uc</span><span class="p">[</span><span class="s1">&#39;NAME&#39;</span><span class="p">],</span>
+        <span class="n">UNDERGRAD_POP</span><span class="o">=</span><span class="n">uc</span><span class="p">[</span><span class="s1">&#39;UNDERGRAD_POP&#39;</span><span class="p">],</span>
+        <span class="n">PCT_FED_LOAN</span><span class="o">=</span><span class="p">(</span><span class="n">uc</span><span class="p">[</span><span class="s1">&#39;PCT_FED_LOAN&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;%&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span> <span class="o">/</span> <span class="mi">100</span><span class="p">),</span>
+        <span class="n">MEDIAN_GRAD_DEBT</span><span class="o">=</span><span class="n">uc</span><span class="p">[</span><span class="s1">&#39;MEDIAN_GRAD_DEBT&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;$&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">),</span>
+        <span class="n">SETTING</span><span class="o">=</span><span class="n">uc</span><span class="p">[</span><span class="s1">&#39;SETTING&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">setting_dtype</span><span class="p">)</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cleaned_uc</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>COLLEGE_ID</th>
+      <th>NAME</th>
+      <th>UNDERGRAD_POP</th>
+      <th>PCT_FED_LOAN</th>
+      <th>MEDIAN_GRAD_DEBT</th>
+      <th>SETTING</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>131200</td>
+      <td>University of California-Berkeley</td>
+      <td>30574.0</td>
+      <td>0.2373</td>
+      <td>13200.0</td>
+      <td>City</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>131300</td>
+      <td>University of California-Davis</td>
+      <td>30046.0</td>
+      <td>0.3600</td>
+      <td>14000.0</td>
+      <td>City</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>131400</td>
+      <td>University of California-Irvine</td>
+      <td>29295.0</td>
+      <td>0.3640</td>
+      <td>16500.0</td>
+      <td>Suburban</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>132000</td>
+      <td>University of California-Santa Barbara</td>
+      <td>22181.0</td>
+      <td>0.3632</td>
+      <td>16300.0</td>
+      <td>Suburban</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>132100</td>
+      <td>University of California-Santa Cruz</td>
+      <td>17577.0</td>
+      <td>0.4641</td>
+      <td>19700.0</td>
+      <td>Suburban</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>4127100</td>
+      <td>University of California-Merced</td>
+      <td>7375.0</td>
+      <td>0.5013</td>
+      <td>19018.0</td>
+      <td>Rural</td>
+    </tr>
+  </tbody>
+</table>
+<p>9 rows × 6 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cleaned_uc</span><span class="o">.</span><span class="n">dtypes</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>COLLEGE_ID             int64
+NAME                  object
+UNDERGRAD_POP        float64
+PCT_FED_LOAN         float64
+MEDIAN_GRAD_DEBT     float64
+SETTING             category
+dtype: object
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Example:</strong> Sometimes a column contains values that do not easily coerce to the intended type. For example, suppose the Series given below needs to be represented as a column of float-type:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">numbers</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="s1">&#39;1,2,2.5,3 1/4,6 7/8,8.3,9,11,99/3&#39;</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">))</span>
+<span class="n">numbers</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0       1
+1       2
+2     2.5
+     ... 
+6       9
+7      11
+8    99/3
+Length: 9, dtype: object
+</pre></div>
+</div>
+</div>
+</div>
+<p>Attempting to use <code class="docutils literal notranslate"><span class="pre">astype(float)</span></code> will result in a <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>, as python doesn’t know how to convert ‘3 1/4’ to a float. To convert this column to float type, one must write a custom function that handles the case of fractional values.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">convert_mixed_to_float</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;converts a string representation of an integer,</span>
+<span class="sd">    decimal, or proper fraction to a float&#39;&#39;&#39;</span>
+    <span class="k">if</span> <span class="s1">&#39;/&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">s</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="s1">&#39; &#39;</span> <span class="ow">in</span> <span class="n">s</span><span class="p">:</span>
+            <span class="n">whole</span><span class="p">,</span> <span class="n">frac</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">whole</span><span class="p">,</span> <span class="n">frac</span> <span class="o">=</span> <span class="s1">&#39;0&#39;</span><span class="p">,</span> <span class="n">s</span>
+
+        <span class="n">num</span><span class="p">,</span> <span class="n">denom</span> <span class="o">=</span> <span class="n">frac</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">whole</span><span class="p">)</span> <span class="o">+</span> <span class="nb">float</span><span class="p">(</span><span class="n">num</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">denom</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">numbers</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">convert_mixed_to_float</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0     1.0
+1     2.0
+2     2.5
+     ... 
+6     9.0
+7    11.0
+8    33.0
+Length: 9, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p><em>Remark:</em> The pandas function <code class="docutils literal notranslate"><span class="pre">pd.to_numeric(series,</span> <span class="pre">errors='coerce')</span></code> blindly coerces values of a Series to numeric values. When the keyword argument <code class="docutils literal notranslate"><span class="pre">errors='coerce'</span></code> silently replaces any non-coercible values with a missing value. This often leads to dropping data that never should have been dropped; non-coercible data should be handled with care, as it’s often present due to systematic issues with how the data was recorded. If such a function was used on <code class="docutils literal notranslate"><span class="pre">numbers</span></code>, 1/3 of the data would be lost!</p>
+<div class="section" id="summary-cleaning-up-data-types">
+<h4>Summary: Cleaning up data-types<a class="headerlink" href="#summary-cleaning-up-data-types" title="Permalink to this headline">¶</a></h4>
+<p><strong>Quantitative Columns</strong> should be represented with numeric data types (float and integer types). However, float-types should only represent quantitative columns. As float values are subject to precision errors, one can only be guaranteed that a value is represented by a <em>similar value</em>. This similarity only makes sense with quantitative data.</p>
+<p><strong>Ordinal data</strong> should be represented with a data type that supports ordering (e.g. string or integer types) and has infinite precision (so the label doesn’t change). Three common approaches are outlined below:</p>
+<ol class="simple">
+<li><p>left as is, using the given string representation.</p>
+<ul class="simple">
+<li><p>Advantages: easy to interpret the values (they remain unchanged)</p></li>
+<li><p>Disadvantages: the string ordering may not match the ordering of the column; strings are inefficient to store.</p></li>
+</ul>
+</li>
+<li><p>mapped to integer values, reflecting the ordering of the values of the column (called <em>integer coding</em>).</p>
+<ul class="simple">
+<li><p>Advantages: the ordering of the ordinal values are captured by the integers; integers are efficient to store.</p></li>
+<li><p>Disadvantages: integers obscure what the value originally represented.</p></li>
+</ul>
+</li>
+<li><p>encoded using a Pandas <code class="docutils literal notranslate"><span class="pre">Categorical</span></code> data-type.</p>
+<ul class="simple">
+<li><p>Advantages: stores and orders values as integers, while displaying them as strings.</p></li>
+<li><p>Disadvantages: relatively new feature in Pandas that may not always be available to use.</p></li>
+</ul>
+</li>
+</ol>
+<p><strong>Nominal data</strong> should be represented by a data type with infinite precision. As the values are merely labels, any change in the values would be an arbitrary change to the values of the column.</p>
+</div>
+</div>
+<div class="section" id="missing-data">
+<h3>Missing data<a class="headerlink" href="#missing-data" title="Permalink to this headline">¶</a></h3>
+<p>While Pandas encodes missing values using the value <code class="docutils literal notranslate"><span class="pre">NaN</span></code>, missing data may appear in a dataset in a variety ways. Different data processing and storage systems may use different conventions (e.g. <code class="docutils literal notranslate"><span class="pre">NULL</span></code>, <code class="docutils literal notranslate"><span class="pre">None</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code>) or may disallow missing values entirely. This section focuses on strategies for <em>identifying</em> the missing values in a dataset; later, the course confronts the problem of how to handle the identified missing values.</p>
+<p>Common examples of ‘placeholder’ missing values that are not obviously missing at first glance:</p>
+<ol class="simple">
+<li><p>The integer <code class="docutils literal notranslate"><span class="pre">0</span></code> is a common stand-in for missing values, especially when the value is unlikely to occur in a dataset. For example, someone of age</p></li>
+<li><p>The integer <code class="docutils literal notranslate"><span class="pre">-1</span></code> is a common stand-in for missing values for columns containing non-negative values. For example, a column containing the “number of children in a family” might use <code class="docutils literal notranslate"><span class="pre">-1</span></code> as a missing value.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">1900</span></code> and <code class="docutils literal notranslate"><span class="pre">1970</span></code> are common placeholder for missing dates in Excel and UNIX respectively. Each of these conventions picks a time as ‘time zero’ and stores dates and times as “time elapsed since time zero” (1970 was roughly the year UNIX was created). In this way, these placeholders are both special case of using <code class="docutils literal notranslate"><span class="pre">0</span></code> as a missing value.</p></li>
+</ol>
+<p><strong>Example:</strong> The fitness tracking app Strava encodes missing location coordinates as <code class="docutils literal notranslate"><span class="pre">0,0</span></code>. This encoding gives the impression of Strava user activity at 0°00’00.0”N+0°00’00.0”E, dubbed <a class="reference external" href="https://en.wikipedia.org/wiki/Null_Island">Null Island</a>.</p>
+<ul class="simple">
+<li><p>While this is a real location, it’s location in the middle of the Atlantic ocean makes it highly unlikely to be a meaningful value.</p></li>
+<li><p>The common usage of <code class="docutils literal notranslate"><span class="pre">0</span></code> as a missing value makes it likely that this activity comes from users with their location tracking disabled.</p></li>
+</ul>
+<p><strong>Example:</strong> The bike sharing company <a class="reference external" href="https://bluebikes.com">Bluebikes</a> makes bike usage data available for the city of Boston. Plotting the distribution of Bluebikes users’ year of birth reveals a large spike of riders born in the year 1969.</p>
+<p><img alt="distribution_of_birth" src="../../_images/bike.png" /></p>
+<p>Is this spike unreasonably large? Or is it possible riders of exactly that age use the bike share service that much more?</p>
+<p>Most likely these values are missing values, as 1969 corresponds to the value -1 when encoded as a UNIX time-stamp. More problematic is that there really are riders whose birth year is 1969! In this case, telling apart the missing values from the true values may be difficult.</p>
+<p><strong>Example:</strong> The college scorecard data contains information on many colleges beyond the University of California campuses. The table <code class="docutils literal notranslate"><span class="pre">colleges</span></code> below contains a much larger sample of universities across the United States.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">colleges</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/colleges.csv&#39;</span><span class="p">)</span>
+<span class="n">colleges</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>COLLEGE_ID</th>
+      <th>NAME</th>
+      <th>UNDERGRAD_POP</th>
+      <th>PCT_FED_LOAN</th>
+      <th>MEDIAN_GRAD_DEBT</th>
+      <th>SETTING</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>4261</th>
+      <td>1005200.0</td>
+      <td>Jefferson Lewis BOCES-Practical Nursing Program</td>
+      <td>77.0</td>
+      <td>68.18%</td>
+      <td>$7250</td>
+      <td>Rural</td>
+    </tr>
+    <tr>
+      <th>1604</th>
+      <td>2099700.0</td>
+      <td>Ross Medical Education Center-Flint</td>
+      <td>153.0</td>
+      <td>62.5%</td>
+      <td>$9500</td>
+      <td>Suburb</td>
+    </tr>
+    <tr>
+      <th>830</th>
+      <td>1113300.0</td>
+      <td>College of Eastern Idaho</td>
+      <td>698.0</td>
+      <td>34.04%</td>
+      <td>$9500</td>
+      <td>Urban</td>
+    </tr>
+    <tr>
+      <th>6031</th>
+      <td>4241500.0</td>
+      <td>Wave Leadership College</td>
+      <td>52.0</td>
+      <td>53.23%</td>
+      <td>PrivacySuppressed</td>
+      <td>Urban</td>
+    </tr>
+    <tr>
+      <th>4814</th>
+      <td>3855300.0</td>
+      <td>Ecclesia College</td>
+      <td>229.0</td>
+      <td>51.29%</td>
+      <td>$16500</td>
+      <td>Rural</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>The previous code written for cleaning <code class="docutils literal notranslate"><span class="pre">MEDIAN_GRAD_DEBT</span></code> no longer works in this larger dataset (check this code throws an exception), as some values don’t conform to the standard representation of US dollars. Before generalizing the cleaning code to the larger dataset, it’s necessary to understand the extent to which these “unusual values” are present.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">check_float</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;returns true if a value is coercible to a float;</span>
+<span class="sd">    otherwise returns false&#39;&#39;&#39;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Print the distribution of values that aren’t of the the form <code class="docutils literal notranslate"><span class="pre">$</span></code> followed by a string coercible to a float value:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">nonnums</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">colleges</span><span class="p">[</span><span class="s1">&#39;MEDIAN_GRAD_DEBT&#39;</span><span class="p">]</span>
+    <span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;$&#39;</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">check_float</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">colleges</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="o">~</span><span class="n">nonnums</span><span class="p">,</span> <span class="s1">&#39;MEDIAN_GRAD_DEBT&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>PrivacySuppressed    1175
+Name: MEDIAN_GRAD_DEBT, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<p>In the larger dataset, the only value that doesn’t represent dollar amounts is ‘PrivacySuppressed’. The meaning of this value is explained in the <a class="reference external" href="https://collegescorecard.ed.gov/data/documentation/">dataset documentation</a>:</p>
+<blockquote>
+<div><p>any data not reported in order to protect an individual’s privacy are shown as PrivacySuppressed.</p>
+</div></blockquote>
+<p>Thus, it seems reasonable to interpret this value as a missing value and replace it with NULL.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">median_grad_debt_cleaner</span><span class="p">(</span><span class="n">ser</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">ser</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;PrivacySuppressed&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">NaN</span><span class="p">)</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;$&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">colleges_cleaned</span> <span class="o">=</span> <span class="n">colleges</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span><span class="n">csc_cleaning_map</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">colleges_cleaned</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>COLLEGE_ID</th>
+      <th>NAME</th>
+      <th>UNDERGRAD_POP</th>
+      <th>PCT_FED_LOAN</th>
+      <th>MEDIAN_GRAD_DEBT</th>
+      <th>SETTING</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>100200</td>
+      <td>Alabama A &amp; M University</td>
+      <td>4824.0</td>
+      <td>0.7697</td>
+      <td>32750.0</td>
+      <td>Urban</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>105200</td>
+      <td>University of Alabama at Birmingham</td>
+      <td>12866.0</td>
+      <td>0.5207</td>
+      <td>21833.0</td>
+      <td>Urban</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2503400</td>
+      <td>Amridge University</td>
+      <td>322.0</td>
+      <td>0.8741</td>
+      <td>22890.0</td>
+      <td>Urban</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>6175</th>
+      <td>4106301</td>
+      <td>Palm Beach Academy of Health &amp; Beauty-Distinct...</td>
+      <td>5.0</td>
+      <td>0.0714</td>
+      <td>6333.0</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>6176</th>
+      <td>295600</td>
+      <td>Piedmont International University</td>
+      <td>336.0</td>
+      <td>0.4847</td>
+      <td>12498.0</td>
+      <td>Urban</td>
+    </tr>
+    <tr>
+      <th>6177</th>
+      <td>4250501</td>
+      <td>National Personal Training Institute-Tampa</td>
+      <td>32.0</td>
+      <td>0.2982</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+<p>6178 rows × 6 columns</p>
+</div></div></div>
+</div>
+</div>
+<div class="section" id="unfaithful-data">
+<h3>Unfaithful data<a class="headerlink" href="#unfaithful-data" title="Permalink to this headline">¶</a></h3>
+<p>The provenance of a dataset, from a real-world event to a dataset displayed in a notebook, is often long and complicated.  However, for this data to be of any use, one must assess how well it captures the “reality” it’s meant to describe. Once a dataset is properly typed, it should be assessed for its faithfulness to the data generating process.</p>
+<p>Generally, such an assessment involves asking if the data contain unrealistic or “incorrect” values? For example:</p>
+<ul class="simple">
+<li><p>Are there dates in the future for events that occurred the past?</p></li>
+<li><p>Are there locations in the dataset that don’t exist?</p></li>
+<li><p>Are there negative counts? (is that a missing value?)</p></li>
+<li><p>Are names misspelled? Do single names have variants such as nicknames?</p></li>
+<li><p>Are there unreasonably large outliers?</p></li>
+</ul>
+<p>Assessing for faithfulness involves being skeptical of the data known data provenance and doing research into the assumptions on how the data were generated. This assessment generally involves understanding and identifying problems with the data, then attempting to “fix” the problem. How to fix unfaithful data depends on the context:</p>
+<ul class="simple">
+<li><p>Poor quality observations may be dropped if there are very few or sufficient random.</p></li>
+<li><p>The likely values might be (approximately) inferable from either researching into data provenance, or from other values in the dataset.</p></li>
+<li><p>The source of problem might be fixed through changes in the experimental design, instrumentation, or data collection.</p></li>
+</ul>
+<p>Assessing the faithfulness of the data to the data generating process involves interpreting exploratory data analyses of the attributes.</p>
+<p><strong>Example:</strong> The ‘UNDERGRAD_POP’ attribute represents the count of undergraduates at colleges in the dataset. An initial assessment of this attribute involves plotting the distribution of undergraduates and analyzing the values and their proportions:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">colleges_cleaned</span><span class="p">[</span><span class="s1">&#39;UNDERGRAD_POP&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+    <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;hist&#39;</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span> <span class="n">logy</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> 
+    <span class="n">title</span><span class="o">=</span><span class="s1">&#39;distrubtion of college population (undergraduate)&#39;</span>
+<span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/cleaning_46_0.png" src="../../_images/cleaning_46_0.png" />
+</div>
+</div>
+<p>One interesting observation is how <em>many</em> small colleges are in the dataset (note the log-scale!). How small are they? Are the values ever negative?</p>
+<p>Plotting colleges with fewer than 1 student reveals six colleges with an undergraduate population of size 0 and no colleges with negative student populations:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># What could this possibly mean?</span>
+<span class="n">colleges_cleaned</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="n">colleges_cleaned</span><span class="o">.</span><span class="n">UNDERGRAD_POP</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>COLLEGE_ID</th>
+      <th>NAME</th>
+      <th>UNDERGRAD_POP</th>
+      <th>PCT_FED_LOAN</th>
+      <th>MEDIAN_GRAD_DEBT</th>
+      <th>SETTING</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2702</th>
+      <td>2154402</td>
+      <td>Beau Monde College of Hair Design</td>
+      <td>0.0</td>
+      <td>0.0962</td>
+      <td>8973.0</td>
+      <td>Urban</td>
+    </tr>
+    <tr>
+      <th>3107</th>
+      <td>2188300</td>
+      <td>Pentecostal Theological Seminary</td>
+      <td>0.0</td>
+      <td>0.0000</td>
+      <td>NaN</td>
+      <td>Urban</td>
+    </tr>
+    <tr>
+      <th>4934</th>
+      <td>489812</td>
+      <td>Miami-Jacobs Career College-Springboro</td>
+      <td>0.0</td>
+      <td>0.9706</td>
+      <td>24549.5</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>5164</th>
+      <td>469205</td>
+      <td>Dorsey Business Schools-Farmington Hills</td>
+      <td>0.0</td>
+      <td>1.0000</td>
+      <td>12986.0</td>
+      <td>Urban</td>
+    </tr>
+    <tr>
+      <th>5574</th>
+      <td>1091302</td>
+      <td>Minneapolis Media Institute</td>
+      <td>0.0</td>
+      <td>0.8706</td>
+      <td>14438.0</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>6155</th>
+      <td>405740</td>
+      <td>National American University-Westwood Teach-Ou...</td>
+      <td>0.0</td>
+      <td>0.7027</td>
+      <td>30223.0</td>
+      <td>Urban</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>How might a school have an undergraduate population of size zero? Is this a mistake or reality?</p>
+<p>The answer may be in how the government defines an undergraduate student. It’s reasonable to assume that certain schools, like beauty schools or theological seminaries, might service populations outside of an undergraduate program. However, this also brings up the question of why there aren’t <em>more</em> colleges with an undergraduate population of zero! More research is necessary to understand the reasonableness of a zero value in this column.</p>
+<p><strong>Example:</strong> The college NAME attribute contains the name of each college in the dataset. One might expect this column to uniquely represent a college; computing the head of the empirical distribution of college names reveals this is not the case:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">colleges_cleaned</span><span class="o">.</span><span class="n">NAME</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Stevens-Henager College                   7
+Columbia College                          5
+McCann School of Business &amp; Technology    5
+                                         ..
+Greensboro College                        1
+Austin Kade Academy                       1
+University of California-Davis            1
+Name: NAME, Length: 6068, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<p>Among these 7 duplicate ‘Stevens-Henager Colleges’, are they:</p>
+<ul class="simple">
+<li><p>Truly the same college? (e.g. an error in recording)</p></li>
+<li><p>Are they different, but somehow related? (e.g. different branches of the same school)</p></li>
+<li><p>Are they totally unrelated? (e.g. a total coincidence they have the same name).</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">colleges_cleaned</span><span class="p">[</span><span class="n">colleges_cleaned</span><span class="o">.</span><span class="n">NAME</span> <span class="o">==</span> <span class="s1">&#39;Stevens-Henager College&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>COLLEGE_ID</th>
+      <th>NAME</th>
+      <th>UNDERGRAD_POP</th>
+      <th>PCT_FED_LOAN</th>
+      <th>MEDIAN_GRAD_DEBT</th>
+      <th>SETTING</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>3384</th>
+      <td>367400</td>
+      <td>Stevens-Henager College</td>
+      <td>205.0</td>
+      <td>0.8255</td>
+      <td>27139.0</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3385</th>
+      <td>367401</td>
+      <td>Stevens-Henager College</td>
+      <td>143.0</td>
+      <td>0.7831</td>
+      <td>27139.0</td>
+      <td>Urban</td>
+    </tr>
+    <tr>
+      <th>4521</th>
+      <td>367403</td>
+      <td>Stevens-Henager College</td>
+      <td>563.0</td>
+      <td>0.7481</td>
+      <td>27139.0</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>4833</th>
+      <td>367405</td>
+      <td>Stevens-Henager College</td>
+      <td>72.0</td>
+      <td>0.7561</td>
+      <td>27139.0</td>
+      <td>Urban</td>
+    </tr>
+    <tr>
+      <th>5438</th>
+      <td>367406</td>
+      <td>Stevens-Henager College</td>
+      <td>259.0</td>
+      <td>0.7057</td>
+      <td>27139.0</td>
+      <td>Urban</td>
+    </tr>
+    <tr>
+      <th>5576</th>
+      <td>3120302</td>
+      <td>Stevens-Henager College</td>
+      <td>111.0</td>
+      <td>0.8455</td>
+      <td>25732.0</td>
+      <td>Rural</td>
+    </tr>
+    <tr>
+      <th>5681</th>
+      <td>367411</td>
+      <td>Stevens-Henager College</td>
+      <td>111.0</td>
+      <td>0.8281</td>
+      <td>27139.0</td>
+      <td>Urban</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Since the school statistics differ across the seven colleges, the observations are likely not true duplicates. However, they might be somehow related, as the COLLEGE_IDs are close. More research is necessary to answer this question fully. Next steps might include:</p>
+<ul class="simple">
+<li><p>Retrieving the other attributes from the full college scorecard dataset (e.g. location),</p></li>
+<li><p>Looking up the colleges from another source to match the schools in the table to outside information.</p></li>
+</ul>
+</div>
+<div class="section" id="code-design">
+<h3>Code Design<a class="headerlink" href="#code-design" title="Permalink to this headline">¶</a></h3>
+<p>The task of data cleaning can be complicated and ad-hoc. The decisions involved in developing data cleaning code often uses domain-specific judgment calls that are far from obvious to someone attempting to understand the process (including the developer themselves, not long after writing the code). Data Scientists should write organized, easy-to-read, easy-to-adapt data cleaning code.</p>
+<p>An reasonable approach to writing cleaning code that deals with one column at a time is to:</p>
+<ol class="simple">
+<li><p>create a cleaning function for each column,</p></li>
+<li><p>store the cleaning functions in a dictionary, keyed by the name of the column to be cleaned,</p></li>
+<li><p>apply the cleaning functions to the columns using <code class="docutils literal notranslate"><span class="pre">DataFrame.agg</span></code>.</p></li>
+</ol>
+<p>While it may seem overkill to write a separate function for each column, this boilerplate has several advantages over ad-hoc procedural code:</p>
+<ul class="simple">
+<li><p>The docstring of each cleaning function can contain descriptions of both the cleaning itself as well as assumptions made in the development of the cleaning logic.</p></li>
+<li><p>Organizing logic into separate functions reduces code complexity as columns are added/changed, or as the cleaning code evolves into more sophisticated logic.</p></li>
+<li><p>Applying a dictionary of functions via <code class="docutils literal notranslate"><span class="pre">agg</span></code> allows same code structure to work with parallel processing library such as Spark and Dask.</p></li>
+</ul>
+<p><strong>Example:</strong> Using this approach, the cleaning code for the College Scorecard data looks as follows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">college_id_cleaner</span><span class="p">(</span><span class="n">ser</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;returns identifier COLLEGE_ID as an integer type&#39;&#39;&#39;</span>
+    <span class="k">return</span> <span class="n">ser</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">pct_fed_loan_cleaner</span><span class="p">(</span><span class="n">ser</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;returns PCT_FED_LOAN as a proportion between 0 and 1.&#39;&#39;&#39;</span>
+    <span class="k">return</span> <span class="n">ser</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;%&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span> <span class="o">/</span> <span class="mi">100</span>
+
+<span class="k">def</span> <span class="nf">median_grad_debt_cleaner</span><span class="p">(</span><span class="n">ser</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;returns MEDIAN_GRAD_DEBT as a float (in USD)&#39;&#39;&#39;</span>
+    <span class="k">return</span> <span class="n">ser</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;PrivacySuppressed&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">NaN</span><span class="p">)</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;$&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">setting_cleaner</span><span class="p">(</span><span class="n">ser</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;returns SETTING column as a category data-type</span>
+<span class="sd">    ordered as RURAL &lt; SUBURBAN &lt; CITY &lt; URBAN&#39;&#39;&#39;</span>
+    <span class="k">return</span> <span class="n">ser</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">setting_dtype</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">csc_cleaning_map</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;COLLEGE_ID&#39;</span><span class="p">:</span> <span class="n">college_id_cleaner</span><span class="p">,</span>
+    <span class="s1">&#39;PCT_FED_LOAN&#39;</span><span class="p">:</span> <span class="n">pct_fed_loan_cleaner</span><span class="p">,</span>
+    <span class="s1">&#39;MEDIAN_GRAD_DEBT&#39;</span><span class="p">:</span> <span class="n">median_grad_debt_cleaner</span><span class="p">,</span>
+    <span class="s1">&#39;SETTING&#39;</span><span class="p">:</span> <span class="n">setting_cleaner</span>
+<span class="p">}</span>
+
+<span class="n">csc_cleaning_map</span> <span class="o">=</span> <span class="p">{</span><span class="n">x</span><span class="p">:</span> <span class="n">csc_cleaning_map</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">colleges</span><span class="o">.</span><span class="n">columns</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">colleges</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span><span class="n">csc_cleaning_map</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>COLLEGE_ID</th>
+      <th>NAME</th>
+      <th>UNDERGRAD_POP</th>
+      <th>PCT_FED_LOAN</th>
+      <th>MEDIAN_GRAD_DEBT</th>
+      <th>SETTING</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>100200</td>
+      <td>Alabama A &amp; M University</td>
+      <td>4824.0</td>
+      <td>0.7697</td>
+      <td>32750</td>
+      <td>Urban</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>105200</td>
+      <td>University of Alabama at Birmingham</td>
+      <td>12866.0</td>
+      <td>0.5207</td>
+      <td>21833</td>
+      <td>Urban</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2503400</td>
+      <td>Amridge University</td>
+      <td>322.0</td>
+      <td>0.8741</td>
+      <td>22890</td>
+      <td>Urban</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>6175</th>
+      <td>4106301</td>
+      <td>Palm Beach Academy of Health &amp; Beauty-Distinct...</td>
+      <td>5.0</td>
+      <td>0.0714</td>
+      <td>6333</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>6176</th>
+      <td>295600</td>
+      <td>Piedmont International University</td>
+      <td>336.0</td>
+      <td>0.4847</td>
+      <td>12498</td>
+      <td>Urban</td>
+    </tr>
+    <tr>
+      <th>6177</th>
+      <td>4250501</td>
+      <td>National Personal Training Institute-Tampa</td>
+      <td>32.0</td>
+      <td>0.2982</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+<p>6178 rows × 6 columns</p>
+</div></div></div>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./content/04"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="modifying-dataframes.html" title="previous page">Modifying DataFrames</a>
+    <a class='right-next' id="next-link" href="eda.html" title="next page">Exploratory Data Analysis (EDA): Part I</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Aaron Fraenkel<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="../../_static/js/index.3da636dd464baa7582d2.js"></script>
+
+
+    
+  </body>
+</html>

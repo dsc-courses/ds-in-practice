@@ -1,0 +1,1142 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Features with Data Pipelines &#8212; The Practice of Data Science</title>
+    
+  <link rel="stylesheet" href="../../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../../_static/js/index.3da636dd464baa7582d2.js">
+
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Modeling Basics" href="../10/introduction.html" />
+    <link rel="prev" title="Feature Engineering" href="features.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../../index.html">
+  
+  <img src="../../_static/toolbox.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">The Practice of Data Science</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../introduction.html">
+   Data Science in Practice
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Understanding Data
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../01/introduction.html">
+   Introduction to Data Science
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../01/what-is-data-science.html">
+     What is Data Science?
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../01/scientific-method.html">
+     The Scientific Method
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../01/data-science-example.html">
+     A Data Science Example
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../02/introduction.html">
+   The Basics of Tabular Data
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../02/tabular-data.html">
+     Tabular Data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../02/tabular-data.html#tables-in-python-using-pandas">
+     Tables in python, using Pandas.
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../02/methods.html">
+     Table Methods
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../02/data-types.html">
+     Data Types and Performance
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../03/introduction.html">
+   Querying and Describing Data
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../03/selecting-data.html">
+     Selecting Data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../03/kinds-of-data.html">
+     Kinds of Data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../03/categorical-distributions.html">
+     Categorical Distributions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../03/quantitative-distributions.html">
+     Quantitative Distributions
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../04/introduction.html">
+   Understanding Assumptions and Data Cleaning
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../04/modifying-dataframes.html">
+     Modifying DataFrames
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../04/cleaning.html">
+     Cleaning Messy Data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../04/eda.html">
+     Exploratory Data Analysis
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../05/introduction.html">
+   Aggregation and Extension of Data
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../05/grouping.html">
+     Data Granularity
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../05/understanding-aggregations.html">
+     Understanding Aggregations
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../05/appending-data.html">
+     Combining Data (Observations)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../05/joining-data.html">
+     Combining Data: Attributes
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../05/joining-data.html#combining-different-measurements-over-the-same-individuals">
+     Combining different measurements over the same individuals
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../05/permutation-tests.html">
+     Permutation Tests
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../05/eda-2.html">
+     Exploratory Data Analysis II
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../06/introduction.html">
+   Missing Data
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../06/defining-missing.html">
+     Definitions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../06/identifying-missing.html">
+     Identifying Missing Data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../06/handling-missing-data.html">
+     Handling Missing Data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../06/single-valued-imputation.html">
+     Single-Valued Imputation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../06/probabilistic-imputation.html">
+     Probabilistic Imputation
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Collecting Data
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../07/introduction.html">
+   Data Collection
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../07/existing-data.html">
+     Using Existing Data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../07/requests.html">
+     HTTP Requests
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../07/html.html">
+     Parsing HTML
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../08/introduction.html">
+   Information Extaction
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../08/patterns.html">
+     Text Processing
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../08/nlp.html">
+     Natural Language Processing
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 current active collapsible-parent">
+  <a class="reference internal" href="introduction.html">
+   Introduction to Features
+  </a>
+  <ul class="current collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="features.html">
+     Feature Engineering
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Data Pipelines
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Modeling With Data
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../10/introduction.html">
+   Modeling Basics
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../10/intro-modeling.html">
+     Introduction to Statistical Models
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../10/model-building.html">
+     Building Modeling Pipelines
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../11/introduction.html">
+   Bias and Variance
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../11/fitting-inference.html">
+     Model Quality (Inference)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../11/fitting-prediction.html">
+     Model Quality (Prediction)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../11/cross-validation.html">
+     Cross Validation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../11/parameter-search.html">
+     Parameter Search
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../12/introduction.html">
+   Evaluating Models; Fairness
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../12/eval.html">
+     Evaluation metrics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../12/parity.html">
+     Parity Measures
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../12/fairness.html">
+     Fairness in Machine Learning
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../_sources/content/09/data-pipelines.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+        <!-- Source interaction buttons -->
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/afraenkel/ds-in-practice/master?urlpath=tree/book/content/09/data-pipelines.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#data-transformation-in-scikit-learn">
+   Data Transformation in Scikit-Learn
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#custom-transformers">
+     Custom Transformers
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#applying-transformations-to-multiple-columns">
+     Applying Transformations to multiple columns
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#data-transformation-pipelines-in-scikit-learn">
+   Data Transformation Pipelines in Scikit Learn
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#applying-separate-transformations-to-subsets-of-columns">
+     Applying Separate Transformations to Subsets of Columns
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+        </nav>
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="features-with-data-pipelines">
+<h1>Features with Data Pipelines<a class="headerlink" href="#features-with-data-pipelines" title="Permalink to this headline">¶</a></h1>
+<hr class="docutils" />
+<p>Feature engineering can create hundreds or thousands of variables, each capturing specialized domain knowledge, so a methodical approach to developing the code for such features is important. The use of data pipelines encourage the development of flexible, clean, and performant code by:</p>
+<ol class="simple">
+<li><p>compartmentalizing the internal logic of each feature, allowing one to add and subtract them as desired,</p></li>
+<li><p>controlling possible parameters for features in one place,</p></li>
+<li><p>providing a uniform interface for composing data transformation logic.</p></li>
+</ol>
+<p>Scikit-learn implements data pipelines as sequences of <code class="docutils literal notranslate"><span class="pre">Transformer</span></code> objects.</p>
+<div class="section" id="data-transformation-in-scikit-learn">
+<h2>Data Transformation in Scikit-Learn<a class="headerlink" href="#data-transformation-in-scikit-learn" title="Permalink to this headline">¶</a></h2>
+<p>Features in Scikit-learn are generated using <em>Transformers</em>. These are classes that implement the following interface:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Transformer.set_params</span></code> defines parameters needed for the internal logic of the feature.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Transformer.fit</span></code> takes in data and determines any parameters from the data that are necessary for creating the feature, returning the ‘fit’ transformer.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Transformer.transform</span></code> takes in data and returns the feature defined by the transformer.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Transformer.fit_transform</span></code> first calls <code class="docutils literal notranslate"><span class="pre">fit</span></code> on the given data, then applies the <code class="docutils literal notranslate"><span class="pre">transform</span></code> method to the same data used to fit the Transformer.</p></li>
+</ul>
+<p><strong>Example:</strong> The <code class="docutils literal notranslate"><span class="pre">Binarizer</span></code> transformer creates a binary feature from a quantitative attribute. For example, suppose <code class="docutils literal notranslate"><span class="pre">purchases</span></code> contains a list of dollar amounts of purchases from a person in a given year:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">purchases</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([[</span><span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">3.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">25.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">50.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">6.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">101.0</span><span class="p">]],</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Amount&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">Binarizer</span></code> transformer can be used to create a binary feature <code class="docutils literal notranslate"><span class="pre">large_purchase</span></code> that is 1 if a purchase is above $20 and 0 otherwise:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">Binarizer</span>
+<span class="n">binarizer</span> <span class="o">=</span> <span class="n">Binarizer</span><span class="p">(</span><span class="n">threshold</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">binarizer</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">purchases</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[0.],
+       [0.],
+       [1.],
+       [1.],
+       [0.],
+       [1.]])
+</pre></div>
+</div>
+</div>
+</div>
+<p>This transformer is initialized with a ‘threshold’ parameter, then used to transform dollar amounts to binary values according to the threshold.</p>
+<p><em>Remark:</em> The logic of <code class="docutils literal notranslate"><span class="pre">Binarizer</span></code> depends only on the value of ‘Amount’ in a given observations. This transformer’s <code class="docutils literal notranslate"><span class="pre">fit</span></code> method doesn’t need to do anything, as it doesn’t need to use any properties from the data.</p>
+<p><strong>Example:</strong> The <code class="docutils literal notranslate"><span class="pre">MinMaxScaler</span></code> linearly scales a quantitative attribute so that the resulting feature is between 0 and 1. That is, <code class="docutils literal notranslate"><span class="pre">MinMaxScaler</span></code> transforms a dataset <code class="docutils literal notranslate"><span class="pre">X</span></code> according to the formula:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">X</span> <span class="o">-</span> <span class="n">X</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">-</span> <span class="n">X</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>For example, on the <code class="docutils literal notranslate"><span class="pre">purchases</span></code> data:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">MinMaxScaler</span>
+<span class="n">mms</span> <span class="o">=</span> <span class="n">MinMaxScaler</span><span class="p">()</span>
+<span class="n">mms</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">purchases</span><span class="p">)</span>
+<span class="n">mms</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">purchases</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[0.  ],
+       [0.02],
+       [0.24],
+       [0.49],
+       [0.05],
+       [1.  ]])
+</pre></div>
+</div>
+</div>
+</div>
+<p><em>Remark:</em> The <code class="docutils literal notranslate"><span class="pre">fit</span></code> method is required before transforming the data, as the <code class="docutils literal notranslate"><span class="pre">MinMaxScaler</span></code> must determine the minimum and maximum values of the dataset to apply the formula.</p>
+<div class="section" id="custom-transformers">
+<h3>Custom Transformers<a class="headerlink" href="#custom-transformers" title="Permalink to this headline">¶</a></h3>
+<p>If a desired feature transformation isn’t already implemented in Scikit-Learn, it can still be implemented in a straightforward way.</p>
+<p>If the custom feature transformation logic doesn’t require fitting parameters from data, the <code class="docutils literal notranslate"><span class="pre">FunctionTransformer</span></code> class implements a transformer from a given function:</p>
+<p><strong>Example:</strong> To create a Transformer that log-scales the purchases array, pass <code class="docutils literal notranslate"><span class="pre">np.log</span></code> to the <code class="docutils literal notranslate"><span class="pre">FunctionTransformer</span></code> constructor:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">FunctionTransformer</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">logscaler</span> <span class="o">=</span> <span class="n">FunctionTransformer</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">,</span> <span class="n">validate</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">logscaler</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">purchases</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Amount</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1.098612</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3.218876</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>3.912023</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1.791759</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>4.615121</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">FunctionTransformer</span></code> can also pass parameters into the custom function. For example, if instead the <code class="docutils literal notranslate"><span class="pre">purchases</span></code> data is log-scaled in a different base, this keyword argument can be specified in the <code class="docutils literal notranslate"><span class="pre">FunctionTransformer</span></code> constructor:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">log_base</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">base</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Apply Log scaling to an array with the specified base.&#39;&#39;&#39;</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">base</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">logscaler</span> <span class="o">=</span> <span class="n">FunctionTransformer</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="n">log_base</span><span class="p">,</span> <span class="n">kw_args</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;base&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">},</span> <span class="n">validate</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">logscaler</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">purchases</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Amount</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.477121</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1.397940</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1.698970</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.778151</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>2.004321</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>A custom transformer that requires fitting is implemented by inheriting the <code class="docutils literal notranslate"><span class="pre">TransformerMixin</span></code> base class.</p>
+</div>
+<div class="section" id="applying-transformations-to-multiple-columns">
+<h3>Applying Transformations to multiple columns<a class="headerlink" href="#applying-transformations-to-multiple-columns" title="Permalink to this headline">¶</a></h3>
+<p>By default, Scikit-Learn Transformers apply a given transformation to every input column separately. However, most datasets contain various column types that require different transformation logic.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rand</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">3</span><span class="p">)),</span> <span class="n">columns</span><span class="o">=</span><span class="s1">&#39;a b c&#39;</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+<span class="n">rand</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>a</th>
+      <th>b</th>
+      <th>c</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>3</td>
+      <td>1</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>7</td>
+      <td>6</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>4</td>
+      <td>2</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>6</td>
+      <td>4</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>3</td>
+      <td>8</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>3</td>
+      <td>3</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>6</td>
+      <td>1</td>
+      <td>3</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">binarizer</span> <span class="o">=</span> <span class="n">Binarizer</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">binarizer</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">rand</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[0, 1, 0],
+       [0, 1, 1],
+       [0, 0, 0],
+       [0, 1, 0],
+       [1, 0, 1],
+       [1, 1, 1],
+       [1, 0, 0]])
+</pre></div>
+</div>
+</div>
+</div>
+<p>Passing a function that selects the specified columns by name requires passing <code class="docutils literal notranslate"><span class="pre">validate=False</span></code> to FunctionTransformer (allowing the function to act on objects other than numpy arrays).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">select</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">cols</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">df</span><span class="p">[</span><span class="n">cols</span><span class="p">]</span>
+
+<span class="n">columnSelector</span> <span class="o">=</span> <span class="n">FunctionTransformer</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="n">select</span><span class="p">,</span> <span class="n">validate</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">kw_args</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;cols&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">]})</span>
+<span class="n">columnSelector</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">rand</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>a</th>
+      <th>b</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>3</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>7</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>4</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>6</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>3</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>3</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>6</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Composing these two transformers applies the binarizer to only the first two columns:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">selected</span> <span class="o">=</span> <span class="n">columnSelector</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">rand</span><span class="p">)</span>
+<span class="n">out</span> <span class="o">=</span> <span class="n">binarizer</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">selected</span><span class="p">)</span>
+<span class="n">out</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[0, 0],
+       [1, 1],
+       [0, 0],
+       [1, 0],
+       [0, 1],
+       [0, 0],
+       [1, 0]])
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="data-transformation-pipelines-in-scikit-learn">
+<h2>Data Transformation Pipelines in Scikit Learn<a class="headerlink" href="#data-transformation-pipelines-in-scikit-learn" title="Permalink to this headline">¶</a></h2>
+<p>Composing many feature transformers by hand is tedious and error-prone. Scikit-Learn has a <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> class to manage the composition of multiple transformers.</p>
+<p>A <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> object is instantiated with a sequence of <em>named</em> transformers:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">translist</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;trans1&#39;</span><span class="p">,</span> <span class="n">t1</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;trans2&#39;</span><span class="p">,</span> <span class="n">t2</span><span class="p">),</span><span class="o">...</span><span class="p">,</span> <span class="p">(</span><span class="s1">&#39;transN&#39;</span><span class="p">,</span> <span class="n">tN</span><span class="p">)]</span>
+<span class="n">pl</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">(</span><span class="n">translist</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Each transformer must be given a name, to ease readability and help debugging.</p>
+<p>The resulting pipeline is itself a <em>transformer</em>, with <code class="docutils literal notranslate"><span class="pre">fit</span></code> and <code class="docutils literal notranslate"><span class="pre">transform</span></code> methods. Calling <code class="docutils literal notranslate"><span class="pre">pl.fit_transform(data)</span></code> results in iteratively calling <code class="docutils literal notranslate"><span class="pre">fit_transform</span></code> on the transformers in the pipeline. <code class="docutils literal notranslate"><span class="pre">fit_</span> <span class="pre">transform</span></code> roughly executes the following logic:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">out</span> <span class="o">=</span> <span class="n">data</span>
+<span class="k">for</span> <span class="n">trans</span> <span class="ow">in</span> <span class="n">translist</span><span class="p">:</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">trans</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+    
+<span class="n">out</span>
+</pre></div>
+</div>
+<p>Similar logic applies to both the <code class="docutils literal notranslate"><span class="pre">fit</span></code> and <code class="docutils literal notranslate"><span class="pre">transform</span></code> methods.</p>
+<p><strong>Example:</strong> To combine the <code class="docutils literal notranslate"><span class="pre">columnSelector</span></code> and <code class="docutils literal notranslate"><span class="pre">binarizer</span></code> transformations into a pipeline, merely pass them as a list:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">Pipeline</span>
+<span class="n">translist</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">(</span><span class="s1">&#39;selector&#39;</span><span class="p">,</span> <span class="n">columnSelector</span><span class="p">),</span> 
+    <span class="p">(</span><span class="s1">&#39;binarizer&#39;</span><span class="p">,</span> <span class="n">binarizer</span><span class="p">)</span>
+<span class="p">]</span>
+
+<span class="n">pl</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">(</span><span class="n">translist</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">rand</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[0, 0],
+       [1, 1],
+       [0, 0],
+       [1, 0],
+       [0, 1],
+       [0, 0],
+       [1, 0]])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="applying-separate-transformations-to-subsets-of-columns">
+<h3>Applying Separate Transformations to Subsets of Columns<a class="headerlink" href="#applying-separate-transformations-to-subsets-of-columns" title="Permalink to this headline">¶</a></h3>
+<p>So far, transformers and pipelines have only been used to compose one data transformation after another. Most realistic scenarios however, involve applying separate transformations to different subsets of columns and putting together the resulting features into a single dataset.</p>
+<p>Scikit-Learn handles this logic with the <code class="docutils literal notranslate"><span class="pre">ColumnTransformer</span></code> class, which separately applies transformers to subsets of columns, returning the resulting features as the columns of an array.</p>
+<p><strong>Example:</strong> Suppose the the following features are derived from the dataset <code class="docutils literal notranslate"><span class="pre">rand</span></code>:</p>
+<ul class="simple">
+<li><p>For columns ‘a’ and ‘c’, return 1 if a value is in the top half of the range of the column; otherwise return 0.</p></li>
+<li><p>For columns ‘a’ and ‘b’, return 1 if a value is greater than 1-standard-deviation above the mean of the column, otherwise return 0.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.compose</span> <span class="kn">import</span> <span class="n">ColumnTransformer</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>To approach this, create a pipeline for each feature transformation:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">trans1</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">([</span>
+    <span class="p">(</span><span class="s1">&#39;minmax&#39;</span><span class="p">,</span> <span class="n">MinMaxScaler</span><span class="p">()),</span> 
+    <span class="p">(</span><span class="s1">&#39;greater_than_half&#39;</span><span class="p">,</span> <span class="n">Binarizer</span><span class="p">(</span><span class="n">threshold</span><span class="o">=</span><span class="mf">0.5</span><span class="p">))</span>
+<span class="p">])</span>
+
+<span class="n">trans2</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">([</span>
+    <span class="p">(</span><span class="s1">&#39;stdscale&#39;</span><span class="p">,</span> <span class="n">StandardScaler</span><span class="p">()),</span> 
+    <span class="p">(</span><span class="s1">&#39;greater_than_1std&#39;</span><span class="p">,</span> <span class="n">Binarizer</span><span class="p">(</span><span class="n">threshold</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+<span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>These transformations are then applied to separate subsets of columns by passing then into <code class="docutils literal notranslate"><span class="pre">ColumnTransformer</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ct</span> <span class="o">=</span> <span class="n">ColumnTransformer</span><span class="p">(</span>
+    <span class="p">[</span>
+        <span class="p">(</span><span class="s1">&#39;top_half_of_range&#39;</span><span class="p">,</span> <span class="n">trans1</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">]),</span> 
+        <span class="p">(</span><span class="s1">&#39;above_one_stdev&#39;</span><span class="p">,</span> <span class="n">trans2</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">])</span>
+    <span class="p">]</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>There are four resulting features, as each transformation is applied to two columns:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ct</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">rand</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[0., 1., 0., 0.],
+       [1., 0., 1., 0.],
+       [0., 1., 0., 0.],
+       [1., 0., 0., 0.],
+       [0., 0., 0., 1.],
+       [0., 1., 0., 0.],
+       [1., 0., 0., 0.]])
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./content/09"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="features.html" title="previous page">Feature Engineering</a>
+    <a class='right-next' id="next-link" href="../10/introduction.html" title="next page">Modeling Basics</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Aaron Fraenkel<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="../../_static/js/index.3da636dd464baa7582d2.js"></script>
+
+
+    
+  </body>
+</html>

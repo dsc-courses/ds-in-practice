@@ -1,0 +1,1232 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Combining Data: Observations &#8212; The Practice of Data Science</title>
+    
+  <link rel="stylesheet" href="../../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../../_static/js/index.3da636dd464baa7582d2.js">
+
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Combining Data: Attributes" href="joining-data.html" />
+    <link rel="prev" title="Understanding Aggregations" href="understanding-aggregations.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../../index.html">
+  
+  <img src="../../_static/toolbox.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">The Practice of Data Science</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../introduction.html">
+   Data Science in Practice
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Understanding Data
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../01/introduction.html">
+   Introduction to Data Science
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../01/what-is-data-science.html">
+     What is Data Science?
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../01/scientific-method.html">
+     The Scientific Method
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../01/data-science-example.html">
+     A Data Science Example
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../02/introduction.html">
+   The Basics of Tabular Data
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../02/tabular-data.html">
+     Tabular Data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../02/tabular-data.html#tables-in-python-using-pandas">
+     Tables in python, using Pandas.
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../02/methods.html">
+     Table Methods
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../02/data-types.html">
+     Data Types and Performance
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../03/introduction.html">
+   Querying and Describing Data
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../03/selecting-data.html">
+     Selecting Data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../03/kinds-of-data.html">
+     Kinds of Data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../03/categorical-distributions.html">
+     Categorical Distributions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../03/quantitative-distributions.html">
+     Quantitative Distributions
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../04/introduction.html">
+   Understanding Assumptions and Data Cleaning
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../04/modifying-dataframes.html">
+     Modifying DataFrames
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../04/cleaning.html">
+     Cleaning Messy Data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../04/eda.html">
+     Exploratory Data Analysis
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 current active collapsible-parent">
+  <a class="reference internal" href="introduction.html">
+   Aggregation and Extension of Data
+  </a>
+  <ul class="current collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="grouping.html">
+     Data Granularity
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="understanding-aggregations.html">
+     Understanding Aggregations
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Combining Data (Observations)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="joining-data.html">
+     Combining Data: Attributes
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="joining-data.html#combining-different-measurements-over-the-same-individuals">
+     Combining different measurements over the same individuals
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="permutation-tests.html">
+     Permutation Tests
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="eda-2.html">
+     Exploratory Data Analysis II
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../06/introduction.html">
+   Missing Data
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../06/defining-missing.html">
+     Definitions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../06/identifying-missing.html">
+     Identifying Missing Data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../06/handling-missing-data.html">
+     Handling Missing Data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../06/single-valued-imputation.html">
+     Single-Valued Imputation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../06/probabilistic-imputation.html">
+     Probabilistic Imputation
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Collecting Data
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../07/introduction.html">
+   Data Collection
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../07/existing-data.html">
+     Using Existing Data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../07/requests.html">
+     HTTP Requests
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../07/html.html">
+     Parsing HTML
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../08/introduction.html">
+   Information Extaction
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../08/patterns.html">
+     Text Processing
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../08/nlp.html">
+     Natural Language Processing
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../09/introduction.html">
+   Introduction to Features
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../09/features.html">
+     Feature Engineering
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../09/data-pipelines.html">
+     Data Pipelines
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Modeling With Data
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../10/introduction.html">
+   Modeling Basics
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../10/intro-modeling.html">
+     Introduction to Statistical Models
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../10/model-building.html">
+     Building Modeling Pipelines
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../11/introduction.html">
+   Bias and Variance
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../11/fitting-inference.html">
+     Model Quality (Inference)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../11/fitting-prediction.html">
+     Model Quality (Prediction)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../11/cross-validation.html">
+     Cross Validation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../11/parameter-search.html">
+     Parameter Search
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../12/introduction.html">
+   Evaluating Models; Fairness
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../12/eval.html">
+     Evaluation metrics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../12/parity.html">
+     Parity Measures
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../12/fairness.html">
+     Fairness in Machine Learning
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../_sources/content/05/appending-data.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+        <!-- Source interaction buttons -->
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/afraenkel/ds-in-practice/master?urlpath=tree/book/content/05/appending-data.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#combining-similar-measurements-of-different-individuals">
+   Combining similar measurements of different individuals
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#appending-data-row-wise">
+   Appending data row-wise
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#application-out-of-core-processing-via-chunking">
+   Application: out-of-core processing via chunking
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#application-time-series">
+   Application: Time Series
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#timestamps">
+     Timestamps
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#timedeltas">
+     Timedeltas
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#grouping-data-by-time-windows">
+     Grouping data by Time windows
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+        </nav>
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="combining-data-observations">
+<h1>Combining Data: Observations<a class="headerlink" href="#combining-data-observations" title="Permalink to this headline">¶</a></h1>
+<hr class="docutils" />
+<p>This section covers statistical and computational concerns associated with combining datasets. Broadly, there are two ways to augment a dataset:</p>
+<ol class="simple">
+<li><p>Extending existing attributes to other observations (e.g. in time or space) is computationally convenient, but raises questions of the scope of the dataset.</p></li>
+<li><p>Adding attributes to existing data creates a richer description of the observations, though the process of associate the new information to each individual observation may be ambiguous.</p></li>
+</ol>
+<div class="section" id="combining-similar-measurements-of-different-individuals">
+<h2>Combining similar measurements of different individuals<a class="headerlink" href="#combining-similar-measurements-of-different-individuals" title="Permalink to this headline">¶</a></h2>
+<p>Datasets are often stored in many different files, for a variety of reasons. Consider a dataset consisting of residential home sales across the United States. There may be:</p>
+<ul class="simple">
+<li><p>One file published every month of the home sales from that month.</p></li>
+<li><p>Files published for each County in the United States.</p></li>
+<li><p>Home sales split up into files of size 300MB for ease of storage on servers.</p></li>
+</ul>
+<p>In reality, such a dataset would likely be split as some combination of all three possibilities. Each of these needs careful attention is several possible ways:</p>
+<ul class="simple">
+<li><p>the distributions of what’s being measured may change (e.g. the recording of home sales became more reliable over time),</p></li>
+<li><p>the meaning of the attributes may vary by what generated the data (e.g. each County reports sales differently),</p></li>
+<li><p>the structure of the data itself may differ across files (e.g. a developer changes the data-ingestion code).</p></li>
+</ul>
+<p>While it’s easy, memory permitting, to combine many files into a single table, the way in which a dataset is split offers a clue into how the data were recorded. These clues are valuable assets in understanding and assessing the faithfulness of the dataset to the assumptions on how the data were generated.</p>
+</div>
+<div class="section" id="appending-data-row-wise">
+<h2>Appending data row-wise<a class="headerlink" href="#appending-data-row-wise" title="Permalink to this headline">¶</a></h2>
+<p>In Pandas, the <code class="docutils literal notranslate"><span class="pre">concat</span></code> function combines many similar measurements into a single DataFrame. It takes in a list of DataFrames, aligns their columns, and returns a “horizontally stacked” DataFrame:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">4</span><span class="p">)))</span>
+<span class="n">df1</span><span class="p">,</span> <span class="n">df2</span><span class="p">,</span> <span class="n">df3</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[[</span><span class="mi">0</span><span class="p">]],</span> <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[[</span><span class="mi">2</span><span class="p">]],</span> <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[[</span><span class="mi">4</span><span class="p">]]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df1</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>2</td>
+      <td>5</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df2</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2</th>
+      <td>2</td>
+      <td>8</td>
+      <td>5</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df3</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>4</th>
+      <td>7</td>
+      <td>7</td>
+      <td>9</td>
+      <td>9</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfList</span> <span class="o">=</span> <span class="n">df1</span><span class="p">,</span> <span class="n">df2</span><span class="p">,</span> <span class="n">df3</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">dfList</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>2</td>
+      <td>5</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2</td>
+      <td>8</td>
+      <td>5</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>7</td>
+      <td>7</td>
+      <td>9</td>
+      <td>9</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p><strong>Example:</strong> Suppose a dataset of residential home prices consists of 50 files named <code class="docutils literal notranslate"><span class="pre">prices_STATEABBR.csv</span></code>, where <code class="docutils literal notranslate"><span class="pre">STATEABBR</span></code> is the state abbreviation, each of which have the same format. Loading such a dataset into Pandas would follow the pattern:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">glob</span>
+<span class="n">DIRNAME</span> <span class="o">=</span> <span class="s1">&#39;data/home_prices&#39;</span>
+<span class="n">files</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">DIRNAME</span><span class="p">)</span>
+<span class="n">states</span> <span class="o">=</span> <span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">files</span> <span class="k">if</span> <span class="n">f</span><span class="p">[:</span><span class="mi">7</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;prices_&#39;</span><span class="p">]</span>
+<span class="n">prices</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">states</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><em>Remark 1:</em> The module <a class="reference external" href="https://docs.python.org/3/library/glob.html"><code class="docutils literal notranslate"><span class="pre">glob</span></code></a> does Unix-style pattern matching.</p>
+<p><em>Remark 2:</em> The state each file represents can be attached to the resulting DataFrame by extracting the state abbreviations from the file names and using the <code class="docutils literal notranslate"><span class="pre">concat</span></code> keyword <code class="docutils literal notranslate"><span class="pre">keys</span></code>.</p>
+</div>
+<div class="section" id="application-out-of-core-processing-via-chunking">
+<h2>Application: out-of-core processing via chunking<a class="headerlink" href="#application-out-of-core-processing-via-chunking" title="Permalink to this headline">¶</a></h2>
+<p>When a dataset is split over many files for space considerations, it may not be possible to collect the data into a single table. In these cases, it’s necessary to process the data one file at a time, while still managing to calculate the desired quantities. Such a ‘out-of-core’ processing is often tricky.</p>
+<ul class="simple">
+<li><p>Example of multi-file, one at a time (running mean).</p></li>
+<li><p>Example of chunking with read_csv.</p></li>
+</ul>
+</div>
+<div class="section" id="application-time-series">
+<h2>Application: Time Series<a class="headerlink" href="#application-time-series" title="Permalink to this headline">¶</a></h2>
+<p>Assessing data collected continuously in time requires understanding how these datasets change in time. To describe these data, one must first understand how to compute with dates and times.</p>
+<p>The data types relevant to time series data in Pandas are timestamps, time-deltas, and time-grouping objects.</p>
+<div class="section" id="timestamps">
+<h3>Timestamps<a class="headerlink" href="#timestamps" title="Permalink to this headline">¶</a></h3>
+<p>Pandas Timestamps represent a particular moment in time (e.g. Sat 8th, 2019 at 3:00PM). The Pandas Timestamp class are built upon Numpy’s <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/arrays.datetime.html">datetime64</a> class, which stores a moment in time as the number of seconds (or possibly milliseconds, nanoseconds) since Jan 1, 1970 as a 64 bit integer. This is representation of timestamps is known as <a class="reference external" href="https://en.wikipedia.org/wiki/Unix_time">UNIX time</a>.</p>
+<p><em>Remark:</em> Pandas Timestamps differ from Numpy datetime64 objects in one primary way: they can also encode a timezone.</p>
+<p>To parse a date and time stored as a string, Pandas has the flexible <code class="docutils literal notranslate"><span class="pre">to_datetime</span></code> function, which:</p>
+<ul class="simple">
+<li><p>Parses a string, or container of strings, to Timestamp objects.</p></li>
+<li><p>Automatically infers the format of the date and time represented by the string.</p></li>
+</ul>
+<p>For example,</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="s1">&#39;Sat Sept 7th 2019, 6:38PM&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Timestamp(&#39;2019-09-07 18:38:00&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dates</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="s1">&#39;1/4/2018&#39;</span><span class="p">,</span> <span class="s1">&#39;12/31/2017&#39;</span><span class="p">,</span> <span class="s1">&#39;3/15/2018&#39;</span><span class="p">])</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">dates</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0   2018-01-04
+1   2017-12-31
+2   2018-03-15
+dtype: datetime64[ns]
+</pre></div>
+</div>
+</div>
+</div>
+<p>The format inference can both parse lists of heterogeneous formats:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dates</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="s1">&#39;1/4/2018&#39;</span><span class="p">,</span> <span class="s1">&#39;2017-12-31&#39;</span><span class="p">,</span> <span class="s1">&#39;March 15, 2018&#39;</span><span class="p">])</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">dates</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0   2018-01-04
+1   2017-12-31
+2   2018-03-15
+dtype: datetime64[ns]
+</pre></div>
+</div>
+</div>
+</div>
+<p>The format inference also makes a best guess at the true values of underspecified dates and times. For example, simply specifying ‘Saturday 2019’ results in ‘2019-01-05’, which is the first Saturday of 2019.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="s1">&#39;Sat 2019 at 3:00PM&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Timestamp(&#39;2019-01-05 15:00:00&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<p>The format inference done by the parser both slows down the parsing and struggles with determining ambiguous date formats (e.g. is 8/1/1970 in August or January?). For both correctness and performance, the format should explicitly be passed to <code class="docutils literal notranslate"><span class="pre">to_datetime</span></code> whenever possible!</p>
+<p>Below, the format for a date in MONTH/DAY/YEAR is specified by the string <code class="docutils literal notranslate"><span class="pre">'%m/%d/%Y'</span></code>. The full reference for specifying date formats in python may be found in the <a class="reference external" href="https://docs.python.org/3/library/datetime.html#strftime-and-strptime-behavior">documentation</a>, or in this <a class="reference external" href="http://strftime.org/">table</a>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dates</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="s1">&#39;1/4/2018&#39;</span><span class="p">,</span> <span class="s1">&#39;12/31/2017&#39;</span><span class="p">,</span> <span class="s1">&#39;3/15/2018&#39;</span><span class="p">])</span>
+<span class="n">parsed_dates</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">dates</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;%m/</span><span class="si">%d</span><span class="s1">/%Y&#39;</span><span class="p">)</span>
+<span class="n">parsed_dates</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0   2018-01-04
+1   2017-12-31
+2   2018-03-15
+dtype: datetime64[ns]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Timestamps have useful attributes and methods that return values such as the day of the week the timestamp falls on, the number of days in the month of the timestamp, a string representation of the timestamp in a specified format. For a full list, see the <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Timestamp.html">documentation</a>.</p>
+<p>Pandas makes these methods and attributes available through the datetime namespace, accessed as <code class="docutils literal notranslate"><span class="pre">Series.dt</span></code>. For example, to calculate the (name of) day of the week of a column of dates:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">parsed_dates</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">day_name</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0    Thursday
+1      Sunday
+2    Thursday
+dtype: object
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Example:</strong> Parse the dates in the dataset of summit attempts of Mt. Rainier and calculate the distribution of climbers across the days of the week:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">climbs_parsed</span> <span class="o">=</span> <span class="n">climbs</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">ParsedDate</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">climbs</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
+    <span class="n">climbs_parsed</span>
+    <span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">day_name</span><span class="o">=</span><span class="n">climbs_parsed</span><span class="o">.</span><span class="n">ParsedDate</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">day_name</span><span class="p">())</span>
+    <span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;day_name&#39;</span><span class="p">)[</span><span class="s1">&#39;Attempted&#39;</span><span class="p">]</span>
+    <span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;Monday Tuesday Wednesday Thursday Friday Saturday Sunday&#39;</span><span class="o">.</span><span class="n">split</span><span class="p">()]</span> <span class="c1"># sort the days</span>
+    <span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">,</span> <span class="n">rot</span><span class="o">=</span><span class="mi">70</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;distribution of climbers by day&#39;</span><span class="p">)</span>
+<span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/appending-data_27_0.png" src="../../_images/appending-data_27_0.png" />
+</div>
+</div>
+<p>Friday and Saturday are the most popular days for climbers to start up the mountain, coinciding with weekend trips.</p>
+<p><em>Remark:</em> The <code class="docutils literal notranslate"><span class="pre">dayofweek</span></code> method, which returns an integer encoded representation of the day of the week, would also work in this case. This method would eliminate the sorting step, but would be less readable.</p>
+</div>
+<div class="section" id="timedeltas">
+<h3>Timedeltas<a class="headerlink" href="#timedeltas" title="Permalink to this headline">¶</a></h3>
+<p>Time deltas are the difference in times between two timestamps. Subtracting two timestamps results in a Timedelta object:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ts1</span><span class="p">,</span> <span class="n">ts2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">([</span><span class="s1">&#39;1/4/2018 7:31:30 AM&#39;</span><span class="p">,</span> <span class="s1">&#39;12/31/2017 8:28:01 PM&#39;</span><span class="p">])</span>
+<span class="n">delta</span> <span class="o">=</span> <span class="n">ts1</span> <span class="o">-</span> <span class="n">ts2</span>
+<span class="n">delta</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Timedelta(&#39;3 days 11:03:29&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Timedelta objects are defined:</p>
+<ul class="simple">
+<li><p>by adding and substracting Timestamps,</p></li>
+<li><p>using the constructor <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Timedelta.html"><code class="docutils literal notranslate"><span class="pre">Timedelta</span></code></a></p></li>
+<li><p>using the parser <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.to_timedelta.html"><code class="docutils literal notranslate"><span class="pre">to_timedelta</span></code></a></p></li>
+</ul>
+<p>Representing a change in time, Timedeltas may then be added or subtracted to Timestamp objects:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dates</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="s1">&#39;12/5/2018 12:34:12 AM&#39;</span><span class="p">,</span> <span class="s1">&#39;12/31/2018 8:23:14 PM&#39;</span><span class="p">,</span> <span class="s1">&#39;3/15/2018 2:12:59 PM&#39;</span><span class="p">])</span>
+<span class="n">parsed_dates</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">dates</span><span class="p">)</span>
+
+<span class="n">parsed_dates</span> <span class="o">+</span> <span class="n">delta</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0   2018-12-08 11:37:41
+1   2019-01-04 07:26:43
+2   2018-03-19 01:16:28
+dtype: datetime64[ns]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Timedeltas have useful <a class="reference external" href="https://pandas.pydata.org/pandas-docs/version/0.25/reference/api/pandas.Timedelta.html">methods and attributes</a>. For example, the <code class="docutils literal notranslate"><span class="pre">total_seconds</span></code> method converts a time delta to the total number of seconds elapsed:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">delta</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>299009.0
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Example:</strong> Select all parties that attempted to climb Mt. Rainier within 1 week of June 12, 2015.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ts</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="s1">&#39;June 12 2015&#39;</span><span class="p">)</span>
+<span class="n">td</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_timedelta</span><span class="p">(</span><span class="s1">&#39;7 days&#39;</span><span class="p">)</span>
+<span class="n">start_ts</span><span class="p">,</span> <span class="n">end_ts</span> <span class="o">=</span> <span class="n">ts</span> <span class="o">-</span> <span class="n">td</span><span class="p">,</span> <span class="n">ts</span> <span class="o">+</span> <span class="n">td</span>
+    
+<span class="p">(</span>
+    <span class="n">climbs_parsed</span>
+    <span class="o">.</span><span class="n">loc</span><span class="p">[</span>
+        <span class="p">(</span><span class="n">climbs_parsed</span><span class="p">[</span><span class="s1">&#39;ParsedDate&#39;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">start_ts</span><span class="p">)</span> <span class="o">&amp;</span> 
+        <span class="p">(</span><span class="n">climbs_parsed</span><span class="p">[</span><span class="s1">&#39;ParsedDate&#39;</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">end_ts</span><span class="p">)</span>
+    <span class="p">]</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Date</th>
+      <th>Route</th>
+      <th>Attempted</th>
+      <th>Succeeded</th>
+      <th>ParsedDate</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1232</th>
+      <td>6/19/2015</td>
+      <td>Disappointment Cleaver</td>
+      <td>4</td>
+      <td>0</td>
+      <td>2015-06-19</td>
+    </tr>
+    <tr>
+      <th>1233</th>
+      <td>6/19/2015</td>
+      <td>Ptarmigan Ridge</td>
+      <td>3</td>
+      <td>3</td>
+      <td>2015-06-19</td>
+    </tr>
+    <tr>
+      <th>1234</th>
+      <td>6/19/2015</td>
+      <td>Disappointment Cleaver</td>
+      <td>5</td>
+      <td>5</td>
+      <td>2015-06-19</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>1505</th>
+      <td>6/5/2015</td>
+      <td>Disappointment Cleaver</td>
+      <td>12</td>
+      <td>12</td>
+      <td>2015-06-05</td>
+    </tr>
+    <tr>
+      <th>1506</th>
+      <td>6/5/2015</td>
+      <td>Disappointment Cleaver</td>
+      <td>3</td>
+      <td>3</td>
+      <td>2015-06-05</td>
+    </tr>
+    <tr>
+      <th>1507</th>
+      <td>6/5/2015</td>
+      <td>Kautz Glacier</td>
+      <td>3</td>
+      <td>3</td>
+      <td>2015-06-05</td>
+    </tr>
+  </tbody>
+</table>
+<p>276 rows × 5 columns</p>
+</div></div></div>
+</div>
+</div>
+<div class="section" id="grouping-data-by-time-windows">
+<h3>Grouping data by Time windows<a class="headerlink" href="#grouping-data-by-time-windows" title="Permalink to this headline">¶</a></h3>
+<p>The Pandas <code class="docutils literal notranslate"><span class="pre">Grouper</span></code> allows one to group data by time frequency; this object is then passed to the splitting operation in a Pandas aggregation. Using <code class="docutils literal notranslate"><span class="pre">Grouper</span></code> requires specifying a frequency <code class="docutils literal notranslate"><span class="pre">freq</span></code> and a column <code class="docutils literal notranslate"><span class="pre">key</span></code> on which to group (if a key is omitted, the index is used).</p>
+<p>For example, a Grouper object for grouping the dates of climbing attempts on Mt. Rainier would use:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">grouper</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Grouper</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="s1">&#39;ParsedDate&#39;</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s1">&#39;1d&#39;</span><span class="p">)</span>
+<span class="n">grouper</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>TimeGrouper(key=&#39;ParsedDate&#39;, freq=&lt;Day&gt;, axis=0, sort=True, closed=&#39;left&#39;, label=&#39;left&#39;, how=&#39;mean&#39;, convention=&#39;e&#39;, base=0)
+</pre></div>
+</div>
+</div>
+</div>
+<p><em>Remark:</em> Notice the <code class="docutils literal notranslate"><span class="pre">Grouper</span></code> object includes detailed attributes of how to defined the time windows. For details, see the <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Grouper.html">documentation</a>.</p>
+<p>This grouper object can then be used to plot the number of climbers attempting to summit per day:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">climbs_parsed</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">grouper</span><span class="p">)[</span><span class="s1">&#39;Attempted&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;attempts per day to summit Mt. Rainier&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/appending-data_41_0.png" src="../../_images/appending-data_41_0.png" />
+</div>
+</div>
+<p>This aggregation is noisy; the number of attempts varies wildly from day-to-day. For example, recall that there is more activity on the mountain during the weekend. The seasonal trend of when people are climbing Mt. Rainier is clearer when counting attempts by the week:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">grouper</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Grouper</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="s1">&#39;ParsedDate&#39;</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s1">&#39;7d&#39;</span><span class="p">)</span>
+<span class="n">climbs_parsed</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">grouper</span><span class="p">)[</span><span class="s1">&#39;Attempted&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;attempts per week to summit Mt. Rainier&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/appending-data_43_0.png" src="../../_images/appending-data_43_0.png" />
+</div>
+</div>
+<p><strong>Example:</strong> Grouper objects may also be used in pivot tables. To plot the number of climbers attempting Mt. Ranier every two weeks, for each route:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
+    <span class="n">climbs_parsed</span>
+    <span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span>
+        <span class="n">index</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">Grouper</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="s1">&#39;ParsedDate&#39;</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s1">&#39;14d&#39;</span><span class="p">),</span> 
+        <span class="n">columns</span><span class="o">=</span><span class="s1">&#39;Route&#39;</span><span class="p">,</span> 
+        <span class="n">values</span><span class="o">=</span><span class="s1">&#39;Attempted&#39;</span><span class="p">,</span> 
+        <span class="n">aggfunc</span><span class="o">=</span><span class="s1">&#39;sum&#39;</span><span class="p">,</span> 
+        <span class="n">fill_value</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">legend</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Biweekly attempts to summit Mt. Rainier, per route&#39;</span><span class="p">)</span>
+<span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/appending-data_45_0.png" src="../../_images/appending-data_45_0.png" />
+</div>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./content/05"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="understanding-aggregations.html" title="previous page">Understanding Aggregations</a>
+    <a class='right-next' id="next-link" href="joining-data.html" title="next page">Combining Data: Attributes</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Aaron Fraenkel<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="../../_static/js/index.3da636dd464baa7582d2.js"></script>
+
+
+    
+  </body>
+</html>
