@@ -1,3 +1,0 @@
-# Introduction
-
-See Lecture Notes
