@@ -24,7 +24,7 @@ Students leave the course:
   those decisions.
 * with a “big picture” understanding of why data science projects are
   structured the way they are.
-* Get a feel for the daily work of a data scientist and the context of
+* with an understanding of the daily work of a data scientist and the context of
   that work in the greater world.
 
 ## Prerequisites
