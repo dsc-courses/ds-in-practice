@@ -27,7 +27,7 @@ import numpy as np
 ```
 
 
-Creating Tabular Structures:
+### Creating Tabular Structures:
 
 |Function or Method Name|Description|
 |---|---|
@@ -36,7 +36,7 @@ Creating Tabular Structures:
 |[`pd.read_csv`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_csv.html)|Reading CSV from file|
 
 
-Common Series/DataFrame attributes and methods:
+### Series/DataFrame attributes and methods:
 
 |Function or Method Name|Description|
 |---|---|
@@ -52,7 +52,7 @@ Common Series/DataFrame attributes and methods:
 |[`Series.agg`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.agg.html) and [`DataFrame.agg`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.agg.html)|apply a collection of functions to a Series/DataFrame|
 
 
-Methods for computing descriptive statistics on Series/DataFrames:
+### Methods for computing descriptive statistics on Series/DataFrames:
 
 |Function or Method Name|Description|
 |---|---|
