@@ -2,16 +2,13 @@
 
 ---
 
-Lecture notes for DSC 80 at UCSD.
+Lecture notes for [DSC 80](https://dsc80.com) at UCSD.
 
 ---
 
 By **Aaron Fraenkel**
 
-**WARNING: THS BOOK IS UNDER DEVELOPMENT.** 
-
-**Regular changes to content will occur; typos are rampant!**
-
+**WARNING: THIS BOOK IS UNDER DEVELOPMENT. Regular changes to content will occur; typos are rampant!**
 
 ## Description of course
 
