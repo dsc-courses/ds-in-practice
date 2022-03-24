@@ -2,7 +2,7 @@
 
 ---
 
-Lecture notes for DSC 80 at UCSD.
+Lecture notes for [DSC 80](https://dsc80.com) at UCSD.
 
 ---
 
